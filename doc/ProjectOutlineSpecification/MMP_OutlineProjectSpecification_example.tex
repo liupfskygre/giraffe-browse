@@ -1,0 +1,80 @@
+\documentclass[11pt,fleqn,twoside]{article}
+\usepackage{makeidx}
+\makeindex
+\usepackage{palatino} %or {times} etc
+\usepackage{plain} %bibliography style
+\usepackage{amsmath} %math fonts - just in case
+\usepackage{amsfonts} %math fonts
+\usepackage{amssymb} %math fonts
+\usepackage{lastpage} %for footer page numbers
+\usepackage{fancyhdr} %header and footer package
+\usepackage{mmpv2}
+\usepackage{url}
+\usepackage{hyperref}
+
+% the following packages are used for citations - You only need to include one.
+%
+% Use the cite package if you are using the numeric style (e.g. IEEEannot).
+% Use the natbib package if you are using the author-date style (e.g. authordate2annot).
+% Only use one of these and comment out the other one.
+\usepackage{cite}
+%\usepackage{natbib}
+
+\begin{document}
+
+\name{Owen Garland}
+\userid{owg1}
+\projecttitle{Building an online resource for Candida Tropicalis}
+\projecttitlememoir{Building an online resource for Candida Tropicalis} %same as the project title or abridged version for page header
+\reporttitle{Outline Project Specification}
+\version{0.1}
+\docstatus{Draft}
+\modulecode{CS39440}
+\degreeschemecode{G600}
+\degreeschemename{Computer Science}
+\supervisor{Wayne Aubrey} % e.g. Neil Taylor
+\supervisorid{waa2}
+\wordcount{}
+
+%optional - comment out next line to use current date for the document
+%\documentdate{10th February 2014}
+\mmp
+
+\setcounter{tocdepth}{3} %set required number of level in table of contents
+
+
+%==============================================================================
+\section{Project description}
+%==============================================================================
+This is a test citation \cite{MarksPaper}
+
+
+%==============================================================================
+\section{Proposed tasks}
+%==============================================================================
+
+
+%==============================================================================
+\section{Project deliverables}
+%==============================================================================
+
+%
+% Start to comment out / remove the following lines. They are only provided for instruction for this example template.  You don't need the following section title, because it will be added as part of the bibliography section.
+%
+% End of comment out / remove the lines. They are only provided for instruction for this example template.
+%
+
+
+\nocite{*} % include everything from the bibliography, irrespective of whether it has been referenced.
+
+% the following line is included so that the bibliography is also shown in the table of contents. There is the possibility that this is added to the previous page for the bibliography. To address this, a newline is added so that it appears on the first page for the bibliography.
+\newpage
+\addcontentsline{toc}{section}{Initial Annotated Bibliography}
+%
+% example of including an annotated bibliography. The current style is an author date one. If you want to change, comment out the line and uncomment the subsequent line. You should also modify the packages included at the top (see the notes earlier in the file) and then trash your aux files and re-run.
+%\bibliographystyle{authordate2annot}
+\bibliographystyle{IEEEannot}
+\renewcommand{\refname}{Annotated Bibliography}  % if you put text into the final {} on this line, you will get an extra title, e.g. References. This isn't necessary for the outline project specification.
+\bibliography{mmp} % References file
+
+\end{document}
