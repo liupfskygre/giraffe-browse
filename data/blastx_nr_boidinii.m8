@@ -1,4 +1,6 @@
 ./diamond blastx -d nr_ref.dmnd -q candidaBoidinii/candida_boidinii.fa -o blastx_nr_boidinii.m8 -p 8
+Query Subject %id  alignment_length mismatches gap_openings q.start q.end s.start s.end e-value bit_score
+
 scaffold1	YP_004362960.1	84.7	190	29	0	13120	12551	292	481	1.4e-84	327.8
 scaffold1	YP_008475087.1	84.2	190	30	0	13120	12551	297	486	2.4e-84	327.0
 scaffold1	YP_008474823.1	82.1	190	34	0	13120	12551	296	485	4.4e-83	322.8
