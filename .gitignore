@@ -36,3 +36,6 @@
 *.ilg
 *.ind
 *.ist
+
+# node
+node_modules
