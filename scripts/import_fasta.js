@@ -1,6 +1,9 @@
 const fasta2json = require('fasta2json')
+    , MongoClient = require('mongodb').MongoClient
+    , url = 'mongodb://localhost:27017/candida'
 
 let proteins = fasta2json.ReadFasta('../data/boidinii/boidinii_uniprot.fa')
+  , species = []
 
 fasta2json.ParseFasta = (str) => {
   let fasta = []
@@ -27,7 +30,7 @@ fasta2json.ParseFasta = (str) => {
     seq.protein = proteins.filter((obj) => {
       let proteinId = obj.head.split('|')[1]
       return proteinId === seq.uniprot
-    })[0]
+    })[0] || 'No uniprot match'
 
     fasta.push(seq)
   }
@@ -35,10 +38,20 @@ fasta2json.ParseFasta = (str) => {
   return fasta
 }
 
-let species = fasta2json.ReadFasta('../data/boidinii/boidinii_working.fa')
+species = fasta2json.ReadFasta('../data/boidinii/boidinii_working.fa')
 
-let search = species.filter((obj) => {
-    return obj.contig === 'C80803 62.0'
-})[0]
+MongoClient.connect(url, (err, db) => {
+  if (err) console.log('ERROR: ' + err)
+  let collection = db.collection('boidinii')
 
-console.log(search)
+  collection.insertMany(species, (err, result) => {
+    if (err) console.log('ERROR: ' + err)
+    console.log(result)
+    db.close()
+  })
+})
+
+// let search = species.filter((obj) => {
+//     return obj.contig === 'C80803 62.0'
+
+// })[0]
