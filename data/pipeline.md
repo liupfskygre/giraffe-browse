@@ -30,7 +30,7 @@ Use awk to get the list of RefSeq protein IDs from the blast results
 awk '{print $2}' boidinii_best_blast.m8 | xclip
 ```
 
-Then past it into the [uniprot look up](http://www.uniprot.org/uploadlists/) and search for RefSeq Protein -> UniProtKB 
+Then paste it into the [uniprot look up](http://www.uniprot.org/uploadlists/) and search for RefSeq Protein -> UniProtKB 
 
 Download the Mapping Table file, to get a list of the IDs that correspond to uniprot IDs.
 
