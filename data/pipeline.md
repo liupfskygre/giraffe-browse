@@ -54,12 +54,12 @@ It is easy to do this with a Vim Macro, however if I want to make this an access
 
 This produces `boidinii_working.fa`.
 
-*This is where I have gotten to so far.* 
-
 ## Create a database with the found data
 Now we have two files that need to be ingest into a database. The `boidinii_working.fa` & `boidinii_uniprot.fa` files should contain all the data that the website needs. 
 
-It should be fairly trivial to produce a script that takes these two files as input and puts them into MongoDB.
+I have created a script to put this data into MongoDB. 
+
+*This is where I am at.*
 
 ## Build a web front end
 Then I just have to make a web front end to make this data accessible, including viewing, searching and comparing genes across the species.
