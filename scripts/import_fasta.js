@@ -43,6 +43,7 @@ species = fasta2json.ReadFasta('../data/boidinii/boidinii_working.fa')
 MongoClient.connect(url, (err, db) => {
   if (err) console.log('ERROR: ' + err)
   let collection = db.collection('boidinii')
+  collection.drop()
 
   collection.insertMany(species, (err, result) => {
     if (err) console.log('ERROR: ' + err)
@@ -55,3 +56,4 @@ MongoClient.connect(url, (err, db) => {
 //     return obj.contig === 'C80803 62.0'
 
 // })[0]
+// db.boidinii.findOne({ uniprot: "K4AC16" })
