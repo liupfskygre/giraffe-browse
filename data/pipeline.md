@@ -54,6 +54,12 @@ It is easy to do this with a Vim Macro, however if I want to make this an access
 
 This produces `boidinii_working.fa`.
 
+## Extract gene sequence from blast results
+Need to find the start and end of the gene in the contig, from the blast results and add that to the database.
+
+## Add UniprotID -> KeggID
+???
+
 ## Create a database with the found data
 Now we have two files that need to be ingest into a database. The `boidinii_working.fa` & `boidinii_uniprot.fa` files should contain all the data that the website needs. 
 
