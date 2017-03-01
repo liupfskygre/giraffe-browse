@@ -23,7 +23,7 @@ awk '!_[$1]++ {print}' blastx_nr_boidinii.m8 > boidinii_best.m8
 ```
 This produces `boidinii_best.m8`.
 
-##  Get uniprot IDs and proteins
+##  Get uniprot & Kegg IDs and proteins
 Use awk to get the list of RefSeq protein IDs from the blast results
 
 ```
@@ -38,16 +38,17 @@ Also download the fasta format of all the proteins found.
 
 This produces `boidinii_uniprot.fa` & `boidinii_uniprot_ids.lst`.
 
+Take the uniprot ids and get the conversion to kegg Id's in the same way. This produces 'boidinii_kegg_ids.lst`
+
 ## Merge the data into a working file
 Using Vim macro's it is simple to combine the found data into a copy of the original fasta file.
 
-The gene is now annotated with the original scaffold, the blast result, and the uniprot ID.
+The gene is now annotated with the original scaffold, the blast result, and the uniprot & kegg ID.
 
 ```
->scaffold4 61.0 | XP_018211803.1  81.6  1170  213 2 517198  513695  1 1170  0.0e+00 1953.7 | A0A1B7SK73
-CCTGATGAACCAGAGGCACCAGTGGAGTCTGAAGCACCAGAAGCACCTGAGGAAGCACCAGATGAAGCGGAGGCACCAGTGGAAGAAGAAGCACCAGTGG
-AAGAAGAAGCGCCAGATGATGAGGAGGCAACAGTNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+>C76265 63.0 | XP_002553495.1 23.7  219 154 5 696 1331  25  237 4.1e-05 58.9 | C5DFV2 | lth:KLTH0D18194g
+AAAAAAAAAAAAATGTTCAGTCAAAAATAAGCTAATTTACCGTACAATGGCATGCATATGCGACAAGGTTCTTTTTTTCTGTTGTTTAGCAAATGCAGTA
+AACCAGTGGTTATACATTCATCATTAGGTGGTACTCTAAATCTGTCTTTATAATCCATCTTTTATCCATAAGTGAAGCTGAAAAGGCTGAAAGTCCTTTT
 ```
 
 It is easy to do this with a Vim Macro, however if I want to make this an accessible & repeatable process then a small python script should be able to handle this task.
@@ -57,8 +58,6 @@ This produces `boidinii_working.fa`.
 ## Extract gene sequence from blast results
 Need to find the start and end of the gene in the contig, from the blast results and add that to the database.
 
-## Add UniprotID -> KeggID
-???
 
 ## Create a database with the found data
 Now we have two files that need to be ingest into a database. The `boidinii_working.fa` & `boidinii_uniprot.fa` files should contain all the data that the website needs. 

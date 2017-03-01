@@ -19,6 +19,7 @@ fasta2json.ParseFasta = (str) => {
     seq.contig = head.split('|')[0].trim()
     seq.blast = head.split('|')[1] || 'No blast result'
     seq.uniprot = head.split('|')[2] || 'No uniprot match'
+    seq.kegg = head.split('|')[3] || 'No kegg match'
     seq.blast = seq.blast.trim()
     seq.uniprot = seq.uniprot.trim()
     seq.sequence = ''
@@ -56,4 +57,4 @@ MongoClient.connect(url, (err, db) => {
 //     return obj.contig === 'C80803 62.0'
 
 // })[0]
-// db.boidinii.findOne({ uniprot: "K4AC16" })
+//db.boidinii.findOne({ uniprot: "K4AC16" })
