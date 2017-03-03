@@ -48,7 +48,6 @@ MongoClient.connect(url, (err, db) => {
 
   collection.insertMany(species, (err, result) => {
     if (err) console.log('ERROR: ' + err)
-    console.log(result)
     db.close()
   })
 })
