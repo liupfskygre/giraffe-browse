@@ -1,9 +1,9 @@
 # Building an online resource for Candida Tropicalis
 
-[![Build Status](https://img.shields.io/travis/bag-man/final-year-project.svg?style=flat-square)](https://travis-ci.org/bag-man/final-year-project)
-[![Coverage](https://img.shields.io/codecov/c/github/bag-man/final-year-project.svg?style=flat-square)](https://codecov.io/github/bag-man/final-year-project)
-[![Dependencies](https://img.shields.io/david/bag-man/final-year-project.svg?style=flat-square)](https://david-dm.org/bag-man/final-year-project)
-[![Code Climate](https://img.shields.io/codeclimate/github/bag-man/final-year-project.svg?style=flat-square)](https://codeclimate.com/github/bag-man/final-year-project)
+[![Build Status](https://travis-ci.com/bag-man/final-year-project.svg?token=gr5Kv7LRnKCzUp9adeKC&branch=master)](https://travis-ci.com/bag-man/final-year-project)
+[![Codecov](https://codecov.io/gh/bag-man/final-year-project/branch/master/graph/badge.svg?token=GuPuQcHhdX)](https://codecov.io/gh/bag-man/final-year-project)
+[![Waffle.io](https://img.shields.io/badge/Waffle%20Board-active-green.svg)](https://waffle.io/bag-man/nodestack)
+[![Demo](https://img.shields.io/badge/Demo-live-green.svg)](http://project.owen.cymru)
 
 This is my repository for my final year project. You can read more about what I am doing in my project logs on [my blog](http://owen.cymru).
 
