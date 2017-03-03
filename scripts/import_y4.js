@@ -52,5 +52,3 @@ MongoClient.connect(url, (err, db) => {
     db.close()
   })
 })
-
-//"C5M7X3"
