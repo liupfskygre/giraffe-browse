@@ -22,6 +22,7 @@ fasta2json.ParseFasta = (str) => {
     seq.kegg = head.split('|')[3] || 'No kegg match'
     seq.blast = seq.blast.trim()
     seq.uniprot = seq.uniprot.trim()
+    seq.kegg = seq.kegg.trim()
     seq.sequence = ''
 
     for (let j = 1; j < fas.length; j++) {
@@ -51,9 +52,3 @@ MongoClient.connect(url, (err, db) => {
     db.close()
   })
 })
-
-// let search = species.filter((obj) => {
-//     return obj.contig === 'C80803 62.0'
-
-// })[0]
-//db.boidinii.findOne({ uniprot: "K4AC16" })
