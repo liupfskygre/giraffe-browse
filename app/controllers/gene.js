@@ -4,7 +4,7 @@ const Database = require('../database')
 
 class GeneController {
   constructor (req, res) {
-    this.id = req.params.id
+    this.search = req.query
     this.res = res
   }
 
@@ -18,7 +18,7 @@ class GeneController {
   }
 
   retrieveGene (search) {
-    search = { search: { uniprot: 'K4AC16' }, collection: 'boidinii' }
+    search = { search: this.search, collection: 'boidinii' }
     let db = new Database(dbUrl)
       , database = db.connect().catch((err) => {
         this.render(null, err)

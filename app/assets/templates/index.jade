@@ -1,4 +1,6 @@
 extend header
 
 block content 
-  button.echo Hello World
+  form(action='/gene', method='GET')
+    input(type='text', name='uniprot')
+    button.search search
