@@ -1,22 +1,23 @@
 extend header
 
 block content 
-  form(action='/gene', method='GET')
-    p
-      | Scaffold: 
-      input(type='text', name='scaffold')
-      | UniprotID: 
-      input(type='text', name='uniprot')
-      | KeggID: 
-      input(type='text', name='kegg')
-      | Sequence: 
-      input(type='textarea', name='sequence')
-      | Species: 
-      select(name='species')
-        option(default, value='') -- select --
-        option(value='shehate') shehate
-        option(value='tropicalis') tropicalis
-        option(value='boidinii') boidinii
+  pre
+    form(action='/gene', method='GET')
+      p
+        | Scaffold: 
+        input(type='text', name='scaffold')
+        | UniprotID: 
+        input(type='text', name='uniprot')
+        | KeggID: 
+        input(type='text', name='kegg')
+        | Sequence: 
+        input(type='textarea', name='sequence')
+        | Species: 
+        select(name='species')
+          option(default, value='') -- select --
+          option(value='shehate') shehate
+          option(value='tropicalis') tropicalis
+          option(value='boidinii') boidinii
 
-      button.search search
+        button.search search
 

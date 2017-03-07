@@ -2,10 +2,14 @@ const GeneController = require(__dirname + '/controllers/gene.js')
 
 module.exports = (app) => {
 
-  app.get('/gene', (req, res, next) => {
+  app.get('/gene/:id?', (req, res, next) => {
     try {
       let gene = new GeneController(req, res)
-      gene.view()
+      if (req.params.id) {
+        gene.view({ _id: req.params.id })
+      } else {
+        gene.view(req.query)
+      }
     } catch (e) {
       next(e)
     }

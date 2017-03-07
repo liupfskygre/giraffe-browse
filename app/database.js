@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb')
+    , ObjectId = require('mongodb').ObjectID
 
 class Database {
 
@@ -21,28 +22,32 @@ class Database {
   addTestGene (data) {
     return new Promise((resolve, reject) => {
       this.db.collection('sequences').save(
-        data
-      , { new: true, upsert: true }
-      , (err, data) => {
+          data
+        , { new: true, upsert: true }
+        , (err, data) => {
           if (err) reject(err)
           resolve(data)
         })
     })
   }
 
-  findGene (data) {
+  findGene (options) {
     return new Promise((resolve, reject) => {
-      this.db.collection('sequences').findOne(
-        data.search
-      , { _id: false }
-      , (err, data) => {
-          if (err) reject(err)
-          if (data) {
-            resolve(data)
-          } else {
-            resolve(0)
-          }
-        })
+      if (options._id) {
+        options._id = ObjectId(options._id)
+      }
+
+      this.db.collection('sequences').find(
+        options
+        , {}
+      ).toArray((err, data) => {
+        if (err) reject(err)
+        if (data) {
+          resolve(data)
+        } else {
+          resolve(0)
+        }
+      })
     })
   }
 }
