@@ -4,30 +4,38 @@ const Database = require('../app/database')
 
 describe('Database', () => {
   let database
+    , mockGene =
+      { 'contig': 'C69229  4.0'
+      , 'blast': 'XP_004983205.1 91.7  36  3 0 146 39  311 346 6.1e-09 68.2'
+      , 'uniprot': 'K4AC16'
+      , 'kegg': 'sita:101760397'
+      , 'sequence': 'GAGGATCCTAACAATCTAGTAAGGCTTCGATT...'
+      , 'protein':
+        { 'head': 'tr|K4AC16|K4AC16_SETIT ...'
+        , 'seq': 'MNIASAALVFLAHCLLLHRCMGSF...'
+        }
+      }
 
   beforeEach((done) => {
     database = new Database(dbUrl)
     database.connect()
-      .then(() => { done() })
-      .catch((err) => { done(err) })
+      .then(() => {
+        database.addTestGene(mockGene).catch((err) => { done(err) })
+        done()
+      }).catch((err) => { done(err) })
   })
 
   afterEach(() => {
     database.db.dropDatabase()
   })
 
-  it('should add a one item to the database', (done) => {
-    database.addItem('testData')
-      .then((data) => {
-        assert.equal(data.value.example, 'testData', 'item not inserted')
-        return database.findItem('testData')
-      })
-      .then((data) => {
-        assert.equal(data.hit, 1, 'incorrect number of reports')
-        done()
-      })
-      .catch((err) => {
-        done(err)
-      })
+  it('should read one gene from the database', (done) => {
+    let testSearch = { search: { uniprot: 'K4AC16' }, collection: 'test' }
+    database.findGene(testSearch).then((data) => {
+      assert.equal(data.uniprot, 'K4AC16', 'Gene object not found')
+      done()
+    }).catch((err) => {
+      done(err)
+    })
   })
 })

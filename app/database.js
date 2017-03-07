@@ -18,25 +18,22 @@ class Database {
     })
   }
 
-  addItem (data) {
+  addTestGene (data) {
     return new Promise((resolve, reject) => {
-      this.db.collection('example').findAndModify(
-        { example: data }
-      , {}
-      , { $inc: { hit: 1 } }
+      this.db.collection('test').save(
+        data
       , { new: true, upsert: true }
       , (err, data) => {
           if (err) reject(err)
           resolve(data)
         })
     })
-
   }
 
-  findItem (data) {
+  findGene (data) {
     return new Promise((resolve, reject) => {
-      this.db.collection('example').findOne(
-        { example: data }
+      this.db.collection(data.collection).findOne(
+        data.search
       , { _id: false }
       , (err, data) => {
           if (err) reject(err)
