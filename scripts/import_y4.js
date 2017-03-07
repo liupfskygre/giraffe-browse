@@ -16,6 +16,7 @@ fasta2json.ParseFasta = (str) => {
       , fas = seqs[i].split('\n')
       , head = fas[0]
 
+    seq.species = 'tropicalis'
     seq.contig = head.split('|')[0].trim()
     seq.blast = head.split('|')[1] || 'No blast result'
     seq.uniprot = head.split('|')[2] || 'No uniprot match'
@@ -44,8 +45,7 @@ species = fasta2json.ReadFasta('data/y4/y4_working.fa')
 
 MongoClient.connect(url, (err, db) => {
   if (err) console.log('ERROR: ' + err)
-  let collection = db.collection('tropicalis')
-  collection.drop()
+  let collection = db.collection('sequences')
 
   collection.insertMany(species, (err, result) => {
     if (err) console.log('ERROR: ' + err)
