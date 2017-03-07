@@ -2,7 +2,7 @@ const fasta2json = require('fasta2json')
     , MongoClient = require('mongodb').MongoClient
     , url = 'mongodb://localhost:27017/candida'
 
-let proteins = fasta2json.ReadFasta('../data/660/660_uniprot.fa')
+let proteins = fasta2json.ReadFasta('data/660/660_uniprot.fa')
   , species = []
 
 fasta2json.ParseFasta = (str) => {
@@ -40,7 +40,7 @@ fasta2json.ParseFasta = (str) => {
   return fasta
 }
 
-species = fasta2json.ReadFasta('../data/660/660_working.fa')
+species = fasta2json.ReadFasta('data/660/660_working.fa')
 
 MongoClient.connect(url, (err, db) => {
   if (err) console.log('ERROR: ' + err)
