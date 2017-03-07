@@ -1,4 +1,10 @@
 extend header
 
 block content
-  pre=JSON.stringify(locals, null, 4)
+
+  each gene in data
+    if gene._id
+      p
+        a(href='/gene/' + gene._id) #{gene.species}
+    else
+      pre=JSON.stringify(locals, null, 4)

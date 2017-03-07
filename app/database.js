@@ -33,21 +33,22 @@ class Database {
 
   findGene (options) {
     return new Promise((resolve, reject) => {
+      let constraints = { _id: true, species: true }
       if (options._id) {
         options._id = ObjectId(options._id)
+        constraints = { _id: false }
       }
 
-      this.db.collection('sequences').find(
-        options
-        , {}
-      ).toArray((err, data) => {
-        if (err) reject(err)
-        if (data) {
-          resolve(data)
-        } else {
-          resolve(0)
+      this.db.collection('sequences').find(options, constraints)
+        .toArray((err, data) => {
+          if (err) reject(err)
+          if (data) {
+            resolve(data)
+          } else {
+            resolve(0)
+          }
         }
-      })
+      )
     })
   }
 }
