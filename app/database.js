@@ -20,7 +20,7 @@ class Database {
 
   addTestGene (data) {
     return new Promise((resolve, reject) => {
-      this.db.collection('test').save(
+      this.db.collection('sequences').save(
         data
       , { new: true, upsert: true }
       , (err, data) => {
@@ -32,7 +32,7 @@ class Database {
 
   findGene (data) {
     return new Promise((resolve, reject) => {
-      this.db.collection(data.collection).findOne(
+      this.db.collection('sequences').findOne(
         data.search
       , { _id: false }
       , (err, data) => {

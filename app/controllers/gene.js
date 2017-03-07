@@ -18,7 +18,8 @@ class GeneController {
   }
 
   retrieveGene (search) {
-    search = { search: this.search, collection: 'boidinii' }
+    search = { search: this.search }
+    console.log(111, search)
     let db = new Database(dbUrl)
       , database = db.connect().catch((err) => {
         this.render(null, err)

@@ -30,7 +30,7 @@ describe('Database', () => {
   })
 
   it('should read one gene from the database', (done) => {
-    let testSearch = { search: { uniprot: 'K4AC16' }, collection: 'test' }
+    let testSearch = { search: { uniprot: 'K4AC16' } }
     database.findGene(testSearch).then((data) => {
       assert.equal(data.uniprot, 'K4AC16', 'Gene object not found')
       done()

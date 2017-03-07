@@ -1,7 +1,15 @@
 class Actions {
 
-  echo () {
-    console.log('Hello World')
+  cleanForm () {
+    $('input').each((index, obj) => {
+      if ($(obj).val() === '') {
+        $(obj).remove()
+      }
+    })
+
+    if ($('select').val() === '') {
+      $('select').remove()
+    }
   }
 
 }
