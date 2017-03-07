@@ -1,6 +1,6 @@
 const fasta2json = require('fasta2json')
     , MongoClient = require('mongodb').MongoClient
-    , url = 'mongodb://localhost:27017/candida'
+    , url = process.env.MONGODB_URI || 'mongodb://localhost:27017/candida'
 
 let proteins = fasta2json.ReadFasta('data/y4/y4_uniprot.fa')
   , species = []
