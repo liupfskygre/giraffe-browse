@@ -17,7 +17,8 @@
     "travis": "npm run base-test && ./node_modules/.bin/codecov -t a5e2d812-2bd3-4cdc-ace5-c8de52d81dca",
     "lint": "./node_modules/.bin/eslint -f unix .",
     "seed": "node scripts/import_660.js; node scripts/import_boidinii.js; node scripts/import_y4.js;",
-    "postinstall": "npm run seed && npm run build"
+    "postinstall": "npm run seed && npm run build",
+    "prepush": "npm test"
   },
   "engines": {
     "node": "6.9.0"
@@ -31,6 +32,7 @@
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^1.3.1",
+    "husky": "^0.13.2",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.1.2",
     "nodemon": "^1.11.0"
