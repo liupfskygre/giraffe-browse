@@ -1,6 +1,6 @@
 const Database = require('../database')
     , dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/candida'
-    , template = require('jade').compileFile(__dirname + '/../assets/templates/gene.jade')
+    , template = require('pug').compileFile(__dirname + '/../assets/templates/gene.pug')
 
 class GeneController {
   constructor (req, res) {

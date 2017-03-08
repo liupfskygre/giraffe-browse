@@ -11,7 +11,7 @@
     "watch-js": "./node_modules/.bin/webpack --watch",
     "clean": "rm -rf app/assets/build/css/ && rm -rf app/assets/build/js/ && mkdir -p app/assets/build/css && mkdir -p app/assets/build/js",
     "build": "npm run clean && npm run build-css && npm run build-js",
-    "watch": "npm run clean && npm run watch-css & npm run watch-js & nodemon -w app/ -e js,jade",
+    "watch": "npm run clean && npm run watch-css & npm run watch-js & nodemon -w app/ -e js,pug",
     "start": "node app/server",
     "base-test": "npm run lint && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register",
     "travis": "npm run base-test && ./node_modules/.bin/codecov -t a5e2d812-2bd3-4cdc-ace5-c8de52d81dca",
@@ -35,7 +35,8 @@
     "husky": "^0.13.2",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.1.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "pug": "^2.0.0-beta11"
   },
   "dependencies": {
     "babel": "^6.5.2",
@@ -44,7 +45,6 @@
     "babel-preset-es2015": "^6.18.0",
     "express": "^4.14.0",
     "fasta2json": "^0.1.1",
-    "jade": "^1.11.0",
     "mongodb": "^2.2.15",
     "morgan": "^1.7.0",
     "path": "^0.12.7",

@@ -16,7 +16,7 @@ module.exports = (app) => {
   })
 
   app.get('*', (req, res, next) => {
-    let home = require('jade').compileFile(__dirname + '/assets/templates/index.jade')
+    let home = require('pug').compileFile(__dirname + '/assets/templates/index.pug')
     try {
       let html = home({ title: 'Home' })
       res.send(html)
