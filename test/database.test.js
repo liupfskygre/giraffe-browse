@@ -10,6 +10,7 @@ describe('Database', () => {
       , 'uniprot': 'K4AC16'
       , 'kegg': 'sita:101760397'
       , 'sequence': 'GAGGATCCTAACAATCTAGTAAGGCTTCGATT...'
+      , 'species': 'boidinii'
       , 'protein':
         { 'head': 'tr|K4AC16|K4AC16_SETIT ...'
         , 'seq': 'MNIASAALVFLAHCLLLHRCMGSF...'
@@ -20,7 +21,9 @@ describe('Database', () => {
     database = new Database(dbUrl)
     database.connect()
       .then(() => {
-        database.addTestGene(mockGene).catch((err) => { done(err) })
+        database.addTestGene(mockGene).then((data) => {
+          mockGene._id = data._id
+        }).catch((err) => { done(err) })
         done()
       }).catch((err) => { done(err) })
   })
@@ -29,10 +32,20 @@ describe('Database', () => {
     database.db.dropDatabase()
   })
 
-  it('should read one gene from the database', (done) => {
+  it('should search for gene from the database', (done) => {
     let testSearch = { uniprot: 'K4AC16' }
     database.findGene(testSearch).then((data) => {
-      assert.equal(data[0].uniprot, 'K4AC16', 'Gene object not found')
+      assert.equal(data.length, 1, 'wrong number of genes found')
+      done()
+    }).catch((err) => {
+      done(err)
+    })
+  })
+
+  it('should return gene based off of ID', (done) => {
+    let testSearch = { _id: mockGene._id }
+    database.findGene(testSearch).then((data) => {
+      assert.equal(data[0].uniprot, 'K4AC16', 'incorrect data retrieved')
       done()
     }).catch((err) => {
       done(err)
