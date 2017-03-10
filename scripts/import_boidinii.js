@@ -1,6 +1,5 @@
 const fasta2json = require('fasta2json')
-    , MongoClient = require('mongodb').MongoClient
-    , url = process.env.MONGODB_URI || 'mongodb://localhost:27017/candida'
+    , GenericModel = require('../app/models/gene.js')()
 
 let proteins = fasta2json.ReadFasta('data/boidinii/boidinii_uniprot.fa')
   , species = []
@@ -43,12 +42,8 @@ fasta2json.ParseFasta = (str) => {
 
 species = fasta2json.ReadFasta('data/boidinii/boidinii_working.fa')
 
-MongoClient.connect(url, (err, db) => {
+GenericModel.create(species, (err, result) => {
   if (err) console.log('ERROR: ' + err)
-  let collection = db.collection('sequences')
-
-  collection.insertMany(species, (err, result) => {
-    if (err) console.log('ERROR: ' + err)
-    db.close()
-  })
+  if (result) console.log('Success')
+  GenericModel.db.close()
 })

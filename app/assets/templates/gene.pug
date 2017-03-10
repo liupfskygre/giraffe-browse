@@ -1,10 +1,13 @@
 extend header
 
-block content
+block content 
+  if data
+    each item in data
+      if item._id
+        p
+          a(href='/gene/' + item._id) #{item.species}
+      else
+        pre=JSON.stringify(locals, null, 4)
+  if error
+    pre=error
 
-  each gene in data
-    if gene._id
-      p
-        a(href='/gene/' + gene._id) #{gene.species}
-    else
-      pre=JSON.stringify(locals, null, 4)

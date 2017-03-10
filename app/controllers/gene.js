@@ -1,5 +1,4 @@
-const Database = require('../database')
-    , dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/candida'
+const GeneModel = require('../models/gene.js')()
     , template = require('pug').compileFile(__dirname + '/../assets/templates/gene.pug')
 
 class GeneController {
@@ -13,17 +12,20 @@ class GeneController {
   }
 
   view (options) {
-    let db = new Database(dbUrl)
-      , database = db.connect().catch((err) => {
-        this.render(null, err)
-      })
+    let constraints = {}
 
-    database.then(() => {
-      db.findGene(options).then((data) => {
-        this.render(data, null)
-      }).catch((err) => {
+    if (options._id) {
+      constraints = { _id: false }
+    } else {
+      constraints = { _id: true, species: true }
+    }
+
+    GeneModel.find(options, constraints, (err, data) => {
+      if (err) {
         this.render(null, err)
-      })
+      } else {
+        this.render(data, null)
+      }
     })
   }
 }
