@@ -4,7 +4,7 @@
   "description": "Building an online resource for Candida Tropicalis",
   "main": "app/server.js",
   "scripts": {
-    "test": "npm run base-test; rm -rf coverage/",
+    "test": "npm run base-test && rm -rf coverage/",
     "build-css": "./node_modules/stylus/bin/stylus app/assets/stylesheets/index.styl -o app/assets/build/css",
     "watch-css": "./node_modules/stylus/bin/stylus app/assets/stylesheets/index.styl -o app/assets/build/css -w",
     "build-js": "./node_modules/.bin/webpack -p",
@@ -18,7 +18,8 @@
     "lint": "./node_modules/.bin/eslint -f unix .",
     "seed": "node scripts/import_660.js; node scripts/import_boidinii.js; node scripts/import_y4.js;",
     "postinstall": "npm run seed && npm run build",
-    "prepush": "npm test"
+    "prepush": "npm test",
+    "logs": "heroku logs --tail --app final-year-project-owg1"
   },
   "engines": {
     "node": "6.9.0"
