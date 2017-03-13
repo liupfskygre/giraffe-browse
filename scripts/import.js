@@ -1,6 +1,7 @@
 const data = require('./output.json')
     , queries = data.BlastOutput.BlastOutput_iterations.Iteration
     , fasta2json = require('fasta2json')
+    , GeneModel = require('../../../app/models/gene.js')()
 
 let contigs = fasta2json.ReadFasta('candida_660.fa').map((contig) => {
   contig.head = contig.head.split(' ')[0]
@@ -14,28 +15,31 @@ let proteins = fasta2json.ReadFasta('candida_660_proteins_GO.fa').map((contig) =
   return contig
 })
 
-let results = []
-
 queries.forEach((query) => {
   let hitid = query['Iteration_query-def']
   let scaffold = hitid.split('.')[0]
 
   if (query.Iteration_message !== 'No hits found') {
+    let hit
     if (query.Iteration_hits.Hit.length) {
       query.Iteration_hits.Hit.forEach((found) => {
-        results.push(extractHit(found, scaffold, hitid))
+        hit = extractHit(found, scaffold, hitid)
       })
     } else {
-     results.push(extractHit(query.Iteration_hits.Hit, scaffold))
+      hit = extractHit(query.Iteration_hits.Hit, scaffold)
     }
-  }
-})
 
-console.log(results[0])
+    GeneModel.create(hit, (err) => {
+      if (err) console.log('ERROR: ' + err)
+    })
+  }
+
+  GeneModel.db.close()
+})
 
 function extractHit (hit, scaffold, hitid) {
   let data =
-    { id: hit.Hit_id
+    { hitid: hit.Hit_id
     , def: hit.Hit_def
     , refseq: hit.Hit_accession
     , len: hit.Hit_len

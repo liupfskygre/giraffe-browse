@@ -5,16 +5,20 @@ module.exports = (url) => {
 
   const schema = new Schema(
     { id: Schema.ObjectId
-    , contig: String
-    , blast: String
-    , uniprot: String
-    , kegg: String
-    , sequence: String
-    , species: String
-    , protein:
-      { head: String
-      , seq: String
-      }
+    , hitid: String
+    , def: String
+    , refseq: String
+    , len: Number
+    , bitscore: Number
+    , evalue: Number
+    , qfrom: Number
+    , qto: Number
+    , hfrom: Number
+    , hto: Number
+    , gaps: Number
+    , alignlen: Number
+    , contig: { head: String, seq: String }
+    , protein: { head: String, seq: String, goids: [String] }
     }
   )
 
