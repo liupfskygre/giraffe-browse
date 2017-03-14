@@ -20,7 +20,7 @@ describe('Database', () => {
     GeneModel.db.dropDatabase()
   })
 
-  it('should save & find a new gene', (done) => {
+  it.skip('should save & find a new gene', (done) => {
     GeneModel.create(gene, () => {
       GeneModel.findOne({ uniprot: 'K4AC16' }, 'species', (err, result) => {
         if (err) console.log(err)

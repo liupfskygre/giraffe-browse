@@ -1,5 +1,5 @@
 const fasta2json = require('fasta2json')
-    , dbUrl = 'mongodb://localhost:27017/candida?poolSize=8&connectionTimeoutMS=5000'
+    , dbUrl = 'mongodb://localhost:27017/candida?connectTimeoutMS=300000'
     , GeneModel = require('../app/models/gene.js')(dbUrl)
     , dataFiles =
       [ { contigs: '../data/boidinii/candida_boidinii.fa'
@@ -37,9 +37,11 @@ GeneModel.db.dropDatabase().then(() => {
       return contig
     })
 
+    let importData = []
+
     queries.forEach((query) => {
       let hitid = query['Iteration_query-def']
-      let scaffold = hitid.split('.')[0]
+        , scaffold = hitid.split('.')[0]
 
       if (query.Iteration_message !== 'No hits found') {
         let hit
@@ -51,11 +53,17 @@ GeneModel.db.dropDatabase().then(() => {
           hit = extractHit(query.Iteration_hits.Hit, scaffold)
         }
 
-        GeneModel.create(hit, (err) => {
-          if (err) console.log('ERROR: ' + err)
-          GeneModel.db.close()
-        })
+        importData.push(hit)
       }
+    })
+
+    process.stdout.write('Adding ' + importData.length + ' hits from ' + species.name + '...')
+
+    GeneModel.create(importData, (err) => {
+      if (err) console.log('ERROR: ' + err)
+      GeneModel.db.close(() => {
+        console.log(' Done.')
+      })
     })
 
     function extractHit (hit, scaffold, hitid) {
