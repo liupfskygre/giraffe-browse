@@ -5,6 +5,7 @@ module.exports = (url) => {
 
   const schema = new Schema(
     { id: Schema.ObjectId
+    , species: String
     , hitid: String
     , def: String
     , refseq: String
