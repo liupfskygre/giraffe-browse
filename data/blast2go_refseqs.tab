@@ -1,3 +1,4 @@
+ rg Hit_accession */*.json | awk '{print $3}' | rg [A-Z] | awk '{print $1}' > blast2go_refseqs.tab
 "XP_002548200",
 "EMG47264",
 "XP_002419386",
