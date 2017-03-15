@@ -16,7 +16,7 @@
     "base-test": "npm run lint && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register",
     "travis": "npm run base-test && ./node_modules/.bin/codecov -t a5e2d812-2bd3-4cdc-ace5-c8de52d81dca",
     "lint": "./node_modules/.bin/eslint -f unix .",
-    "seed": "node scripts/import_660.js; node scripts/import_boidinii.js; node scripts/import_y4.js;",
+    "seed": "node scripts/import-runner.js",
     "postinstall": "npm run seed && npm run build",
     "prepush": "npm test",
     "logs": "heroku logs --tail --app final-year-project-owg1"

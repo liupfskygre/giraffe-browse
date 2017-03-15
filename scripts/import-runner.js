@@ -1,20 +1,22 @@
+const dataDir = __dirname + '/../data/'
 const dataFiles =
     [
-      { contigs: '../data/boidinii/candida_boidinii.fa'
-      , proteins: '../data/boidinii/proteins_GO.fa'
-      , blast: '../data/boidinii/blast2go.json'
-      , name: 'boidinii'
+      { contigs: dataDir + 'tropicalis/candida_Y4.fa'
+        , proteins: dataDir + 'tropicalis/proteins_GO.fa'
+        , blast: dataDir + 'tropicalis/blast2go.json'
+        , name: 'tropicalis'
       }
-    , { contigs: '../data/shehate/candida_660.fa'
-      , proteins: '../data/shehate/proteins_GO.fa'
-      , blast: '../data/shehate/blast2go.json'
-      , name: 'shehate'
+    , { contigs: dataDir + 'shehate/candida_660.fa'
+        , proteins: dataDir + 'shehate/proteins_GO.fa'
+        , blast: dataDir + 'shehate/blast2go.json'
+        , name: 'shehate'
       }
-    , { contigs: '../data/tropicalis/candida_Y4.fa'
-      , proteins: '../data/tropicalis/proteins_GO.fa'
-      , blast: '../data/tropicalis/blast2go.json'
-      , name: 'tropicalis'
-      }
+    // Commented out so it fits on heroku for free
+    // , { contigs: dataDir + 'boidinii/candida_boidinii.fa'
+    //   , proteins: dataDir + 'boidinii/proteins_GO.fa'
+    //   , blast: dataDir + 'boidinii/blast2go.json'
+    //   , name: 'boidinii'
+    //   }
     ]
     , importSpecies = require('./import.js')
     , GeneModel = require('../app/models/gene.js')()
