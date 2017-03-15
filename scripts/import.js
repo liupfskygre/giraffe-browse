@@ -1,4 +1,5 @@
 const fasta2json = require('fasta2json')
+    , mappings = require(__dirname + '/../data/mappings/complete_map.json')
 
 function importSpecies (species) {
   let data = require(species.blast)
@@ -46,6 +47,8 @@ function importSpecies (species) {
       , species: species.name
       , def: hit.Hit_def
       , refseq: hit.Hit_accession
+      , uniprot: mappings.find(x => x.Uniprot === hit.Hit_accession)
+      , cgdid: mappings.find(x => x.CGDID === hit.Hit_accession)
       , len: hit.Hit_len
       , bitscore: hit.Hit_hsps.Hsp['Hsp_bit-score']
       , evalue: hit.Hit_hsps.Hsp.Hsp_evalue
