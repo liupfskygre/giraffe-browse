@@ -26,7 +26,7 @@ GeneModel.db.dropDatabase().then(() => {
     return a.concat(b)
   }, [])
 
-  GeneModel.db.collection('genes').insert(data, (err) => {
+  GeneModel.db.collection('hits').insert(data, (err) => {
     if (err) console.log('ERROR: ' + err)
     GeneModel.db.close(() => {
       console.log('Finished.')

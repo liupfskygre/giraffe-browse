@@ -5,9 +5,13 @@ module.exports = (url) => {
 
   const schema = new Schema(
     { id: Schema.ObjectId
+    , name: String
     , species: String
     , hitid: String
     , def: String
+    , accession: String
+    , uniprot: String
+    , cgdid: String
     , refseq: String
     , len: Number
     , bitscore: Number
@@ -25,5 +29,5 @@ module.exports = (url) => {
 
   class GeneModel extends Model { }
 
-  return db.database.model(GeneModel, schema, 'genes')
+  return db.database.model(GeneModel, schema, 'hits')
 }

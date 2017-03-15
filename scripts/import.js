@@ -42,13 +42,27 @@ function importSpecies (species) {
   return importData
 
   function extractHit (hit, scaffold, hitid) {
+    let mapping = mappings.find(x => x.Uniprot === hit.Hit_accession)
+    if (!mapping) {
+      mapping = mappings.find(x => x.refseq === hit.Hit_accession)
+    }
+    let refseq, cgdid, uniprot, name
+    if (mapping) {
+      refseq = mapping.refseq
+      cgdid = mapping.CGDID
+      uniprot = mapping.Uniprot
+      name = mapping.name
+    }
+
     let data =
       { hitid: hit.Hit_id
       , species: species.name
       , def: hit.Hit_def
-      , refseq: hit.Hit_accession
-      , uniprot: mappings.find(x => x.Uniprot === hit.Hit_accession)
-      , cgdid: mappings.find(x => x.CGDID === hit.Hit_accession)
+      , name: name
+      , accession: hit.Hit_accession
+      , uniprot: uniprot
+      , cgdid: cgdid
+      , refseq: refseq
       , len: hit.Hit_len
       , bitscore: hit.Hit_hsps.Hsp['Hsp_bit-score']
       , evalue: hit.Hit_hsps.Hsp.Hsp_evalue
