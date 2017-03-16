@@ -54,13 +54,13 @@ mixin listItems(data)
             td
               a(href='/hit/' + item._id) #{item.species}
             td
-              a(href='/hit/' + item._id) #{item.cgdid}
-            td
-              a(href='/hit/' + item._id) #{item.refseq}
-            td
-              a(href='/hit/' + item._id) #{item.uniprot}
-            td
               a(href='/hit/' + item._id) #{item.evalue}
+            td.external
+              a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + item.cgdid) #{item.cgdid}
+            td.external
+              a(href='https://www.ncbi.nlm.nih.gov/protein/' + item.refseq) #{item.refseq}
+            td.external
+              a(href='http://www.uniprot.org/uniprot/' + item.uniprot) #{item.uniprot}
 
 mixin display(hit)
   div.table-responsive
@@ -97,8 +97,9 @@ mixin display(hit)
         tr
           td Gene Ontology IDs
           td
-            each id in hit.protein.goids
-              a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
+            if hit.protein.goids
+              each id in hit.protein.goids
+                a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
         tr
           td Length
           td=hit.len
