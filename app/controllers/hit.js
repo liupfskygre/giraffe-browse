@@ -1,4 +1,4 @@
-const HitModel = require('../models/hit.js')()
+const HitModel = require('../models/hit.js')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/hit.pug')
 
 class hitController {

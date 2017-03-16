@@ -19,7 +19,10 @@ const dataFiles =
     //   }
     ]
     , importSpecies = require('./import.js')
-    , HitModel = require('../app/models/hit.js')()
+    , createDatabase = require('../app/database.js')
+    , HitModel = require('../app/models/hit.js')
+
+createDatabase()
 
 HitModel.db.dropDatabase().then(() => {
   let data = dataFiles.map(importSpecies).reduce((a, b) => {

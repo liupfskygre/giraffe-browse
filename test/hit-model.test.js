@@ -1,4 +1,4 @@
-const HitModel = require('../app/models/hit.js')()
+const HitModel = require('../app/models/hit.js')
     , assert = require('assert')
     , mockHit = require('./mock/hit.js')()
 
