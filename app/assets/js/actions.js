@@ -10,6 +10,10 @@ class Actions {
     if ($('select').val() === '') {
       $('select').remove()
     }
+
+    if ($('textarea').val() === '') {
+      $('textarea').remove()
+    }
   }
 
 }
