@@ -5,7 +5,7 @@ block content
     each item in data
       if item._id
         p
-          a(href='/gene/' + item._id) #{item.species}
+          a(href='/hit/' + item._id) #{item.species}
       else
         pre=JSON.stringify(locals, null, 4)
   if error

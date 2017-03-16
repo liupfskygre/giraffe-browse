@@ -1,14 +1,14 @@
-const GeneController = require(__dirname + '/controllers/gene.js')
+const HitController = require(__dirname + '/controllers/hit.js')
 
 module.exports = (app) => {
 
-  app.get('/gene/:id?', (req, res, next) => {
+  app.get('/hit/:id?', (req, res, next) => {
     try {
-      let gene = new GeneController(req, res)
+      let hit = new HitController(req, res)
       if (req.params.id) {
-        gene.view({ _id: req.params.id })
+        hit.view({ _id: req.params.id })
       } else {
-        gene.view(req.query)
+        hit.view(req.query)
       }
     } catch (e) {
       next(e)

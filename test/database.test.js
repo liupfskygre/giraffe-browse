@@ -1,30 +1,48 @@
 const dbUrl = 'mongodb://localhost/test'
-    , GeneModel = require('../app/models/gene.js')(dbUrl)
+    , HitModel = require('../app/models/hit.js')(dbUrl)
     , assert = require('assert')
 
 describe('Database', () => {
-  let gene =
-    { contig: 'C69229  4.0'
-    , blast: 'XP_004983205.1 91.7  36  3 0 146 39  311 346 6.1e-09 68.2'
-    , uniprot: 'K4AC16'
-    , kegg: 'sita:101760397'
-    , sequence: 'GAGGATCCTAACAATCTAGTAAGGCTTCGATT...'
-    , species: 'boidinii'
+  let hit =
+    { hitid: 'gi|68475779|ref|XP_718096.1|'
+    , species: 'tropicalis'
+    , def: 'hypothetical protein CaO19.5760 [Candida albicans SC5314]'
+    , name: 'IHD1'
+    , accession: 'XP_718096'
+    , uniprot: 'Q5A8I8'
+    , cgdid: 'CAL0000194292'
+    , refseq: 'XP_718096'
+    , len: '392'
+    , bitscore: '144.436'
+    , evalue: '1.81006e-37'
+    , qfrom: '1'
+    , qto: '100'
+    , hfrom: '1'
+    , hto: '100'
+    , gaps: '0'
+    , alignlen: '100'
+    , contig:
+      { head: 'scaffold9'
+      , seq: 'CCCAACTTTGCTCGATGAGTATCAACAAT...'
+      }
     , protein:
-      { head: 'tr|K4AC16|K4AC16_SETIT ...'
-      , seq: 'MNIASAALVFLAHCLLLHRCMGSF...'
+      { head: 'scaffold9.g322.t1 hypothetical GPI-anchored|GO:0016020'
+      , seq: 'mrkttlffallqialaakradddcndhctaalakqnscggsgdagtqsetlkclckdedyw...'
+      , headid: 'scaffold9.g322.t1'
+      , goids: [ 'GO:0016020' ]
       }
     }
 
   afterEach(() => {
-    GeneModel.db.dropDatabase()
+    HitModel.db.dropDatabase()
   })
 
-  it.skip('should save & find a new gene', (done) => {
-    GeneModel.create(gene, () => {
-      GeneModel.findOne({ uniprot: 'K4AC16' }, 'species', (err, result) => {
+  it('should save & find a new gene', (done) => {
+    HitModel.create(hit, () => {
+      HitModel.findOne({ uniprot: 'Q5A8I8' }, 'species name', (err, result) => {
         if (err) console.log(err)
-        assert.equal(result.species, 'boidinii', 'data not saved correctly')
+        assert.equal(result.species, 'tropicalis', 'data not saved correctly')
+        assert.equal(result.name, 'IHD1', 'data not saved correctly')
         done()
       })
     })

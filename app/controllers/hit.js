@@ -1,13 +1,13 @@
-const GeneModel = require('../models/gene.js')()
-    , template = require('pug').compileFile(__dirname + '/../assets/templates/gene.pug')
+const HitModel = require('../models/hit.js')()
+    , template = require('pug').compileFile(__dirname + '/../assets/templates/hit.pug')
 
-class GeneController {
+class hitController {
   constructor (req, res) {
     this.res = res
   }
 
-  render (gene, err) {
-    let html = template({ title: 'Gene', data: gene, error: err })
+  render (hit, err) {
+    let html = template({ title: 'hit', data: hit, error: err })
     this.res.send(html)
   }
 
@@ -20,7 +20,7 @@ class GeneController {
       constraints = { _id: true, species: true }
     }
 
-    GeneModel.find(options, constraints, (err, data) => {
+    HitModel.find(options, constraints, (err, data) => {
       if (err) {
         this.render(null, err)
       } else {
@@ -30,4 +30,4 @@ class GeneController {
   }
 }
 
-module.exports = GeneController
+module.exports = hitController
