@@ -33,5 +33,9 @@ module.exports = (url) => {
     }
   }
 
-  return db.database.model(HitModel, schema, 'hits')
+  try {
+    return db.database.model('HitModel')
+  } catch (error) {
+    return db.database.model(HitModel, schema, 'hits')
+  }
 }
