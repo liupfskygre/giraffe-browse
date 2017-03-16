@@ -16,10 +16,10 @@ describe('Database', () => {
 
   it('should save & find a new gene', (done) => {
     HitModel.create(mockHit, () => {
-      HitModel.findOne({ uniprot: 'Q5A8I8' }, 'species name', (err, result) => {
+      HitModel.findOne({ uniprot: 'P0CY34' }, 'species name', (err, result) => {
         if (err) console.log(err)
-        assert.equal(result.species, 'tropicalis', 'data not saved correctly')
-        assert.equal(result.name, 'IHD1', 'data not saved correctly')
+        assert.equal(result.species, 'shehate', 'data not saved correctly')
+        assert.equal(result.name, 'TUP1', 'data not saved correctly')
         done()
       })
     })
