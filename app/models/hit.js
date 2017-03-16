@@ -27,11 +27,11 @@ module.exports = (url) => {
     }
   )
 
-  class GeneModel extends Model {
+  class HitModel extends Model {
     findHitSeq () {
       return this.contig.seq
     }
   }
 
-  return db.database.model(GeneModel, schema, 'hits')
+  return db.database.model(HitModel, schema, 'hits')
 }

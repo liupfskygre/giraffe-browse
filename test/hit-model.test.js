@@ -39,4 +39,5 @@ describe('Hit', () => {
     assert.equal(hit.findHitSeq(), 'correct hit', 'Incorrect sequence found')
     done()
   })
+
 })
