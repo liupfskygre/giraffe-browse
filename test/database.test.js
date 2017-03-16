@@ -1,7 +1,6 @@
 const dbUrl = 'mongodb://localhost:27017/test'
     , HitModel = require('../app/models/hit.js')(dbUrl)
     , assert = require('assert')
-    , mongoose = require('mongoose')
 
 describe('Database', () => {
   let hit =
@@ -50,7 +49,7 @@ describe('Database', () => {
     done()
   })
 
-  it('should save & find a new gene', (done) => {
+  it.skip('should save & find a new gene', (done) => {
     HitModel.create(hit, () => {
       HitModel.findOne({ uniprot: 'Q5A8I8' }, 'species name', (err, result) => {
         if (err) console.log(err)
