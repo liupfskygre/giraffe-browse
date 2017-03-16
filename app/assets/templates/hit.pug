@@ -18,58 +18,60 @@ mixin display(hit)
     table.table
       thead
         tr
-          th.col-md-4 Item
-          th Value
+          th.col-md-2 Item
+          th.col-md-10 Value
       tbody
         tr
-          td.col-md-4 Gene Name
+          td Gene Name
           td=hit.name
         tr
-          td.col-md-4 Species
+          td Species
           td=hit.species
         tr
-          td.col-md-4 HitID
+          td HitID
           td=hit.hitid
         tr
-          td.col-md-4 AccessionID
+          td AccessionID
           td=hit.accession
         tr
-          td.col-md-4 UniprotID
+          td UniprotID
           td
             a(href='http://www.uniprot.org/uniprot/' + hit.uniprot) #{hit.uniprot}
         tr
-          td.col-md-4 Candida Genome ID
+          td Candida Genome ID
           td
             a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + hit.cgdid) #{hit.cgdid}
         tr
-          td.col-md-4 RefSeqID
+          td RefSeqID
           td=hit.refseq
         tr
-          td.col-md-4 Length
+          td Length
           td=hit.len
         tr
-          td.col-md-4 Bitscore
+          td Bitscore
           td=hit.bitscore
         tr
-          td.col-md-4 eValue
+          td eValue
           td=hit.evalue
         tr
-          td.col-md-4 Alignment Length
+          td Alignment Length
           td=hit.alignlen
         tr
-          td.col-md-4 ContigID
+          td ContigID
           td=hit.contig.head
         tr
-          td.col-md-4 Sequence
-          td=hit.contig.seq
+          td Sequence
+          td
+            textarea.col-md-12(rows='4')=hit.contig.seq
         tr
-          td.col-md-4 ProteinID
+          td ProteinID
           td=hit.protein.head
         tr
-          td.col-md-4 Protein Sequence
-          td=hit.protein.seq
+          td Protein Sequence
+          td
+            textarea.col-md-12(rows='2')=hit.protein.seq
         tr
-          td.col-md-4 Gene Ontology ID
+          td Gene Ontology ID
           td
             each id in hit.protein.goids
-              a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}
+              a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  

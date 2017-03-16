@@ -7,7 +7,7 @@ class hitController {
   }
 
   render (hit, err) {
-    let html = template({ title: 'hit', data: hit, error: err })
+    let html = template({ title: 'Hits', data: hit, error: err })
     this.res.send(html)
   }
 
