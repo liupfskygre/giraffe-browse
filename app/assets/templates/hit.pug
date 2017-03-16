@@ -62,14 +62,14 @@ mixin display(hit)
         tr
           td Sequence
           td
-            textarea.col-md-12(rows='4')=hit.contig.seq
+            textarea(readonly).col-md-12(rows='4')=hit.contig.seq
         tr
           td ProteinID
           td=hit.protein.head
         tr
           td Protein Sequence
           td
-            textarea.col-md-12(rows='2')=hit.protein.seq
+            textarea(readonly).col-md-12(rows='2')=hit.protein.seq
         tr
           td Gene Ontology ID
           td
