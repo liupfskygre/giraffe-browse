@@ -1,6 +1,7 @@
-const dbUrl = 'mongodb://localhost/test'
+const dbUrl = 'mongodb://localhost:27017/test'
     , HitModel = require('../app/models/hit.js')(dbUrl)
     , assert = require('assert')
+    , mongoose = require('mongoose')
 
 describe('Database', () => {
   let hit =
@@ -33,8 +34,20 @@ describe('Database', () => {
       }
     }
 
-  afterEach(() => {
-    HitModel.db.dropDatabase()
+  afterEach((done) => {
+    HitModel.db.dropDatabase().then(() => {
+      HitModel.db.close().then(() => {
+        done()
+      })
+    })
+  })
+
+  // https://github.com/Automattic/mongoose/issues/1251
+  after((done) => {
+    HitModel.db.models = {}
+    HitModel.db.modelSchemas = {}
+    HitModel.db.close()
+    done()
   })
 
   it('should save & find a new gene', (done) => {

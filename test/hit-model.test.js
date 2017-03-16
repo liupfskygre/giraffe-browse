@@ -30,12 +30,21 @@ describe('Hit', () => {
     }
   , hit
 
-  beforeEach(() => {
+  beforeEach((done) => {
     mockHit.contig.seq = mockHit.contig.seq.replace(/[^ACTG]/g, '')
     hit = new HitModel(mockHit)
+    done()
   })
 
-  it.skip('should find the matching hit sequence', (done) => {
+  // https://github.com/Automattic/mongoose/issues/1251
+  after((done) => {
+    HitModel.db.models = {}
+    HitModel.db.modelSchemas = {}
+    HitModel.db.close()
+    done()
+  })
+
+  it('should find the matching hit sequence', (done) => {
     assert.equal(hit.findHitSeq(), 'correct hit', 'Incorrect sequence found')
     done()
   })
