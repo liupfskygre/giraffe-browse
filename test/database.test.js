@@ -49,7 +49,7 @@ describe('Database', () => {
     done()
   })
 
-  it.skip('should save & find a new gene', (done) => {
+  it('should save & find a new gene', (done) => {
     HitModel.create(hit, () => {
       HitModel.findOne({ uniprot: 'Q5A8I8' }, 'species name', (err, result) => {
         if (err) console.log(err)
