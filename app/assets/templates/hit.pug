@@ -67,8 +67,8 @@ mixin display(hit)
     table.table
       thead
         tr
-          th.col-md-2 Item
-          th.col-md-10 Value
+          th.col-md-1 Item
+          th.col-md-11 Value
       tbody
         tr
           td Gene Name
@@ -80,10 +80,10 @@ mixin display(hit)
           td HitID
           td=hit.hitid
         tr
-          td AccessionID
+          td Accession ID
           td=hit.accession
         tr
-          td UniprotID
+          td Uniprot ID
           td
             a(href='http://www.uniprot.org/uniprot/' + hit.uniprot) #{hit.uniprot}
         tr
@@ -91,8 +91,14 @@ mixin display(hit)
           td
             a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + hit.cgdid) #{hit.cgdid}
         tr
-          td RefSeqID
-          td=hit.refseq
+          td RefSeq ID
+          td
+            a(href='https://www.ncbi.nlm.nih.gov/protein/' + hit.refseq) #{hit.refseq}
+        tr
+          td Gene Ontology IDs
+          td
+            each id in hit.protein.goids
+              a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
         tr
           td Length
           td=hit.len
@@ -119,8 +125,3 @@ mixin display(hit)
           td Protein Sequence
           td
             textarea.col-md-12(rows='2', readonly)=hit.protein.seq
-        tr
-          td Gene Ontology ID
-          td
-            each id in hit.protein.goids
-              a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
