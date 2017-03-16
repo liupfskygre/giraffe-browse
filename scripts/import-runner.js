@@ -19,16 +19,16 @@ const dataFiles =
     //   }
     ]
     , importSpecies = require('./import.js')
-    , GeneModel = require('../app/models/gene.js')()
+    , HitModel = require('../app/models/hit.js')()
 
-GeneModel.db.dropDatabase().then(() => {
+HitModel.db.dropDatabase().then(() => {
   let data = dataFiles.map(importSpecies).reduce((a, b) => {
     return a.concat(b)
   }, [])
 
-  GeneModel.db.collection('hits').insert(data, (err) => {
+  HitModel.db.collection('hits').insert(data, (err) => {
     if (err) console.log('ERROR: ' + err)
-    GeneModel.db.close(() => {
+    HitModel.db.close(() => {
       console.log('Finished.')
       process.exit(0)
     })
