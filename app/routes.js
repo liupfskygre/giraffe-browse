@@ -16,10 +16,9 @@ module.exports = (app) => {
   })
 
   app.get('*', (req, res, next) => {
-    let home = require('pug').compileFile(__dirname + '/assets/templates/index.pug')
     try {
-      let html = home({ title: 'Home' })
-      res.send(html)
+      let hit = new HitController(req, res)
+      hit.listKnown()
     } catch (e) {
       next(e)
     }

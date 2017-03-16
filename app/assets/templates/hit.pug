@@ -1,19 +1,68 @@
 extend header
 
 block content 
+
+  pre
+    form(action='/hit', method='GET')
+      div
+        label Gene Name: 
+        input(type='text', name='name', width='20')
+      div
+        label UniprotID: 
+        input(type='text', name='uniprot')
+      div.area
+        label(for='sequence') Sequence:  
+        textarea(name='sequence')
+      div
+        label Species:   
+        select(name='species')
+          option(default, value='') -- select --
+          option(value='shehate') shehate
+          option(value='tropicalis') tropicalis
+          // option(value='boidinii') boidinii
+
+      div
+        button.search search
+
   if data
-    each item in data
-      if item._id
-        p
-          a(href='/hit/' + item._id) #{item.species}
-      else
-        +display(data[0])
+    if data[0]._id
+      +listItems(data)
+    else
+      +display(data[0])
   if error
     pre=error
 
+mixin listItems(data)
+  div.table-responsive
+    table.table
+      thead
+        tr
+          th.col-md-1 Candida Gene Name
+          th.col-md-5 Description
+          th.col-md-1 Species
+          th.col-md-1 Candida Geneome ID
+          th.col-md-1 Uniprot ID
+          th.col-md-1 RefSeq Id
+          th.col-md-1 eValue
+      tbody
+        each item in data
+          tr
+            td
+              a(href='/hit/' + item._id) #{item.name}
+            td
+              a(href='/hit/' + item._id) #{item.protein.desc}
+            td
+              a(href='/hit/' + item._id) #{item.species}
+            td
+              a(href='/hit/' + item._id) #{item.cgdid}
+            td
+              a(href='/hit/' + item._id) #{item.refseq}
+            td
+              a(href='/hit/' + item._id) #{item.uniprot}
+            td
+              a(href='/hit/' + item._id) #{item.evalue}
 
 mixin display(hit)
-  // pre=JSON.stringify(locals, null, 4)
   div.table-responsive
     table.table
       thead
@@ -62,14 +111,14 @@ mixin display(hit)
         tr
           td Sequence
           td
-            textarea(readonly).col-md-12(rows='4')=hit.contig.seq
+            textarea.col-md-12(rows='4', readonly)=hit.contig.seq
         tr
           td ProteinID
           td=hit.protein.head
         tr
           td Protein Sequence
           td
-            textarea(readonly).col-md-12(rows='2')=hit.protein.seq
+            textarea.col-md-12(rows='2', readonly)=hit.protein.seq
         tr
           td Gene Ontology ID
           td

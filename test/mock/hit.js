@@ -33,6 +33,7 @@ module.exports = () => {
     , protein:
       { head: 'scaffold9.g322.t1 hypothetical GPI-anchored|GO:0016020'
       , seq: 'mrkttlffallqialaakradddcndhctaalakqnscggsgdagtqsetlkclckdedyw...'
+      , desc: 'hypothetical GPI-anchored'
       , headid: 'scaffold9.g322.t1'
       , goids: [ 'GO:0016020' ]
       }

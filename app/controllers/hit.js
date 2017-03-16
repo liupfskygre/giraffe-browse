@@ -4,11 +4,33 @@ const HitModel = require('../models/hit.js')
 class hitController {
   constructor (req, res) {
     this.res = res
+    this.searchConstraints =
+      { _id: true
+      , name: true
+      , species: true
+      , cgdid: true
+      , evalue: true
+      , uniprot: true
+      , refseq: true
+      , 'protein.desc': true
+      }
   }
 
   render (hit, err) {
     let html = template({ title: 'Hits', data: hit, error: err })
     this.res.send(html)
+  }
+
+  listKnown () {
+    let query = { name: { $exists: true, $ne: null } }
+
+    HitModel.find(query, this.searchContraints, (err, data) => {
+      if (err) {
+        this.render(null, err)
+      } else {
+        this.render(data, null)
+      }
+    })
   }
 
   view (options) {
@@ -17,7 +39,7 @@ class hitController {
     if (options._id) {
       constraints = { _id: false }
     } else {
-      constraints = { _id: true, species: true }
+      constraints = this.searchConstraints
     }
 
     HitModel.find(options, constraints, (err, data) => {

@@ -21,7 +21,7 @@ const schema = new Schema(
   , gaps: Number
   , alignlen: Number
   , contig: { head: String, seq: String }
-  , protein: { head: String, seq: String, goids: [String] }
+  , protein: { head: String, seq: String, goids: [String], desc: String }
   }
 )
 

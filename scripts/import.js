@@ -11,6 +11,8 @@ function importSpecies (species) {
   })
 
   let proteins = fasta2json.ReadFasta(species.proteins).map((contig) => {
+    let desc = contig.head.split('|')[0]
+    contig.desc = desc.substr(desc.indexOf(' ') + 1)
     contig.headid = contig.head.split(' ')[0]
     contig.goids = contig.head.split('|')[1]
     contig.goids = (contig.goids) ? contig.goids.split(' ') : contig.goids
