@@ -19,7 +19,8 @@
     "seed": "node scripts/import-runner.js",
     "postinstall": "npm run seed && npm run build",
     "prepush": "npm test",
-    "logs": "heroku logs --tail --app final-year-project-owg1"
+    "logs": "heroku logs --tail --app final-year-project-owg1",
+    "testwatch": "nodemon --exec 'mocha -R min' "
   },
   "engines": {
     "node": "6.9.0"

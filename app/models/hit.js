@@ -27,7 +27,7 @@ const schema = new Schema(
 
 class HitModel extends Model {
   findHitSeq () {
-    return this.contig.seq
+    return this.contig.seq.substring(this.qfrom - 1, this.qto - 1)
   }
 }
 
