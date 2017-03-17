@@ -43,6 +43,7 @@ class hitController {
     }
 
     HitModel.find(options, constraints, (err, data) => {
+      if (!data.length) err = 'No results.'
       if (err) {
         this.render(null, err)
       } else {
