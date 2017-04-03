@@ -18,10 +18,39 @@ Arabinose and Xylose are five carbon sugars ubiquitously found in plants such as
 
 Understanding at a genomic level why \textit{Candida boidinii} is unable to utilise arabinose and genetically modifying \textit{Candida tropicalis} to have the same phenotype, may enable \textit{Candida topicalis} to exclusively produce xylitol and not arabitol. One other exciting possibility is using it as a low glycaemic index table sugar that can be used by diabetics.
 
-What was your background preparation for the project? What similar systems or research techniques did you assess? What was your motivation and interest in this project? 
+What was your background preparation for the project? 
+
+Before undertaking this project -->I<-- had some experience working with genomic data, and had been sitting in on lectures for a functional genomics module. This helped me get a good understanding of the basics of genetics and get a foothold on the terminology that is used in the world of bioinformatics. 
+
+* Looked into other genome databases
+* Looked into blast / diamond / GPU / blas2go
+* Looked at databases such as CHADO
+
+What similar systems or research techniques did you assess? 
+
+From studying bioinformatics and researching the most common methods of manipulating and analysing the data gathered, a trend was found that indicated that unlike computer science, where tools are highly developed and have evolved to a very stable state where the best tools are known and highly specialised to suit their purpose, in bioinformatics a combination of factors including the relative youth of the field and the large number of competing projects that don't collaborate; there have been a wide array of tools created, often by biologists with no software engineering experience, none of which have been adopted and honed as the de facto standard. This means that for every task in the bioinformatics space there is often many different solutions offered, to what can be a very simple problem. 
+
+What was your motivation and interest in this project? 
+
+My interest in this project stems from my interest in genetics, something that has always fascinated me since I learned about how we evolved into being. As a computer scientist I relish the chance to apply the knowledge of my domain, to a real life application that can have a measurable positive impact on the world. Hopefully I will be able to use this experience to further my career into bioinformatics as well as helping contribute to the research being done. 
 
 \section{Analysis}
-Taking into account the problem and what you learned from the background work, what was your analysis of the problem? How did your analysis help to decompose the problem into the main tasks that you would undertake? Were there alternative approaches? Why did you choose one approach compared to the alternatives? 
+Taking into account the problem and what you learned from the background work, what was your analysis of the problem? 
+
+From researching the current solutions to the problem of annotating, storing and presenting genetic information, it was clear that a modern solution (describe that) wasn't currently in the public open source domain. Of the open source projects that were currently in use the majority appeared to be very old and monolithic, commonly written in Perl. Expand on all this etc.
+
+How did your analysis help to decompose the problem into the main tasks that you would undertake?
+
+Looking at the data that I was provided with there was three clear stages to the development of my solution. The first would be to ensure that the data I had was valid and in the same format for each of the species that were being analysed. The next was to import that data into a database, and then from there develop a web front end to interact with the data in the database. 
+
+Were there alternative approaches? 
+
+Use one of the existing databases and web front ends, but eww.
+
+Why did you choose one approach compared to the alternatives? 
+
+Diamond or blast2go?
+SQL vs MongoDB Discuss in many details
 
 There should be a clear statement of the research questions, which you will evaluate at the end of the work. 
 
