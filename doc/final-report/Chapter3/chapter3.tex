@@ -1,11 +1,47 @@
 \chapter{Software Design, Implementation and Testing}
 
-This could be one chapter or a few chapters. It should define and discuss the software that is developed to support the research that is being conducted. For example, if your research involves running experiments, what software are you creating to support that work? What functionality is required? What design will be used? What implementation issues are there and what testing is used? 
+This could be one chapter or a few chapters. It should define and discuss the software that is developed to support the research that is being conducted. For example, if your research involves running experiments, 
+
+What software are you creating to support that work?
+
+Import scripts, website. 
+
+What functionality is required?
+
+Store the data in a database, search for genes, compare genes
+
+What design will be used?
+
+What implementation issues are there and what testing is used? 
 
 Even though a research project is investigating specific research questions, it is still necessary for you to discuss the software that you develop. Research has a habit of generating bits of software that can exist for several years and need future modification. Therefore you need to be able to discuss the technical issues as well as the research approach. 
 
 \section{Design}
 You should concentrate on the more important aspects of the design. It is essential that an overview is presented before going into detail. As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.
+
+The first stage in designing this system was to decide upon what database technology would be used for the data store. As discussed in the analysis a NoSQL database called MongoDB has been chosen to store the data. This choice was also influenced by the choice of server side language, which for this project will be NodeJS. 
+
+NodeJS was chosen because 
+
+* Client and server side languages are the same
+* Integrates well with MongoDB as it uses BSON which works with native JSON
+* Provides easy package management via npm
+* ES6 syntax is very nice
+* I have a lot of experience with it and learning a new language is outside of the scope of the project
+
+The website for this interface will be built off of nodestack\ref{nodestack}, a set of boilerplate code that uses several technologies including:
+
+ES6
+Webpack
+MongoDB
+Mongoose
+Travis CI
+Eslint
+Heroku
+Pug
+Stylus
+
+http://blog.owen.cymru/nodejs-es6-boiler-plate/
 
 The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
 

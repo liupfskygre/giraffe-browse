@@ -34,10 +34,11 @@ As the source of the data was uncertain, it was decided to investigate performin
 
 Make my blog post into something proper http://blog.owen.cymru/project-log-today-i-found-out-rm-can-only-take-100-000-arguments-at-a-time/
 
-
 What similar systems or research techniques did you assess? 
 
 From studying bioinformatics and researching the most common methods of manipulating and analysing the data gathered, a trend was found that indicated that unlike computer science, where tools are highly developed and have evolved to a very stable state where the best tools are known and highly specialised to suit their purpose, in bioinformatics a combination of factors including the relative youth of the field and the large number of competing projects that don't collaborate; there have been a wide array of tools created, often by biologists with no software engineering experience, none of which have been adopted and honed as the de facto standard. This means that for every task in the bioinformatics space there is often many different solutions offered, to what can be a very simple problem. 
+
+Gbrowse?
 
 What was your motivation and interest in this project? 
 
@@ -54,12 +55,14 @@ Looking at the data that I was provided with there was three clear stages to the
 
 Were there alternative approaches? 
 
-Use one of the existing databases and web front ends, but eww.
+An alternative approach to this project would have been to use one of the existing databases such as Intermine or CHADO, and then use a web front end compatible with those databases such as GBrowse or Jbrowse. This would like require slight changes to how the data was processed before going into these established systems, however it would mean that the data would be in a format that is well understood by bioinformaticians. 
 
 Why did you choose one approach compared to the alternatives? 
 
-Diamond or blast2go?
+As a computer scientist looking at this problem, there doesn't seem to be much need for a very complex solution. Once the data is generated, the hard bit, it just needs to be made into a database friendly format and then ingested to the database system. From there building a simple web front end to make the database accessible is a very simple task. There isn't any need to manipulate or modify the data, simply create and read it. Because of this it seemed that the current systems were greatly over complicating matters. 
+
 SQL vs MongoDB Discuss in many details
+Diamond or blast2go?
 
 There should be a clear statement of the research questions, which you will evaluate at the end of the work. 
 
