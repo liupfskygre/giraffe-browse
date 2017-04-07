@@ -10,9 +10,12 @@ block content
       div
         label UniprotID: 
         input(type='text', name='uniprot')
+      div
+        label(for='protein.desc') Descript:  
+        input(type='text', name='protein.desc')
       div.area
-        label(for='sequence') Sequence:  
-        textarea(name='sequence')
+        label(for='contig.seq') Sequence:  
+        textarea(name='contig.seq')
       div
         label Species:   
         select(name='species')

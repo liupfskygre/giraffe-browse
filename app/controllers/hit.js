@@ -40,14 +40,22 @@ class hitController {
       constraints = { _id: false }
     } else {
       constraints = this.searchConstraints
+      for (let option in options) {
+        options[option] = new RegExp(options[option], 'i')
+      }
     }
 
+    console.log('\nSearching for ', options, '\n')
+
     HitModel.find(options, constraints, (err, data) => {
-      if (!data.length) err = 'No results.'
       if (err) {
         this.render(null, err)
       } else {
-        this.render(data, null)
+        if (!data.length) {
+          this.render(null, 'No results.')
+        } else {
+          this.render(data, null)
+        }
       }
     })
   }
