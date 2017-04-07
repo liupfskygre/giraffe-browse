@@ -45,8 +45,6 @@ class hitController {
       }
     }
 
-    console.log('\nSearching for ', options, '\n')
-
     HitModel.find(options, constraints, (err, data) => {
       if (err) {
         this.render(null, err)

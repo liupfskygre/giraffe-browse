@@ -31,13 +31,14 @@ HitModel.db.dropDatabase().then(() => {
 
   HitModel.db.collection('hits').insert(data, (err) => {
     if (err) console.log('ERROR: ' + err)
-    HitModel.db.hits.createIndex(
-      { name: 'text'
-      , uniprot: 'text'
-      , 'protein.desc': 'text'
-      , 'contig.seq': 'text'
-      }
-    )
+    // Build index if we use text search
+    // HitModel.db.collection('hits').createIndex(
+    //   { name: 'text'
+    //   , uniprot: 'text'
+    //   , 'protein.desc': 'text'
+    //   , 'contig.seq': 'text'
+    //   }
+    // )
     HitModel.db.close(() => {
       console.log('Finished.')
       process.exit(0)
