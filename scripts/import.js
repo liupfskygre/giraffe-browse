@@ -37,6 +37,14 @@ function importSpecies (species) {
 
   return importData
 
+  function findCodingRange (codingSeq, contig) {
+    let codingLength = codingSeq.length
+      , start = contig.indexOf(codingSeq.substr(0, 30))
+      , end = contig.indexOf(codingSeq.substr(codingLength - 30, codingLength))
+
+    if (start > -1 && end > -1) return { start, end }
+  }
+
   function extractHit (hit) {
     let mapping = mappings.find(x => x.GeneID === hit.cgdId)
       , cgdid, uniprot, name
@@ -47,15 +55,21 @@ function importSpecies (species) {
       name = mapping.GeneName
     }
 
+    let contig = contigs.find(x => x.head === hit.scaffold.split('.')[0])
+      , codingseq = codingseqs.find(x => x.head === hit.scaffold)
+      , protein = proteins.find(x => x.headid === hit.scaffold)
+      , codingRange = findCodingRange(codingseq.seq, contig.seq)
+
     let data =
       { hitid: hit.cgdId
       , species: species.name
-      , name: name
-      , uniprot: uniprot
-      , cgdid: cgdid
-      , contig: contigs.find(x => x.head === hit.scaffold.split('.')[0])
-      , codingseq: codingseqs.find(x => x.head === hit.scaffold)
-      , protein: proteins.find(x => x.headid === hit.scaffold)
+      , name
+      , uniprot
+      , cgdid
+      , contig
+      , codingseq
+      , protein
+      , codingRange
       }
 
     return data
