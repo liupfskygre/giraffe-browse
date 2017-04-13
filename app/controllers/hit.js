@@ -9,9 +9,7 @@ class hitController {
       , name: true
       , species: true
       , cgdid: true
-      , evalue: true
       , uniprot: true
-      , refseq: true
       , 'protein.desc': true
       }
   }
@@ -30,7 +28,7 @@ class hitController {
       } else {
         this.render(data, null)
       }
-    })
+    }).limit(10)
   }
 
   view (options) {

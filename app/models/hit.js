@@ -3,24 +3,13 @@ const mongoose = require('mongoose')
 
 const schema = new Schema(
   { id: Schema.ObjectId
-  , name: String
-  , species: String
   , hitid: String
-  , def: String
-  , accession: String
+  , species: String
+  , name: String
   , uniprot: String
   , cgdid: String
-  , refseq: String
-  , len: Number
-  , bitscore: Number
-  , evalue: Number
-  , qfrom: Number
-  , qto: Number
-  , hfrom: Number
-  , hto: Number
-  , gaps: Number
-  , alignlen: Number
   , contig: { head: String, seq: String }
+  , codingseq: { head: String, seq: String }
   , protein: { head: String, seq: String, goids: [String], desc: String }
   }
 )

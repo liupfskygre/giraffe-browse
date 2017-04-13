@@ -43,9 +43,7 @@ mixin listItems(data)
           th.col-md-1 Candida Gene Name
           th.col-md-5 Description
           th.col-md-1 Species
-          th.col-md-1 eValue
           th.col-md-1 Candida Geneome ID
-          th.col-md-1 RefSeq Id
           th.col-md-1 Uniprot ID
       tbody
         each item in data
@@ -56,12 +54,8 @@ mixin listItems(data)
               a(href='/hit/' + item._id) #{item.protein.desc}
             td
               a(href='/hit/' + item._id) #{item.species}
-            td
-              a(href='/hit/' + item._id) #{item.evalue}
             td.external
               a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + item.cgdid) #{item.cgdid}
-            td.external
-              a(href='https://www.ncbi.nlm.nih.gov/protein/' + item.refseq) #{item.refseq}
             td.external
               a(href='http://www.uniprot.org/uniprot/' + item.uniprot) #{item.uniprot}
 
@@ -83,9 +77,6 @@ mixin display(hit)
           td HitID
           td=hit.hitid
         tr
-          td Accession ID
-          td=hit.accession
-        tr
           td Uniprot ID
           td
             a(href='http://www.uniprot.org/uniprot/' + hit.uniprot) #{hit.uniprot}
@@ -94,37 +85,18 @@ mixin display(hit)
           td
             a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + hit.cgdid) #{hit.cgdid}
         tr
-          td RefSeq ID
-          td
-            a(href='https://www.ncbi.nlm.nih.gov/protein/' + hit.refseq) #{hit.refseq}
-        tr
           td Gene Ontology IDs
           td
             if hit.protein.goids
               each id in hit.protein.goids
                 a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
         tr
-          td Length
-          td=hit.len
-        tr
-          td Bitscore
-          td=hit.bitscore
-        tr
-          td eValue
-          td=hit.evalue
-        tr
-          td Alignment Length
-          td=hit.alignlen
-        tr
           td ContigID
           td=hit.contig.head
         tr
-          td Sequence
+          td Contig
           td
             textarea.col-md-12(rows='4', readonly)=hit.contig.seq
-        tr
-          td ProteinID
-          td=hit.protein.head
         tr
           td Protein Sequence
           td

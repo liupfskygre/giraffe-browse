@@ -1,22 +1,24 @@
 const dataDir = __dirname + '/../data/'
 const dataFiles =
     [
-      { contigs: dataDir + 'tropicalis/candida_Y4.fa'
-        , proteins: dataDir + 'tropicalis/proteins_GO.fa'
-        , blast: dataDir + 'tropicalis/blast2go.json'
-        , name: 'tropicalis'
+      { contigs: dataDir + 'tropicalis/candida_tropicalis.fa'
+      , proteins: dataDir + 'tropicalis/candida_tropicalis_proteins_go.fa'
+      , codingseq: dataDir + 'tropicalis/candida_tropicalis_codingseq.fa'
+      , blast: dataDir + 'tropicalis/blastx_tropicalis_codingseq_albicans_proteins.json'
+      , name: 'tropicalis'
       }
-    , { contigs: dataDir + 'shehate/candida_660.fa'
-        , proteins: dataDir + 'shehate/proteins_GO.fa'
-        , blast: dataDir + 'shehate/blast2go.json'
-        , name: 'shehate'
+    , { contigs: dataDir + 'boidinii/candida_boidinii.fa'
+      , proteins: dataDir + 'boidinii/candida_boidinii_proteins_go.fa'
+      , codingseq: dataDir + 'boidinii/candida_boidinii_codingseq.fa'
+      , blast: dataDir + 'boidinii/blastx_boidinii_codingseq_albicans_proteins.json'
+      , name: 'boidinii'
       }
-    // Commented out so it fits on heroku for free
-    // , { contigs: dataDir + 'boidinii/candida_boidinii.fa'
-    //   , proteins: dataDir + 'boidinii/proteins_GO.fa'
-    //   , blast: dataDir + 'boidinii/blast2go.json'
-    //   , name: 'boidinii'
-    //   }
+    , { contigs: dataDir + 'shehate/candida_shehate.fa'
+      , proteins: dataDir + 'shehate/candida_shehate_proteins_go.fa'
+      , codingseq: dataDir + 'shehate/candida_shehate_codingseq.fa'
+      , blast: dataDir + 'shehate/blastx_shehate_codingseq_albicans_proteins.json'
+      , name: 'shehate'
+      }
     ]
     , importSpecies = require('./import.js')
     , createDatabase = require('../app/database.js')

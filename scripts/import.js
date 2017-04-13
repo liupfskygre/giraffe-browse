@@ -2,8 +2,10 @@ const fasta2json = require('fasta2json')
     , mappings = require(__dirname + '/../data/mappings/complete_map.json')
 
 function importSpecies (species) {
-  let data = require(species.blast)
-    , queries = data.BlastOutput.BlastOutput_iterations.Iteration
+  let blast = require(species.blast)
+    , queries = blast.BlastOutput.BlastOutput_iterations.Iteration
+
+  let codingseqs = fasta2json.ReadFasta(species.codingseq)
 
   let contigs = fasta2json.ReadFasta(species.contigs).map((contig) => {
     contig.head = contig.head.split(' ')[0]
@@ -22,60 +24,38 @@ function importSpecies (species) {
   let importData = []
 
   queries.forEach((query) => {
-    let hitid = query['Iteration_query-def']
-      , scaffold = hitid.split('.')[0]
+    if (query.Iteration_hits !== '') {
+      let scaffold = query['Iteration_query-def']
+        , cgdId = query['Iteration_hits'].Hit['Hit_def']
+        , hit = { scaffold, cgdId }
 
-    if (query.Iteration_message !== 'No hits found') {
-      let hit
-      if (query.Iteration_hits.Hit.length) {
-        query.Iteration_hits.Hit.forEach((found) => {
-          hit = extractHit(found, scaffold, hitid)
-        })
-      } else {
-        hit = extractHit(query.Iteration_hits.Hit, scaffold)
-      }
-
-      importData.push(hit)
+      importData.push(extractHit(hit))
     }
   })
 
-  console.log('Adding ' + importData.length + ' hits from ' + species.name + '...')
+  console.log('Adding ' + importData.length + ' genes from ' + species.name + '...')
 
   return importData
 
-  function extractHit (hit, scaffold, hitid) {
-    let mapping = mappings.find(x => x.Uniprot === hit.Hit_accession)
-    if (!mapping) {
-      mapping = mappings.find(x => x.refseq === hit.Hit_accession)
-    }
-    let refseq, cgdid, uniprot, name
+  function extractHit (hit) {
+    let mapping = mappings.find(x => x.GeneID === hit.cgdId)
+      , cgdid, uniprot, name
+
     if (mapping) {
-      refseq = mapping.refseq
       cgdid = mapping.CGDID
-      uniprot = mapping.Uniprot
-      name = mapping.name
+      uniprot = mapping.uniprot
+      name = mapping.GeneName
     }
 
     let data =
-      { hitid: hit.Hit_id
+      { hitid: hit.cgdId
       , species: species.name
-      , def: hit.Hit_def
       , name: name
-      , accession: hit.Hit_accession
       , uniprot: uniprot
       , cgdid: cgdid
-      , refseq: refseq
-      , len: hit.Hit_len
-      , bitscore: hit.Hit_hsps.Hsp['Hsp_bit-score']
-      , evalue: hit.Hit_hsps.Hsp.Hsp_evalue
-      , qfrom: hit.Hit_hsps.Hsp['Hsp_query-from']
-      , qto: hit.Hit_hsps.Hsp['Hsp_query-to']
-      , hfrom: hit.Hit_hsps.Hsp['Hsp_hit-from']
-      , hto: hit.Hit_hsps.Hsp['Hsp_hit-to']
-      , gaps: hit.Hit_hsps.Hsp.Hsp_gaps
-      , alignlen: hit.Hit_hsps.Hsp['Hsp_align-len']
-      , contig: contigs.find(x => x.head === scaffold)
-      , protein: proteins.find(x => x.headid === hitid)
+      , contig: contigs.find(x => x.head === hit.scaffold.split('.')[0])
+      , codingseq: codingseqs.find(x => x.head === hit.scaffold)
+      , protein: proteins.find(x => x.headid === hit.scaffold)
       }
 
     return data
