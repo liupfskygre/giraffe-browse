@@ -74,6 +74,9 @@ mixin display(hit)
           td Gene Name
           td=hit.name
         tr
+          td Description
+          td=hit.protein.desc
+        tr
           td Species
           td=hit.species
         tr
