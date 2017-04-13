@@ -37,12 +37,22 @@ function importSpecies (species) {
 
   return importData
 
+  // 7725
   function findCodingRange (codingSeq, contig) {
     let codingLength = codingSeq.length
-      , start = contig.indexOf(codingSeq.substr(0, 30))
-      , end = contig.indexOf(codingSeq.substr(codingLength - 30, codingLength))
+      , start = -1
+      , end = -1
+      , selector = codingLength / 4
 
-    if (start > -1 && end > -1) return { start, end }
+    while (start === -1 && end === -1 || selector > 11) {
+      if (start < 0) start = contig.indexOf(codingSeq.substr(0, selector))
+      if (end < 0) end = contig.indexOf(codingSeq.substr(codingLength - selector, codingLength)) + selector
+      selector -= 9
+    }
+
+    if (start === 0 && end === 0) return {}
+
+    return { start, end }
   }
 
   function extractHit (hit) {
