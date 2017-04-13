@@ -28,11 +28,14 @@ class hitController {
       } else {
         this.render(data, null)
       }
-    }).limit(10)
+    }).limit(100)
   }
 
   view (options) {
     let constraints = {}
+      , limit = options.limit < 50 ? options.limit : 50
+
+    delete options.limit
 
     if (options._id) {
       constraints = { _id: false }
@@ -53,7 +56,7 @@ class hitController {
           this.render(data, null)
         }
       }
-    })
+    }).limit(limit)
   }
 }
 

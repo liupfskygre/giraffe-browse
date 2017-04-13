@@ -5,3 +5,7 @@ $('.search').on('click', () => {
   action.cleanForm()
 })
 
+if ($('.contig').length) {
+  action.highlight()
+}
+

@@ -91,13 +91,17 @@ mixin display(hit)
               each id in hit.protein.goids
                 a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
         tr
-          td ContigID
+          td Contig ID
           td=hit.contig.head
         tr
-          td Contig
+          td Contig Sequence
           td
-            textarea.col-md-12(rows='4', readonly)=hit.contig.seq
+            div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end)=hit.contig.seq
+        tr
+          td Coding Sequence
+          td
+            div.sequence.col-md-12.coding=hit.codingseq.seq
         tr
           td Protein Sequence
           td
-            textarea.col-md-12(rows='2', readonly)=hit.protein.seq
+            div.sequence.col-md-12.protein=hit.protein.seq
