@@ -5,24 +5,27 @@ block content
   pre
     form(action='/hit', method='GET')
       div
-        label Gene Name: 
+        label Gene Name:    
         input(type='text', name='name', width='20')
       div
-        label UniprotID: 
+        label UniprotID:    
         input(type='text', name='uniprot')
       div
-        label(for='protein.desc') Descript:  
+        label(for='protein.desc') Description:  
         input(type='text', name='protein.desc')
       div.area
-        label(for='contig.seq') Sequence:  
+        label(for='contig.seq') Sequence:     
         textarea(name='contig.seq')
       div
-        label Species:   
+        label Species:      
         select(name='species')
           option(default, value='') -- select --
           option(value='shehate') shehate
           option(value='tropicalis') tropicalis
-          // option(value='boidinii') boidinii
+          option(value='boidinii') boidinii
+      div
+        label(for='limit') Limit:        
+        input(type='number', name='limit')
 
       div
         button.search search

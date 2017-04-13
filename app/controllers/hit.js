@@ -1,5 +1,6 @@
 const HitModel = require('../models/hit.js')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/hit.pug')
+    , max = 300
 
 class hitController {
   constructor (req, res) {
@@ -33,7 +34,7 @@ class hitController {
 
   view (options) {
     let constraints = {}
-      , limit = options.limit < 50 ? options.limit : 50
+      , limit = options.limit < max ? parseInt(options.limit) : max
 
     delete options.limit
 

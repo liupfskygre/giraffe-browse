@@ -8,4 +8,3 @@ $('.search').on('click', () => {
 if ($('.contig').length) {
   action.highlight()
 }
-
