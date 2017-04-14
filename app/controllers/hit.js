@@ -12,6 +12,7 @@ class hitController {
       , cgdid: true
       , uniprot: true
       , 'protein.desc': true
+      , score: { $meta: 'textScore' }
       }
   }
 
@@ -36,19 +37,25 @@ class hitController {
     let constraints = {}
       , limit = options.limit < max ? parseInt(options.limit) : max
       , search = JSON.parse(JSON.stringify(options))
+      , query = options
+      , sort = {}
 
     delete options.limit
 
     if (options._id) {
       constraints = { _id: false }
     } else {
+      options = Object.keys(search).reduce((res, v) => {
+        return res.concat(search[v])
+      }, []).join(' ')
+
+      query = { '$text': { '$search': options } }
+      sort = { score: { $meta: 'textScore' } }
+
       constraints = this.searchConstraints
-      for (let option in options) {
-        options[option] = new RegExp(options[option], 'i')
-      }
     }
 
-    HitModel.find(options, constraints, (err, data) => {
+    HitModel.find(query, constraints, (err, data) => {
       if (err) {
         this.render(null, options, err)
       } else {
@@ -58,7 +65,7 @@ class hitController {
           this.render(data, search, null)
         }
       }
-    }).limit(limit)
+    }).limit(limit).sort(sort)
   }
 }
 

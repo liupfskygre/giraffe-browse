@@ -15,10 +15,8 @@ const schema = new Schema(
   }
 )
 
-class HitModel extends Model {
-  findHitSeq () {
-    return this.contig.seq.substring(this.qfrom - 1, this.qto - 1)
-  }
-}
+schema.index({ name: 'text', uniprot: 'text', 'protein.desc': 'text', 'contig.seq': 'text', species: 'text' })
+
+class HitModel extends Model { }
 
 module.exports = mongoose.model(HitModel, schema, 'hits')

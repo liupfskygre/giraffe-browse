@@ -33,14 +33,24 @@ HitModel.db.dropDatabase().then(() => {
 
   HitModel.db.collection('hits').insert(data, (err) => {
     if (err) console.log('ERROR: ' + err)
-    // Build index if we use text search
-    // HitModel.db.collection('hits').createIndex(
-    //   { name: 'text'
-    //   , uniprot: 'text'
-    //   , 'protein.desc': 'text'
-    //   , 'contig.seq': 'text'
-    //   }
-    // )
+
+    HitModel.db.collection('hits').createIndex(
+      { name: 'text'
+      , uniprot: 'text'
+      , species: 'text'
+      , 'protein.desc': 'text'
+      , 'contig.seq': 'text'
+      }
+    , { weights:
+        { 'protein.desc': 10
+        , name: 8
+        , uniprot: 8
+        , 'contig.seq': 2
+        , species: 1
+        }
+      }
+    )
+
     HitModel.db.close(() => {
       console.log('Finished.')
       process.exit(0)
