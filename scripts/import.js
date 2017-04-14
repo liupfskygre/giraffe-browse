@@ -1,5 +1,6 @@
 const fasta2json = require('fasta2json')
     , mappings = require(__dirname + '/../data/mappings/complete_map.json')
+    , findCodingRange = require('./find-coding-range.js')
 
 function importSpecies (species) {
   let blast = require(species.blast)
@@ -36,24 +37,6 @@ function importSpecies (species) {
   console.log('Adding ' + importData.length + ' genes from ' + species.name + '...')
 
   return importData
-
-  // 7725
-  function findCodingRange (codingSeq, contig) {
-    let codingLength = codingSeq.length
-      , start = -1
-      , end = -1
-      , selector = codingLength / 4
-
-    while (start === -1 && end === -1 || selector > 11) {
-      if (start < 0) start = contig.indexOf(codingSeq.substr(0, selector))
-      if (end < 0) end = contig.indexOf(codingSeq.substr(codingLength - selector, codingLength)) + selector
-      selector -= 9
-    }
-
-    if (start === 0 && end === 0) return {}
-
-    return { start, end }
-  }
 
   function extractHit (hit) {
     let mapping = mappings.find(x => x.GeneID === hit.cgdId)
