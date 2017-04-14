@@ -3,6 +3,7 @@ extend header
 block content 
 
   pre
+    // pre=JSON.stringify(locals, 2, null)
     a(href='/')
       img(src='/images/logo.png')
 
@@ -115,7 +116,7 @@ mixin display(hit)
         tr
           td Contig Sequence
           td
-            div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end)=hit.contig.seq
+            div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
         tr
           td Coding Sequence
           td

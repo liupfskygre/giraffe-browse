@@ -18,14 +18,21 @@ class Actions {
 
   highlight () {
     let highlight = $('.contig')[0]
-      , start = $(highlight).attr('start')
-      , end = $(highlight).attr('end')
-      , coding = highlight.innerHTML.substr(start, end)
-      , regex = new RegExp(coding, 'gi')
+      , fail = $(highlight).attr('fail')
 
-    highlight.innerHTML = highlight.innerHTML.replace(regex, function (match) {
-      return '<span class="highlight">' + match + '</span>'
-    })
+    if (fail) {
+      console.log('Coding sequence couldn\'t be found in contig!')
+      return
+    } else {
+      let start = $(highlight).attr('start')
+        , end = $(highlight).attr('end')
+        , coding = highlight.innerHTML.substr(start, end)
+        , regex = new RegExp(coding, 'gi')
+
+      highlight.innerHTML = highlight.innerHTML.replace(regex, function (match) {
+        return '<span class="highlight">' + match + '</span>'
+      })
+    }
   }
 
 }

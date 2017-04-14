@@ -11,7 +11,7 @@ const schema = new Schema(
   , contig: { head: String, seq: String }
   , codingseq: { head: String, seq: String }
   , protein: { head: String, seq: String, goids: [String], desc: String }
-  , codingRange: { start: Number, end: Number }
+  , codingRange: { start: Number, end: Number, fail: Boolean }
   }
 )
 
