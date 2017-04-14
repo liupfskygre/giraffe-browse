@@ -123,14 +123,14 @@ mixin display(hit)
           td=hit.contig.head
         tr
           td Contig Sequence
+            | +/-  
+            div
+              input.plusminus(type='number') 
+              button.copybutton(data-clipboard-target='.hidden-box') copy
+              div.infobox
+                |  
           td
             div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
-            div
-              p Copy sequence and +/-   
-                input.plusminus(type='number') 
-                button.copybutton(data-clipboard-target='.hidden-box') copy
-                div.infobox
-                  |  
         tr
           td Coding Sequence
           td
