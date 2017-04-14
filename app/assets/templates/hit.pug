@@ -4,51 +4,60 @@ block content
 
   pre
     // pre=JSON.stringify(locals, 2, null)
-    a(href='/')
+    a.col-md-2(href='/')
       img(src='/images/logo.png')
 
-    form(action='/hit', method='GET')
-      div.center
-        div
-          label Gene Name:    
-          input(type='text', name='name', width='20', value=options.name)
-        div
-          label Uniprot ID:   
-          input(type='text', name='uniprot', value=options.uniprot)
-        div
-          label(for='protein.desc') Description:  
-          input(type='text', name='protein.desc', value=options['protein.desc'])
-        div.area
-          label(for='contig.seq') Sequence:     
-          textarea(name='contig.seq')=options['contig.seq']
+    form.form(action='/hit', method='GET')
+      div.col-md-3
+        div.form-group
+          label.col-sm-3.control-label Gene Name:
+          div.col-sm-9
+            input.form-control(type='text', name='name', value=options.name)
+        div.form-group
+          label.col-sm-3.control-label(for='protein.desc') Description:
+          div.col-sm-9
+            input.form-control(type='text', name='protein.desc', value=options['protein.desc'])
+        div.form-group
+          label.col-sm-3.control-label(for='contig.seq') Sequence:
+          div.col-sm-9
+            textarea.form-control(name='contig.seq')=options['contig.seq']
 
-      div.center
-        div
-          label Species:      
-          select(name='species', value=options.species)
-            option(default, value='', selected=options.species === '') -- select --
-            option(value='shehate', selected=options.species === 'shehate') shehate
-            option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
-            option(value='boidinii', selected=options.species === 'boidinii') boidinii
-        div
-          label(for='limit') Limit:        
-          input(type='number', name='limit', value=options.limit)
-        div
-          button.search search
-        div.copy
-          | Copy coding sequence and +/- 
-          input.plusminus(type='number', width='40px') 
-          button.copybutton(data-clipboard-target='.hidden-box') copy
-        div.infobox
+      div.col-md-2
+        div.form-group
+          label.col-sm-3.control-label Uniprot:
+          div.col-sm-9
+            input.form-control(type='text', name='uniprot', value=options.uniprot)
+        div.form-group
+          label.col-sm-3.control-label Species:
+          div.col-sm-9
+            select.form-control(name='species', value=options.species)
+              option(default, value='', selected=options.species === '') -- select --
+              option(value='shehate', selected=options.species === 'shehate') shehate
+              option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
+              option(value='boidinii', selected=options.species === 'boidinii') boidinii
+        div.form-group
+          label.col-sm-3.control-label(for='limit') Limit:        
+          div.col-sm-9
+            input.form-control(type='number', name='limit', value=options.limit)
+        div.form-group
+          button.form-control search
+
+    div.col-md-5
+      p
+        | Candida Genome annotations for Tropicalis, Boidinii and Shehate.
+        | 
+        | Search for a gene, by ID, name or description. You can also add a neuclotide snippet to search for.
+        | 
+        | Created by Owen Garland (owg1@aber.ac.uk).
+      hr.colmd-2
+      div.form-group
+        label.col-sm-3.control-label Copy sequence and +/- 
+        input.col-sm-1.plusminus(type='number') 
+        button.copybutton.col-sm-1(data-clipboard-target='.hidden-box') copy
+      div.form-group
+        div.infobox.col-sm-12
           | 
 
-      div.right
-        pre
-          | Candida Genome annotations for Tropicalis, Boidinii and Shehate.
-          | 
-          | Search for a gene, by ID, name or description. You can also add a neuclotide snippet to search for.
-          | 
-          | Created by Owen Garland (owg1@aber.ac.uk).
 
   if data
     if data[0]._id

@@ -23,7 +23,7 @@ class Actions {
       , start = parseInt($(highlight).attr('start'))
       , end = parseInt($(highlight).attr('end'))
       , fail = $(highlight).attr('fail')
-      , plusminus = parseInt($('.plusminus').val())
+      , plusminus = parseInt($('.plusminus').val()) || 0
 
     if (fail) {
       $('.infobox').text('Coding sequence couldn\'t be found.')
@@ -38,7 +38,7 @@ class Actions {
       let clip = new Clipboard('.copybutton')
 
       clip.on('success', (e) => {
-        $('.infobox').text('Coding sequence and +/-1000 bases copied.')
+        $('.infobox').text('Coding sequence and +/-' + plusminus + ' bases copied.')
         $('.hidden-box').hide()
         e.clearSelection()
       })
