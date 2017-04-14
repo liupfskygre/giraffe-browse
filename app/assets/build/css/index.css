@@ -1,0 +1,30 @@
+img {
+  float: left;
+}
+pre {
+  white-space: pre-wrap;
+}
+.area * {
+  vertical-align: top;
+}
+.external {
+  background-color: #ededed;
+}
+textarea,
+select,
+input {
+  width: 200px;
+}
+.highlight {
+  color: #f00;
+}
+span {
+  overflow-y: scroll;
+  word-break: break-all;
+}
+.sequence {
+  overflow-y: scroll;
+  word-break: break-all;
+  height: 100px;
+  padding: 0;
+}
