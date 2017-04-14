@@ -39,6 +39,7 @@ class Actions {
 
       clip.on('success', (e) => {
         $('.infobox').text('Coding sequence and +/-1000 bases copied.')
+        $('.hidden-box').hide()
         e.clearSelection()
       })
 
