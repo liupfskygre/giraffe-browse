@@ -42,12 +42,14 @@ block content
         div.form-group
           button.form-control search
 
-    div.col-md-5
+    div.col-md-5.info
       p
         | Candida Genome annotations for Tropicalis, Boidinii and Shehate.
         | 
-        | Search for a gene, by ID, name or description. You can also add a neuclotide snippet to search for.
+        | Search for a gene by ID, neucleotide sequence, name or description.
         | 
+        | Coding sequences are highlighted in red.
+        |
         | Created by Owen Garland (owg1@aber.ac.uk).
 
 
@@ -122,13 +124,13 @@ mixin display(hit)
           td Contig ID
           td=hit.contig.head
         tr
-          td Contig Sequence
-            | +/-  
+          td Contig 
             div
-              input.plusminus(type='number') 
-              button.copybutton(data-clipboard-target='.hidden-box') copy
-              div.infobox
-                |  
+              p +/-    
+                input.plusminus(type='number') 
+                button.copybutton(data-clipboard-target='.hidden-box') copy
+                div.infobox
+                  |  
           td
             div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
         tr
