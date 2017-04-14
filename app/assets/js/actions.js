@@ -38,7 +38,7 @@ class Actions {
       let clip = new Clipboard('.copybutton')
 
       clip.on('success', (e) => {
-        $('.infobox').text('Coding sequence and +/-' + plusminus + ' bases copied.')
+        $('.infobox').text('Sequence and +/- ' + plusminus + ' bases copied to clipboard.')
         $('.hidden-box').hide()
         e.clearSelection()
       })
