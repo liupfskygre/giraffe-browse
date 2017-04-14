@@ -1,3 +1,5 @@
+const Clipboard = require('clipboard')
+
 class Actions {
 
   cleanForm () {
@@ -13,6 +15,26 @@ class Actions {
 
     if ($('textarea').val() === '') {
       $('textarea').remove()
+    }
+  }
+
+  copyCoding () {
+    let highlight = $('.contig')[0]
+      , fail = $(highlight).attr('fail')
+
+    if (fail) {
+      $('.infobox').text('Coding sequence couldn\'t be found.')
+    } else {
+      let clip = new Clipboard('.copybutton')
+
+      clip.on('success', (e) => {
+        $('.infobox').text('Coding sequence and +/-1000 bases copied.')
+        e.clearSelection()
+      })
+
+      clip.on('error', () => {
+        $('.infobox').text('Can\'t copy in this browser! :(')
+      })
     }
   }
 

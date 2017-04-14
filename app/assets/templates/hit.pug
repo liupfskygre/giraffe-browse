@@ -35,6 +35,11 @@ block content
           input(type='number', name='limit', value=options.limit)
         div
           button.search search
+        div.copy
+          | Copy coding sequence and +/- 
+          input.plusminus(type='text', name='plusminus', width='40px') 
+          button.copybutton(data-clipboard-target='.highlight') copy
+        div.infobox
 
       div.right
         pre
