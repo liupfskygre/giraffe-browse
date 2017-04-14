@@ -15,8 +15,8 @@ class hitController {
       }
   }
 
-  render (hit, err) {
-    let html = template({ title: 'Hits', data: hit, error: err })
+  render (hit, options, err) {
+    let html = template({ title: 'Hits', data: hit, options: options, error: err })
     this.res.send(html)
   }
 
@@ -25,9 +25,9 @@ class hitController {
 
     HitModel.find(query, this.searchContraints, (err, data) => {
       if (err) {
-        this.render(null, err)
+        this.render(null, {}, err)
       } else {
-        this.render(data, null)
+        this.render(data, {}, null)
       }
     }).limit(100)
   }
@@ -35,6 +35,7 @@ class hitController {
   view (options) {
     let constraints = {}
       , limit = options.limit < max ? parseInt(options.limit) : max
+      , search = JSON.parse(JSON.stringify(options))
 
     delete options.limit
 
@@ -49,12 +50,12 @@ class hitController {
 
     HitModel.find(options, constraints, (err, data) => {
       if (err) {
-        this.render(null, err)
+        this.render(null, options, err)
       } else {
         if (!data.length) {
-          this.render(null, 'No results.')
+          this.render(null, search, 'No results.')
         } else {
-          this.render(data, null)
+          this.render(data, search, null)
         }
       }
     }).limit(limit)

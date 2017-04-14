@@ -10,28 +10,28 @@ block content
       div.center
         div
           label Gene Name:    
-          input(type='text', name='name', width='20')
+          input(type='text', name='name', width='20', value=options.name)
         div
           label UniprotID:    
-          input(type='text', name='uniprot')
+          input(type='text', name='uniprot', value=options.uniprot)
         div
           label(for='protein.desc') Description:  
-          input(type='text', name='protein.desc')
+          input(type='text', name='protein.desc', value=options['protein.desc'])
         div.area
           label(for='contig.seq') Sequence:     
-          textarea(name='contig.seq')
+          textarea(name='contig.seq')=options['contig.seq']
 
       div.center
         div
           label Species:      
-          select(name='species')
-            option(default, value='') -- select --
-            option(value='shehate') shehate
-            option(value='tropicalis') tropicalis
-            option(value='boidinii') boidinii
+          select(name='species', value=options.species)
+            option(default, value='', selected=options.species === '') -- select --
+            option(value='shehate', selected=options.species === 'shehate') shehate
+            option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
+            option(value='boidinii', selected=options.species === 'boidinii') boidinii
         div
           label(for='limit') Limit:        
-          input(type='number', name='limit')
+          input(type='number', name='limit', value=options.limit)
         div
           button.search search
 
