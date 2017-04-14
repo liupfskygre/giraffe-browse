@@ -12,7 +12,7 @@ block content
           label Gene Name:    
           input(type='text', name='name', width='20', value=options.name)
         div
-          label UniprotID:    
+          label Uniprot ID:   
           input(type='text', name='uniprot', value=options.uniprot)
         div
           label(for='protein.desc') Description:  
@@ -93,7 +93,7 @@ mixin display(hit)
           td Species
           td=hit.species
         tr
-          td HitID
+          td Hit ID
           td=hit.hitid
         tr
           td Uniprot ID
