@@ -3,33 +3,45 @@ extend header
 block content 
 
   pre
-    img(src='/images/logo.png')
-    form(action='/hit', method='GET')
-      div
-        label Gene Name:    
-        input(type='text', name='name', width='20')
-      div
-        label UniprotID:    
-        input(type='text', name='uniprot')
-      div
-        label(for='protein.desc') Description:  
-        input(type='text', name='protein.desc')
-      div.area
-        label(for='contig.seq') Sequence:     
-        textarea(name='contig.seq')
-      div
-        label Species:      
-        select(name='species')
-          option(default, value='') -- select --
-          option(value='shehate') shehate
-          option(value='tropicalis') tropicalis
-          option(value='boidinii') boidinii
-      div
-        label(for='limit') Limit:        
-        input(type='number', name='limit')
+    a(href='/')
+      img(src='/images/logo.png')
 
-      div
-        button.search search
+    form(action='/hit', method='GET')
+      div.center
+        div
+          label Gene Name:    
+          input(type='text', name='name', width='20')
+        div
+          label UniprotID:    
+          input(type='text', name='uniprot')
+        div
+          label(for='protein.desc') Description:  
+          input(type='text', name='protein.desc')
+        div.area
+          label(for='contig.seq') Sequence:     
+          textarea(name='contig.seq')
+
+      div.center
+        div
+          label Species:      
+          select(name='species')
+            option(default, value='') -- select --
+            option(value='shehate') shehate
+            option(value='tropicalis') tropicalis
+            option(value='boidinii') boidinii
+        div
+          label(for='limit') Limit:        
+          input(type='number', name='limit')
+        div
+          button.search search
+
+      div.right
+        pre
+          | Candida Genome annotations for Tropicalis, Boidinii and Shehate.
+          | 
+          | Search for a gene, by ID, name or description. You can also add a neuclotide snippet to search for.
+          | 
+          | Created by Owen Garland (owg1@aber.ac.uk).
 
   if data
     if data[0]._id
