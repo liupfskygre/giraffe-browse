@@ -37,8 +37,8 @@ block content
           button.search search
         div.copy
           | Copy coding sequence and +/- 
-          input.plusminus(type='text', name='plusminus', width='40px') 
-          button.copybutton(data-clipboard-target='.highlight') copy
+          input.plusminus(type='number', name='plusminus', width='40px') 
+          button.copybutton(data-clipboard-target='.hidden-box') copy
         div.infobox
 
       div.right
@@ -54,6 +54,7 @@ block content
       +listItems(data)
     else
       +display(data[0])
+      div.hidden-box
   if error
     pre=error
 

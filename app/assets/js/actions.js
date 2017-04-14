@@ -20,11 +20,21 @@ class Actions {
 
   copyCoding () {
     let highlight = $('.contig')[0]
+      , start = parseInt($(highlight).attr('start'))
+      , end = parseInt($(highlight).attr('end'))
       , fail = $(highlight).attr('fail')
+      , plusminus = parseInt($('.plusminus').val())
 
     if (fail) {
       $('.infobox').text('Coding sequence couldn\'t be found.')
     } else {
+      let contig = $('.contig').text()
+        , before = contig.substr(start - plusminus, plusminus)
+        , after = contig.substr(end + start, plusminus)
+        , coding = $('.highlight').text()
+
+      $('.hidden-box').text(before + coding + after)
+
       let clip = new Clipboard('.copybutton')
 
       clip.on('success', (e) => {
