@@ -15,8 +15,6 @@ const schema = new Schema(
   }
 )
 
-schema.index({ name: 'text', uniprot: 'text', 'protein.desc': 'text', 'contig.seq': 'text', species: 'text' })
-
 class HitModel extends Model { }
 
 module.exports = mongoose.model(HitModel, schema, 'hits')

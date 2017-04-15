@@ -36,7 +36,7 @@ HitModel.db.dropDatabase().then(() => {
 
     HitModel.db.collection('hits').createIndex(
       { name: 'text'
-      , uniprot: 'text'
+      , cgdid: 'text'
       , species: 'text'
       , 'protein.desc': 'text'
       , 'contig.seq': 'text'
@@ -44,10 +44,11 @@ HitModel.db.dropDatabase().then(() => {
     , { weights:
         { 'protein.desc': 10
         , name: 8
-        , uniprot: 8
-        , 'contig.seq': 2
+        , cgdid: 8
+        , 'contig.seq': 7
         , species: 1
         }
+      , name: 'hit_search_index'
       }
     )
 
