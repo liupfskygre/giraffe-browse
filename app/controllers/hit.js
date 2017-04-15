@@ -54,12 +54,12 @@ class hitController {
         delete search['codingseq.seq']
       }
 
-      options = Object.keys(search).reduce((res, v) => {
-        return res.concat(search[v])
-      }, []).join(' ')
+      if (options.search) {
+        query['$text'] = { '$search': options.search }
+      }
 
-      if (options) {
-        query['$text'] = { '$search': options }
+      if (options.species) {
+        query.species = options.species
       }
 
       search['codingseq.seq'] = origSeq
@@ -67,6 +67,8 @@ class hitController {
       sort = { score: { $meta: 'textScore' } }
       constraints = this.searchConstraints
     }
+
+    console.log(111, query)
 
     HitModel.find(query, constraints, (err, data) => {
       if (err) {

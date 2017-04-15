@@ -10,23 +10,15 @@ block content
     form.form(action='/hit', method='GET')
       div.col-md-3
         div.form-group
-          label.col-sm-3.control-label Gene Name:
+          label.col-sm-3.control-label Search:
           div.col-sm-9
-            input.form-control(type='text', name='name', value=options.name)
-        div.form-group
-          label.col-sm-3.control-label(for='protein.desc') Description:
-          div.col-sm-9
-            input.form-control(type='text', name='protein.desc', value=options['protein.desc'])
+            input.form-control(type='text', name='search', value=options.search)
         div.form-group
           label.col-sm-3.control-label(for='codingseq.seq') Sequence:
           div.col-sm-9
             textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
 
       div.col-md-2
-        div.form-group
-          label.col-sm-3.control-label CGD ID:
-          div.col-sm-9
-            input.form-control(type='text', name='cgdid', value=options.cgdid)
         div.form-group
           label.col-sm-3.control-label Species:
           div.col-sm-9
@@ -46,11 +38,9 @@ block content
       p
         | Candida Genome annotations for Tropicalis, Boidinii and Shehate.
         | 
-        | Search for a gene by ID, neucleotide sequence, name or description.
+        | Search for a gene by CGDID, name or description. And/or a nuecleotide coding sequence snippet in the sequence field.
         | 
-        | Coding sequences are highlighted in red.
-        |
-        | Created by Owen Garland (owg1@aber.ac.uk).
+        | Coding sequences are highlighted in red. Created by Owen Garland (owg1@aber.ac.uk).
 
 
   if data
