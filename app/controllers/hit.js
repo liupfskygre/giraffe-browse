@@ -10,6 +10,7 @@ class hitController {
       , name: true
       , species: true
       , cgdid: true
+      , uniprot: true
       , 'protein.desc': true
       , score: { $meta: 'textScore' }
       }
