@@ -68,8 +68,6 @@ class hitController {
       constraints = this.searchConstraints
     }
 
-    console.log(111, query)
-
     HitModel.find(query, constraints, (err, data) => {
       if (err) {
         this.render(null, options, err)
