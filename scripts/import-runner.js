@@ -39,13 +39,11 @@ HitModel.db.dropDatabase().then(() => {
       , cgdid: 'text'
       , species: 'text'
       , 'protein.desc': 'text'
-      , 'contig.seq': 'text'
       }
     , { weights:
         { 'protein.desc': 10
         , name: 8
         , cgdid: 8
-        , 'contig.seq': 7
         , species: 1
         }
       , name: 'hit_search_index'

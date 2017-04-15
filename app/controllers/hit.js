@@ -38,19 +38,33 @@ class hitController {
       , search = JSON.parse(JSON.stringify(options))
       , query = options
       , sort = {}
+      , origSeq
 
     delete options.limit
 
     if (options._id) {
       constraints = { _id: false }
     } else {
+      query = {}
+
+      if (options['codingseq.seq']) {
+        origSeq = options['codingseq.seq']
+        let seq = new RegExp(options['codingseq.seq'], 'i')
+        query['codingseq.seq'] = seq
+        delete search['codingseq.seq']
+      }
+
       options = Object.keys(search).reduce((res, v) => {
         return res.concat(search[v])
       }, []).join(' ')
 
-      query = { '$text': { '$search': options } }
-      sort = { score: { $meta: 'textScore' } }
+      if (options) {
+        query['$text'] = { '$search': options }
+      }
 
+      search['codingseq.seq'] = origSeq
+
+      sort = { score: { $meta: 'textScore' } }
       constraints = this.searchConstraints
     }
 

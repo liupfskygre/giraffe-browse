@@ -3,7 +3,7 @@ extend header
 block content 
 
   pre
-    // pre=JSON.stringify(locals, 2, null)
+    // pre=JSON.stringify(options, 2, null)
     a.col-md-2(href='/')
       img(src='/images/logo.png')
 
@@ -18,9 +18,9 @@ block content
           div.col-sm-9
             input.form-control(type='text', name='protein.desc', value=options['protein.desc'])
         div.form-group
-          label.col-sm-3.control-label(for='contig.seq') Sequence:
+          label.col-sm-3.control-label(for='codingseq.seq') Sequence:
           div.col-sm-9
-            textarea.form-control(name='contig.seq')=options['contig.seq']
+            textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
 
       div.col-md-2
         div.form-group
