@@ -29,7 +29,8 @@
         },
         "codingRange": {
                 "start": 5,
-                "end": 301.25
+                "end": 301.25,
+                "fail": false
         }
 }
 
