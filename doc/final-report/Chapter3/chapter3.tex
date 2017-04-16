@@ -74,27 +74,72 @@ The first stage in designing this system was to decide upon what database techno
 NodeJS was chosen because:
 
 \begin{itemize}
-  \item Client and server side languages are the same
-  \item Integrates well with MongoDB as it uses BSON which works with native JSON
-  \item Provides easy package management via npm
-  \item ES6 syntax is very nice
-  \item I have a lot of experience with it and learning a new language is outside of the scope of the project
+  \item Client and server side languages are the same.
+  \item Integrates well with MongoDB as it uses BSON which works with native JSON.
+  \item Provides easy package management via npm.
+  \item ES6 syntax is very nice.
+  \item I have a lot of experience with it and learning a new language is outside of the scope of the project.
 \end{itemize}
 
 The website for this interface will be built off of nodestack\ref{nodestack}, a set of boilerplate code that uses several technologies including:
 
-ES6
-Webpack
-MongoDB
-Mongoose
-Travis CI
-Eslint
-Heroku
-Pug
-Stylus
-Bootstrap
+% http://blog.owen.cymru/nodejs-es6-boiler-plate/
 
-http://blog.owen.cymru/nodejs-es6-boiler-plate/
+\begin{itemize}
+  \item Node JS / ES6
+
+    "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world."\cite{https://nodejs.org}
+    Since Node >4.0 it has supported the ES6 standard, which provides a lot of syntactic sugar, and makes the formatting of the code a lot easier to read and write. 
+  \item Webpack
+    
+    Webpack is a module bundler that allows for easy packaging of client side javascript. It allows the client side javascript to be written in ES6, then when built it will transpile the ES6 code into more widely supported ES2015 code, minify it for efficient, and package it into one single file. This means that the code can be written in a nicely organised manner across multiple files in ES6, and then reduced to one small file for actual usage. 
+
+  \item Mongoose
+
+    Mongoose is an Object Data Manager, it allows developers to define schema's and validation for their data objects as well as extensible models for those objects. This makes interactions with MongoDB a lot simpler, as well as easy enforcement of validation rules.
+
+  \item Pug
+
+    Pug is an HTML templating language that allows developers to write HTML with dynamic variables from the server side, and include some logic elements. The main benefit is that it has a much cleaner syntax than HTML so it is a lot easier to read and write. 
+
+  \item Stylus
+
+    Stylus is an expressive CSS language that, like Pug and ES6, improves the syntax of CSS by minimising unnecessary elements. It has many other advantages over CSS, although for this project they aren't likely to be utilised as the front end design work of this project will be minimal. 
+
+  \item Bootstrap
+
+    Bootstrap is a CSS and JS framework that is aimed at making responsive websites easier to write. With the addition of bootstrap to the project adapting the front end to work on mobile will be minimal. It also adds useful features for laying out the page and some attractive default CSS. 
+\end{itemize}
+
+
+\subsection{Build Process}
+  One of the first things that was setup for this project was the build process. This doesn't take long to setup but provides a huge benefit for the rest of the project. It helps to reduce errors and speed up the process of deployment and testing.
+
+  \subsection{Development Environment}
+    This project will be developed on an Arch Linux system, as it will only ever be ran on a Linux host this isn't an issue, as the production environment will match the development one. 
+
+    All of the code and LaTeX will be written with the editor Vim, which has been configured to have many optimisations to this workflow. For instance while writing a LaTeX report a preview PDF window will automatically update when changes are made. Similarly any syntax errors will be highlighted as soon as they are made, and then (if possible) automatically fixed when saved. The full Vim configuration that was used can be found here\cite{.vimrc}.
+
+  \subsection{Version Control}
+    This project is being entirely tracked with Git version control. This allows the developer to have all of the work backed up, with an easily accessible history. It also allows for branching of the project to test out experimental features or bug fixes. The project is remotely hosted on Github\cite{github} for remote backup and access via multiple hosts. Github also is widely supported for third party integrations, something that will be utilised quite extensively. 
+
+    When pushing code to Github, a module called Husky\cite{husky} will run the test suite on the developers local machine. If the tests fail, the code will not be pushed.
+
+  \subsection{Test suite}
+    The test suite is set up to first clean the project of old builds and coverage reports, then run ESlint\cite{eslint} with the Clock Config\cite{clockconfig}. This will scan the entire codebase for files that do not adhere to the code style defined in the Clock config. This means that any badly formatted code will cause an error and prevent the code from being pushed until the developer fixes the issues. 
+
+    After the linting check, the test suite will use Mocha\cite{mocha} to run all of the JavaScript test files that are in the project. If any of the assertions made in the test files fail, the project will not be pushed. 
+
+    Once the test's have been ran Istanbul\cite{istanbul} will provide a coverage report, that will show to the user the percentage of tested code that has been covered by the assertions. After this the code can finally be pushed to Github. 
+    
+  \subsection{Continuous Integration}
+    Once the code has been pushed to Github, a hook on Github will trigger Travis CI\cite{travis} to clone down the latest version of the code to it's servers and run the test suite again on it's own server. This is very useful as occasionally developers can bypass Husky to push code, or have something setup in their system that isn't defined in the application that causes test to pass on their system but not when the application is built from scratch. 
+
+    Once those tests are successful, it will send the coverage report generated by Istanbul to another third party service called Codecov\cite{codecov}. This tracks the test coverage over time and provides interactive charts highlighting areas that need more test coverage. 
+
+  \subsection{Deployment}
+  If the tests pass on Travis CI, a Github hook will then activate the deployment. The project is setup to use Heroku\cite{heroku}, and to build on successful CI results. This means that when code is pushed to the master branch, it will automatically be deployed to their service. This is excellent for development as it allows changes made to the system to be almost immediately reflected on the live website. The only drawback of Heroku is that this project is using their free offerings which only allow 500MB's of database storage, which means that anything larger than that will be truncated. This isn't an issue for development, however it will mean that when the project is to go live, funding would need to be found to pay for more data storage, or alternatively the project can be hosted elsewhere, most likely within the University network.
+    
 
 % The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
 
