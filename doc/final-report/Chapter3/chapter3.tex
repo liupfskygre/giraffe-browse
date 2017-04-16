@@ -139,6 +139,8 @@ The website for this interface will be built off of nodestack\ref{nodestack}, a 
 
   \subsection{Deployment}
   If the tests pass on Travis CI, a Github hook will then activate the deployment. The project is setup to use Heroku\cite{heroku}, and to build on successful CI results. This means that when code is pushed to the master branch, it will automatically be deployed to their service. This is excellent for development as it allows changes made to the system to be almost immediately reflected on the live website. The only drawback of Heroku is that this project is using their free offerings which only allow 500MB's of database storage, which means that anything larger than that will be truncated. This isn't an issue for development, however it will mean that when the project is to go live, funding would need to be found to pay for more data storage, or alternatively the project can be hosted elsewhere, most likely within the University network.
+
+  The benefits of this build process are clear, firstly code is automatically deployed, which saves the developers time greatly. However the main advantage is that before the deployment the code will have had the test suite ran on it twice, once on the developers local machine and then again on a brand new build on the CI service. This means that any mistakes are caught before they are put into production and the developer is notified of these issues so they can't be avoided. 
     
 
 % The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
