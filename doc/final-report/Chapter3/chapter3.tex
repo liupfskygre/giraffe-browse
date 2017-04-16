@@ -8,40 +8,22 @@
 There are two main components to the software being developed for this project. The first is the manipulation of the data into a database, and the second is a web front end for the data to be accessed via. 
 
 \subsection{Database}
-The database has to store data for each gene that has been annotated in the dataset for each species. I decided upon this schema:
+The database has to store the following information for each hit:
 
-\begin{lstlisting}
-  { id: Schema.ObjectId
-  , hitid: String
-  , species: String
-  , name: String
-  , cgdid: String
-  , uniprot: String
-  , contig: 
-    { head: String
-    , seq: String 
-    }
-  , codingseq: 
-    { head: String
-    , seq: String 
-    }
-  , protein: 
-    { head: String
-    , seq: String
-    , goids: [String]
-    , desc: String 
-    }
-  , codingRange: 
-    { start: Number
-    , end: Number
-    , fail: Boolean 
-    }
-  }
-\end{lstlisting}
+\begin{itemize}
+  \item ID of the hit that was found when the species coding sequences have been aligned with \textit{C. albicans}.
+  \item Species it came from.
+  \item The gene name and ID from Candida Genome Database.
+  \item UniProt ID.
+  \item Contig of raw DNA.
+  \item Coding sequence of nucleotides.
+  \item Protein sequence that the coding sequence codes for.
+  \item Annotations from NCBI nr database to provide a description of the proteins.
+  \item A list of Gene Ontology\cite{geneontology} ID's for the protein.
+  \item If it can be found, the positions of the start and end of the coding sequence in the raw contig. 
+\end{itemize}
 
-This will store the unique \_id assigned by MongoDB to all documents, the ID of the hit that was found when the species coding sequences have been aligned with \textit{C. albicans}, the species it came from, the gene name and ID from Candida Genome Database, the UniProt ID, the contig of raw DNA, the coding sequence of nucleotides, the protein sequence that the coding sequence codes for, along with the annotations from NCBI nr database to provide a description, an array of Gene Ontology\cite{geneontology} ID's and finally if it can be found the positions of the start and end of the coding sequence in the raw contig. 
-
-From this schema there are a few clear tasks of what needs to be extracted from the data that has been collated. For each alignment with \textit{C. albicans} the protein sequence and GO annotations need to found, the coding sequence that was used in the alignment and the contig that it came from. In addition to this the metadata about the genes such as the name and ID's need to be read from the mapping file that was created earlier. 
+From these requirements it is clear there are a few pieces of data that need to be extracted from the data that has been collated. For each alignment with \textit{C. albicans} the protein sequence and GO annotations need to found, the coding sequence that was used in the alignment and the contig that it came from. In addition to this the metadata about the genes such as the name and ID's need to be read from the mapping file that was created earlier. 
 
 The final bit of data that needs to be added is the position of the coding sequence in the contig. A primitive algorithm will have to be developed to detect this as it is out of the scope of the project to create a 100\% accurate way of finding it.
 
@@ -56,10 +38,40 @@ The website will only have a few requirements:
 \begin{itemize}
   \item Display each record in the database in an easy to read manner. 
   \item Highlight coding sequence in contig if possible.
-  \item Copy coding sequence and +/- a user defined number of bases to the clipboard
+  \item Copy coding sequence and +/- a user defined number of bases to the clipboard.
   \item Search the database for a gene, but name, description, ID, or even by nucleotide sequence. 
 \end{itemize}
 
+
+\section{Build Process}
+  One of the first things that was setup for this project was the build process. This doesn't take long to setup but provides a huge benefit for the rest of the project. It helps to reduce errors and speed up the process of deployment and testing.
+
+  \subsection{Development Environment}
+    This project will be developed on an Arch Linux system, as it will only ever be ran on a Linux host this isn't an issue, as the production environment will match the development one. 
+
+    All of the code and LaTeX will be written with the editor Vim, which has been configured to have many optimisations to this workflow. The full Vim configuration that was used can be found here\cite{.vimrc}.
+
+  \subsection{Version Control}
+    This project is being entirely tracked with Git version control. This allows the developer to have all of the work backed up, with an easily accessible history. It also allows for branching of the project to test out experimental features or bug fixes. The project is remotely hosted on Github\cite{github} for remote backup and access via multiple hosts. Github also is widely supported for third party integrations, something that will be utilised quite extensively. 
+
+    When pushing code to Github, a module called Husky\cite{husky} will run the test suite on the developers local machine. If the tests fail, the code will not be pushed.
+
+  \subsection{Test suite}
+    The test suite is set up to first clean the project of old builds and coverage reports, then run ESlint\cite{eslint} with the Clock Config\cite{clockconfig}. This will scan the entire codebase for files that do not adhere to the code style defined in the Clock config. This means that any badly formatted code will cause an error and prevent the code from being pushed until the developer fixes the issues. 
+
+    After the linting check, the test suite will use Mocha\cite{mocha} to run all of the JavaScript test files that are in the project. If any of the assertions made in the test files fail, the project will not be pushed. 
+
+    Once the test's have been ran Istanbul\cite{istanbul} will provide a coverage report, that will show to the user the percentage of tested code that has been covered by the assertions. After this the code can finally be pushed to Github. 
+    
+  \subsection{Continuous Integration}
+    Once the code has been pushed to Github, a hook on Github will trigger Travis CI\cite{travis} to clone down the latest version of the code to it's servers and run the test suite again on it's own server. This is very useful as occasionally developers can bypass Husky to push code, or have something setup in their system that isn't defined in the application that causes test to pass on their system but not when the application is built from scratch. 
+
+    Once those tests are successful, it will send the coverage report generated by Istanbul to another third party service called Codecov\cite{codecov}. This tracks the test coverage over time and provides interactive charts highlighting areas that need more test coverage. 
+
+  \subsection{Deployment}
+  If the tests pass on Travis CI, a Github hook will then activate the deployment. The project is setup to use Heroku\cite{heroku}, and to build on successful CI results. This means that when code is pushed to the master branch, it will automatically be deployed to their service. This is excellent for development as it allows changes made to the system to be almost immediately reflected on the live website. The only drawback of Heroku is that this project is using their free offerings which only allow 500MB's of database storage, which means that anything larger than that will be truncated. This isn't an issue for development, however it will mean that when the project is to go live, funding would need to be found to pay for more data storage, or alternatively the project can be hosted elsewhere, most likely within the University network.
+
+  The benefits of this build process are clear, firstly code is automatically deployed, which saves the developers time greatly. However the main advantage is that before the deployment the code will have had the test suite ran on it twice, once on the developers local machine and then again on a brand new build on the CI service. This means that any mistakes are caught before they are put into production and the developer is notified of these issues so they can't be avoided. 
 \section{Design}
 % You should concentrate on the more important aspects of the design. It is essential that an overview is presented before going into detail. As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.
 % 
@@ -112,35 +124,6 @@ The website for this interface will be built off of nodestack\ref{nodestack}, a 
 \end{itemize}
 
 
-\subsection{Build Process}
-  One of the first things that was setup for this project was the build process. This doesn't take long to setup but provides a huge benefit for the rest of the project. It helps to reduce errors and speed up the process of deployment and testing.
-
-  \subsection{Development Environment}
-    This project will be developed on an Arch Linux system, as it will only ever be ran on a Linux host this isn't an issue, as the production environment will match the development one. 
-
-    All of the code and LaTeX will be written with the editor Vim, which has been configured to have many optimisations to this workflow. For instance while writing a LaTeX report a preview PDF window will automatically update when changes are made. Similarly any syntax errors will be highlighted as soon as they are made, and then (if possible) automatically fixed when saved. The full Vim configuration that was used can be found here\cite{.vimrc}.
-
-  \subsection{Version Control}
-    This project is being entirely tracked with Git version control. This allows the developer to have all of the work backed up, with an easily accessible history. It also allows for branching of the project to test out experimental features or bug fixes. The project is remotely hosted on Github\cite{github} for remote backup and access via multiple hosts. Github also is widely supported for third party integrations, something that will be utilised quite extensively. 
-
-    When pushing code to Github, a module called Husky\cite{husky} will run the test suite on the developers local machine. If the tests fail, the code will not be pushed.
-
-  \subsection{Test suite}
-    The test suite is set up to first clean the project of old builds and coverage reports, then run ESlint\cite{eslint} with the Clock Config\cite{clockconfig}. This will scan the entire codebase for files that do not adhere to the code style defined in the Clock config. This means that any badly formatted code will cause an error and prevent the code from being pushed until the developer fixes the issues. 
-
-    After the linting check, the test suite will use Mocha\cite{mocha} to run all of the JavaScript test files that are in the project. If any of the assertions made in the test files fail, the project will not be pushed. 
-
-    Once the test's have been ran Istanbul\cite{istanbul} will provide a coverage report, that will show to the user the percentage of tested code that has been covered by the assertions. After this the code can finally be pushed to Github. 
-    
-  \subsection{Continuous Integration}
-    Once the code has been pushed to Github, a hook on Github will trigger Travis CI\cite{travis} to clone down the latest version of the code to it's servers and run the test suite again on it's own server. This is very useful as occasionally developers can bypass Husky to push code, or have something setup in their system that isn't defined in the application that causes test to pass on their system but not when the application is built from scratch. 
-
-    Once those tests are successful, it will send the coverage report generated by Istanbul to another third party service called Codecov\cite{codecov}. This tracks the test coverage over time and provides interactive charts highlighting areas that need more test coverage. 
-
-  \subsection{Deployment}
-  If the tests pass on Travis CI, a Github hook will then activate the deployment. The project is setup to use Heroku\cite{heroku}, and to build on successful CI results. This means that when code is pushed to the master branch, it will automatically be deployed to their service. This is excellent for development as it allows changes made to the system to be almost immediately reflected on the live website. The only drawback of Heroku is that this project is using their free offerings which only allow 500MB's of database storage, which means that anything larger than that will be truncated. This isn't an issue for development, however it will mean that when the project is to go live, funding would need to be found to pay for more data storage, or alternatively the project can be hosted elsewhere, most likely within the University network.
-
-  The benefits of this build process are clear, firstly code is automatically deployed, which saves the developers time greatly. However the main advantage is that before the deployment the code will have had the test suite ran on it twice, once on the developers local machine and then again on a brand new build on the CI service. This means that any mistakes are caught before they are put into production and the developer is notified of these issues so they can't be avoided. 
     
 
 % The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
@@ -154,6 +137,34 @@ The website for this interface will be built off of nodestack\ref{nodestack}, a 
 % Some example sub-sections may be as follows, but the specific sections are for you to define. 
 
 \subsection{Overall Architecture}
+\begin{lstlisting}
+  { id: Schema.ObjectId
+  , hitid: String
+  , species: String
+  , name: String
+  , cgdid: String
+  , uniprot: String
+  , contig: 
+    { head: String
+    , seq: String 
+    }
+  , codingseq: 
+    { head: String
+    , seq: String 
+    }
+  , protein: 
+    { head: String
+    , seq: String
+    , goids: [String]
+    , desc: String 
+    }
+  , codingRange: 
+    { start: Number
+    , end: Number
+    , fail: Boolean 
+    }
+  }
+\end{lstlisting}
 
 \subsection{Some detailed design}
 
