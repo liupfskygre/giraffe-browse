@@ -5,11 +5,28 @@ $('.search').on('click', () => {
   action.cleanForm()
 })
 
-$('.copybutton').on('click', (e) => {
-  e.preventDefault()
-  action.copyCoding()
-})
-
 if ($('.contig').length) {
   action.highlight()
 }
+
+const Clipboard = require('clipboard')
+
+let clip = new Clipboard('.copybutton', {
+  text: () => {
+    return action.copy()
+  }
+})
+
+clip.on('success', (e) => {
+  if (e.text) {
+    $('.infobox').text('Sequence copied!')
+  } else {
+    $('.infobox').text('Coding sequence couldn\'t be found.')
+  }
+  $('.hidden-box').hide()
+  e.clearSelection()
+})
+
+clip.on('error', () => {
+  $('.infobox').text('Can\'t copy in this browser:(')
+})

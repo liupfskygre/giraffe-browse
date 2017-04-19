@@ -1,5 +1,3 @@
-const Clipboard = require('clipboard')
-
 class Actions {
 
   cleanForm () {
@@ -18,7 +16,7 @@ class Actions {
     }
   }
 
-  copyCoding () {
+  copy () {
     let highlight = $('.contig')[0]
       , start = parseInt($(highlight).attr('start'))
       , end = parseInt($(highlight).attr('end'))
@@ -27,28 +25,14 @@ class Actions {
 
     if (start === 0) start += plusminus
 
-    if (fail) {
-      $('.infobox').text('Coding sequence couldn\'t be found.')
-    } else {
-      let contig = $('.contig').text()
-        , before = contig.substr(start - plusminus, plusminus)
-        , after = contig.substr(end, plusminus)
-        , coding = $('.highlight').text()
+    if (fail) return null
 
-      $('.hidden-box').text(before + coding + after)
+    let contig = $('.contig').text()
+      , before = contig.substr(start - plusminus, plusminus)
+      , after = contig.substr(end, plusminus)
+      , coding = $('.highlight').text()
 
-      let clip = new Clipboard('.copybutton')
-
-      clip.on('success', (e) => {
-        $('.infobox').text('Sequence copied!')
-        $('.hidden-box').hide()
-        e.clearSelection()
-      })
-
-      clip.on('error', () => {
-        $('.infobox').text('Can\'t copy in this browser! :(')
-      })
-    }
+    return before + coding + after
   }
 
   highlight () {
