@@ -31,6 +31,11 @@ HitModel.db.dropDatabase().then(() => {
     return a.concat(b)
   }, [])
 
+  data.push(require('../test/mock/split-bottom-hit.json')
+          , require('../test/mock/split-top-hit.json')
+          , require('../test/mock/missing-hit.json')
+          , require('../test/mock/hit.json'))
+
   HitModel.db.collection('hits').insert(data, (err) => {
     if (err) console.log('ERROR: ' + err)
 

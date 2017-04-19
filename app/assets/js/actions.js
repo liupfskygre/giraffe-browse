@@ -30,7 +30,7 @@ class Actions {
     } else {
       let contig = $('.contig').text()
         , before = contig.substr(start - plusminus, plusminus)
-        , after = contig.substr(end + start, plusminus)
+        , after = contig.substr(end, plusminus)
         , coding = $('.highlight').text()
 
       $('.hidden-box').text(before + coding + after)
@@ -59,7 +59,7 @@ class Actions {
     } else {
       let start = $(highlight).attr('start')
         , end = $(highlight).attr('end')
-        , coding = highlight.innerHTML.substr(start, end)
+        , coding = highlight.innerHTML.substring(start, end)
         , regex = new RegExp(coding, 'gi')
 
       highlight.innerHTML = highlight.innerHTML.replace(regex, function (match) {
