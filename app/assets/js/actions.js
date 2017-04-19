@@ -25,6 +25,8 @@ class Actions {
       , fail = $(highlight).attr('fail')
       , plusminus = parseInt($('.plusminus').val()) || 0
 
+    if (start === 0) start += plusminus
+
     if (fail) {
       $('.infobox').text('Coding sequence couldn\'t be found.')
     } else {
