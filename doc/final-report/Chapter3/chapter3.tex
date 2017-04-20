@@ -8,7 +8,7 @@
 There are two main components to the software being developed for this project. The first is the manipulation of the data into a database, and the second is a web front end for the data to be accessed via. 
 
 \subsection{Database}
-The database has to store the following information for each hit:
+The database has to store the following information for each hit from the alignment with \textit{C. albicans}:
 
 \begin{itemize}
   \item ID of the hit that was found when the species coding sequences have been aligned with \textit{C. albicans}.
@@ -137,6 +137,13 @@ The website for this interface will be built off of nodestack\ref{nodestack}, a 
 % Some example sub-sections may be as follows, but the specific sections are for you to define. 
 
 \subsection{Overall Architecture}
+
+As the application only has one data object to model, the architecture isn't that complex. However it is still beneficial to follow good design principles which is why a traditional Model View Controller (MVC) design pattern was followed. 
+
+The MVC design pattern allows for each data object that is being modelled to have three components, a model which defines the data's structure and it's functionality, a controller that is how the application interacts with that model, and finally a view, which is what is displayed to the user and how they interact with the model. For example a user may click on a gene, which sends a request to the controller, the controller then requests that gene from the model, which in turn updates the view, that the user can then see the gene that they had selected. 
+
+Abstracting the functionality of the project out into these three components allows for the development to be a lot easier to manage and work with, than having one monolithic class to handle the entire functionality of a data object. 
+
 \begin{lstlisting}
   { id: Schema.ObjectId
   , hitid: String
