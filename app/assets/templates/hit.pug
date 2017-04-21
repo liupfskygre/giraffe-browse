@@ -30,7 +30,7 @@ block content
         div.form-group
           label.col-sm-3.control-label(for='limit') Limit:        
           div.col-sm-9
-            input.form-control(type='number', name='limit', value=options.limit)
+            input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
         div.form-group
           button.form-control.search search
 
@@ -83,49 +83,54 @@ mixin display(hit)
           th.col-md-11 Value
       tbody
         tr
-          td Gene Name
+          td.header Gene Name
           td=hit.name
         tr
-          td Description
+          td.header Description
           td=hit.protein.desc
         tr
-          td Species
+          td.header Species
           td=hit.species
         tr
-          td Hit ID
+          td.header Hit ID
           td=hit.hitid
         tr
-          td Uniprot ID
+          td.header Uniprot ID
           td
             a(href='http://www.uniprot.org/uniprot/' + hit.uniprot) #{hit.uniprot}
         tr
-          td Candida Genome ID
+          td.header Candida Genome ID
           td
             a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + hit.cgdid) #{hit.cgdid}
         tr
-          td Gene Ontology IDs
+          td.header Gene Ontology IDs
           td
             if hit.protein.goids
               each id in hit.protein.goids
                 a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
         tr
-          td Contig ID
+          td.header Contig ID
           td=hit.contig.head
         tr
-          td Contig 
+          td.header Contig 
             div
-              p +/-    
-                input.plusminus(type='number') 
-                button.copybutton(data-clipboard-target='.hidden-box') copy
-                div.infobox
-                  |  
+              button.btn.copybutton(data-clipboard-target='.hidden-box') Copy coding sequence
+            div
+              div.col-md-6.copyarea
+                input.plusminus.form-control.bfh-number(type='number', min='0') 
+              div.col-md-6.copyarea
+                div.buttoninfo +/- bases  
+              div.infobox
+                |  
           td
             div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
         tr
-          td Coding Sequence
+          td.header Coding Sequence
+            div
+              button.btn.reverse Reverse Compliment
           td
             div.sequence.col-md-12.coding=hit.codingseq.seq
         tr
-          td Protein Sequence
+          td.header Protein Sequence
           td
             div.sequence.col-md-12.protein=hit.protein.seq

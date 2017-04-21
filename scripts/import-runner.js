@@ -33,6 +33,7 @@ HitModel.db.dropDatabase().then(() => {
 
   data.push(require('../test/mock/split-bottom-hit.json')
           , require('../test/mock/split-top-hit.json')
+          , require('../test/mock/reverse-hit.json')
           , require('../test/mock/missing-hit.json')
           , require('../test/mock/hit.json'))
 

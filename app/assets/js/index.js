@@ -5,6 +5,10 @@ $('.search').on('click', () => {
   action.cleanForm()
 })
 
+$('.reverse').on('click', () => {
+  action.reverseCompliment()
+})
+
 if ($('.contig').length) {
   action.highlight()
 }

@@ -35,6 +35,16 @@ class Actions {
     return plusminus ? before + '|' + coding + '|' + after : coding
   }
 
+  reverseCompliment () {
+    let seq = $('.coding').text().split('').reverse().join('')
+
+    seq = seq.replace(/[ACTG]/g, (base) => {
+      return 'ACTG'.charAt('TGAC'.indexOf(base))
+    })
+
+    $('.coding').text(seq)
+  }
+
   highlight () {
     let highlight = $('.contig')[0]
       , fail = $(highlight).attr('fail')
