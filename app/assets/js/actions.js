@@ -32,7 +32,7 @@ class Actions {
       , after = contig.substr(end, plusminus)
       , coding = $('.highlight').text()
 
-    return before + '|' + coding + '|' + after
+    return plusminus ? before + '|' + coding + '|' + after : coding
   }
 
   highlight () {
