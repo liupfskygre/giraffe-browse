@@ -13,7 +13,7 @@ module.exports = function findCodingRange (codingSeq, contig, reverse) {
   if (end <= selector) end = contig.length
 
   if (fail && !reverse) {
-    findCodingRange(reverseCompliment(codingSeq), contig, true)
+    return findCodingRange(reverseCompliment(codingSeq), contig, true)
   } else {
     return { start, end, fail }
   }

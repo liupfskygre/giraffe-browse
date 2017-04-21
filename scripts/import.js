@@ -5,7 +5,6 @@ const fasta2json = require('fasta2json')
 function importSpecies (species) {
   let blast = require(species.blast)
     , queries = blast.BlastOutput.BlastOutput_iterations.Iteration
-    , fail = 0
 
   let codingseqs = fasta2json.ReadFasta(species.codingseq)
 
@@ -36,7 +35,6 @@ function importSpecies (species) {
   })
 
   console.log('Adding ' + importData.length + ' genes from ' + species.name + '...')
-  console.log('Coding sequence not detected in contig for ' + fail + ' genes.')
 
   return importData
 
@@ -54,8 +52,6 @@ function importSpecies (species) {
       , codingseq = codingseqs.find(x => x.head === hit.scaffold)
       , protein = proteins.find(x => x.headid === hit.scaffold)
       , codingRange = findCodingRange(codingseq.seq, contig.seq)
-
-    if (codingRange.fail) fail++
 
     let data =
       { hitid: hit.cgdId
