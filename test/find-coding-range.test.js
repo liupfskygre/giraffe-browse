@@ -1,5 +1,6 @@
 const assert = require('assert')
     , hit = require('./mock/hit.json')
+    , reverseHit = require('./mock/reverse-hit.json')
     , splitTopHit = require('./mock/split-top-hit.json')
     , splitBottomHit = require('./mock/split-bottom-hit.json')
     , missingHit = require('./mock/missing-hit.json')
@@ -11,6 +12,17 @@ describe('Hit', () => {
     let start = hit.codingRange.start
     , end = hit.codingRange.end
     , result = findCodingRange(hit.codingseq.seq, hit.contig.seq)
+
+    assert.equal(result.start, start, 'Incorrect start sequence found')
+    assert.equal(result.end, end, 'Incorrect end sequence found')
+    assert.equal(result.fail, false, 'Fail flag set incorrectly')
+    done()
+  })
+
+  it('should find the start and end of the coding sequence with the reverse compliment', (done) => {
+    let start = reverseHit.codingRange.start
+    , end = reverseHit.codingRange.end
+    , result = findCodingRange(reverseHit.codingseq.seq, reverseHit.contig.seq)
 
     assert.equal(result.start, start, 'Incorrect start sequence found')
     assert.equal(result.end, end, 'Incorrect end sequence found')

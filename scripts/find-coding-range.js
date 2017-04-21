@@ -1,4 +1,4 @@
-module.exports = (codingSeq, contig) => {
+module.exports = function findCodingRange (codingSeq, contig, reverse) {
   let codingLength = codingSeq.length
     , start = 0
     , end = 0
@@ -12,6 +12,18 @@ module.exports = (codingSeq, contig) => {
   if (start === -1) start = 0
   if (end <= selector) end = contig.length
 
-  return { start, end, fail }
+  if (fail && !reverse) {
+    findCodingRange(reverseCompliment(codingSeq), contig, true)
+  } else {
+    return { start, end, fail }
+  }
+
+  function reverseCompliment (sequence) {
+    let reverse = sequence.split('').reverse().join('')
+
+    return reverse.replace(/[ACTG]/g, (base) => {
+      return 'ACTG'.charAt('TGAC'.indexOf(base))
+    })
+  }
 }
 
