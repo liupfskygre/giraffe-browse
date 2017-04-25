@@ -206,12 +206,10 @@ The initial algorithm was finding around fifty percent of the genes in the datas
 
 Modifying the algorithm to search for the reverse compliment of the coding sequence if it wasn't found "the first way", resulted in every gene being detected. The algorithm, simply found the index of the first twelve bases of the coding sequence in the contig, and the last twelve bases of the coding sequence in the contig. If the start or end couldn't be found it was assumed that the gene was spread across two contigs and the start or end respectively were marked to indicate that the gene was split across two contigs. 
 
-Below is the algorithm in javascript.
-
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[scale=0.60]{code1}
-\caption{Code \label{overflow}}
+\includegraphics[scale=0.70]{code1}
+\caption{Algorithm to find coding sequence inside a contig. \label{overflow}}
 \end{center}
 \end{figure}
 
