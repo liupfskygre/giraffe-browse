@@ -186,6 +186,34 @@ Abstracting the functionality of the project out into these three components all
 \subsection{Other relevant sections}
 
 \section{Implementation}
+During the investigation into the data, many issues were encountered. Mainly due to a lack of understanding of what the data meant, and how it was produced. Initially the plan was to take the raw contigs for each species and use diamond to align them against the NCBI nr database. Then from those results link the data back to the Candida Genome Database via the RefSeq ID's that the NCBI nr database uses. However it was later discovered that there was an annotated set of blast data in the provided data, that did this step. 
+
+A prototype was built around this blast data, however it was then realised that the data for \textit{C. boidinii} was not aligned against the NCBI nr database, but rather another unknown data set. This meant that to pursue this line of prototyping I would need to either reproduce the \textit{C. Boidinii} dataset, or reproduce all three with another pipeline. 
+
+The core problem was that it was unknown what tools had been used to produce this data, it appeared that a proprietary tool blast2go\cite{blast2go} had been used to align and annotate the data. However after using a trial copy to try and replicate the results it was evident that this tool had not actually been used to create the alignments with the NCBI nr database. 
+
+Eventually it became clear that the alignment had just been performed with the BLAST tool, on the universities HPC, with a different output format that was not known. This meant that the data could actually be reproduced quite easily with diamond. 
+
+After these revelations, and another meeting with the researchers, we discovered in the original datasets that there were in fact already annotated protein sequence files and coding sequence files. This meant that a huge chunk of the work had been done this whole time, and that it wasn't needed to generate our own data set. There was however one missing piece which was the link back to the Candida Genome Database, something that would be invaluable to the researchers who were already familiar with CGD. 
+
+Because of this, thankfully the weeks of effort spent learning about alignments and annotations weren't wasted, as I was able to produce a new alignment from the coding sequence files against the proteins found in \textit{C. albicans}, the latter being provided by CGD. This meant that the data was able to then be linked to the well documented genes in \textit{C. albicans}, as well as the other annotations provided by the original dataset, such as Gene Ontology ID's.
+
+Now each species had, the raw contigs, the coding sequences, the amino acids sequences, the annotated protein information, and the link to the Candida Genome Database. The next key piece of information to recover that would be of great use to the researchers was the position of the gene (coding sequence) inside the raw contig. With this information they would be able to easily find the sequence of bases that surround the gene, making wet lab tests a lot easier. 
+
+To do this mock data was produced manually, that contained the correct results, and unit tests made to check if a dummy function was returning the correct results as defined in the mock data. Then an algorithm was developed to find the position of a coding sequence inside a contig. 
+
+The initial algorithm was finding around fifty percent of the genes in the dataset, which was a worry. Thankfully after some discussions with my tutor, it became apparent that the reason for this is that the coding sequences were stored "in one direction", but the alignment results were finding genes that were the reverse compliment of that. This explains why around fifty percent of the genes weren't found. 
+
+Modifying the algorithm to search for the reverse compliment of the coding sequence if it wasn't found "the first way", resulted in every gene being detected. The algorithm, simply found the index of the first twelve bases of the coding sequence in the contig, and the last twelve bases of the coding sequence in the contig. If the start or end couldn't be found it was assumed that the gene was spread across two contigs and the start or end respectively were marked to indicate that the gene was split across two contigs. 
+
+Below is the algorithm in javascript.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.60]{code1}
+\caption{Code \label{overflow}}
+\end{center}
+\end{figure}
 
 % This section should discuss issues you encountered as you tried to implement your experiments. What were the results of running the experiments? What conclusions can you draw from these results? 
 % 
