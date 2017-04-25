@@ -202,18 +202,31 @@ Abstracting the functionality of the project out into these three components all
 
 % The following sections indicate some areas you might include. Other sections may be more appropriate to your project. 
 
-\subsection{Overall Approach to Testing}
+Initially it was planned to develop this application in a test driven manner, as it leads to high quality code and stable solutions. The difficulty with this approach is that it didn't really fit well with the prototyping and experimentation phase where I was learning about the data and what it meant. The key reason for this is that the majority of the logic is in the seed script that imports the data into the database. This meant that a script would be written to import the data, and the only way of really testing it was to look at what was in the database and to see if that made sense in a biological context. Unfortunately it would be beyond the scope of this project to test the biological accuracy of the data that was imported. However I was able to manually verify that the data was correct at several stages. 
+
+\subsection{Data verification}
+Once the data was in the database, to verify that it was correct, and gene was selected at random and then entered into the Candida Genome Database's\cite{cgd} BLAST tool. This compared the genes that were in my database against what was in the CGD database, and enabled us to see whether what was in the database was accurate. 
 
 \subsection{Automated Testing}
+For the area's of logic that were testable, a TDD design was followed, mainly for the selection of the coding sequence in the contig, as this was the only real area of logic in the project that had it's own custom algorithm to be tested. In addition to this the test suite that was being used for the project also checked the project for code formatting issues with the eslint\cite{eslint} tool. This will cause the tests to fail if potentially dangerous assertions are made in the code. For example if a `==` was used instead of a `===` it will throw and error highlighting the issue to the developer. 
 
 \subsubsection{Unit Tests}
+Unit tests were written for the logic that detects the coding sequence inside the contig, this is a crucial algorithm as the sites functionality depends on this data being accurate, so it was important that the algorithm be thoroughly tested. To do this several mock database records were created that had all the different possibilities that a gene could be found in, a normal hit, a reverse compliment hit, a missing hit and a hit that was split above and below the contig. 
 
-\subsubsection{User Interface Testing}
+Tests were then written to compare the result of the finding function against the correct values stored in the mock data. You can see this in the file `find-coding-range.test.js' where the tests are located. The function was then able to be developed ensuring that the data it was returning was correct. 
 
-\subsubsection{Stress Testing}
+\subsection{User Interface Testing}
+The user interface hasn't had automated tests written for it unfortunately, as there was only one HTML page and only two sets of data that were being returned it didn't feel particularly necessary to write test to check that the data was coming through correctly. 
 
-\subsubsection{Other types of testing}
+That being said the UI has been manually tested on Chrome, Firefox and Internet Explorer to check for any functional issues. None were found, however it was noted that in Internet Explorer there was some font rendering issues, but this isn't a concern as it doesn't impact the functionality of the site. I will be recommending that the site is used on Chrome though, as that it was it was developed on, so is the most thoroughly tested. 
+
+Once the site was at a stage where it could be demonstrated the UI was shown to the researchers and they were asked to provide any feedback that might make the site easier to use for them. This feedback was.... yaydadada .... because of this feedback xyz was done to make it abc for them to use.
+
+\subsection{Stress Testing}
+As this site is hosting commercially sensitive data, it won't be publicly accessible, this means that only the researchers who are working on this data will be accessing it. Because of this there isn't a need to perform any stress testing on the service, as the stack is more than capable of handling < 10 users at a time, and isn't vulnerable to public attacks. 
 
 \subsection{Integration Testing}
+As listed in the build process section 3.2.4, continuous integration services were used throughout this project, meaning that every time a new build was pushed to github, it had to pass tests on the CI server before being deployed to the production server. This has ensured that any modifications to the code base won't break the core functionality of the production build. 
 
 \subsection{User Testing}
+Once the site has been developed to a stage where the users can get a real sense of how it is looking and how it will function, they have been invited to suggest changes that need to be made, in line with the agile practices that this project has been developed with. Some of these changes that were suggested included the reverse compliment functionality that helped to highlight all of the genes. 
