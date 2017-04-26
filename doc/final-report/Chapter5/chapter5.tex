@@ -2,19 +2,40 @@
 
 % Examiners expect to find in your dissertation a section addressing such questions as:
 
-% \begin{itemize}
-%    \item Were the requirements correctly identified? 
-%    \item Were the design decisions correct?
-%    \item Could a more suitable set of tools have been chosen?
-%    \item How well did the software meet the needs of those who were expecting to use it?
-%    \item How well were any other project aims achieved?
-%    \item If you were starting again, what would you do differently?
-% \end{itemize}
+\begin{itemize}
+   \item Were the requirements correctly identified? 
+
+     Part of the difficulty of this project was going through several iterations of understandings of the data, and how it needed to be interpreted. This meant that the requirements only really became clear very late in the project. However once they were apparent, development from then on was very straight forward. 
+
+   \item Were the design decisions correct?
+
+     The project is functional, and hasn't suffered any bugs, and meets all of the achievable criteria so I believe the design decisions were correct.
+
+   \item Could a more suitable set of tools have been chosen?
+
+     The use of NodeJS and MongoDB does set this project apart from older similar projects, that use Perl and PostgreSQL. However there is a clear shift in the technologies used for web development, as Perl is on the decline\cite{needed}, and newer technologies like Node JS are taking it's place. The advantages presented to a web developer of NodeJS are clear and outlined in the design choices section. 
+
+   \item How well did the software meet the needs of those who were expecting to use it?
+
+     Hopefully will find out on Friday!
+
+   \item If you were starting again, what would you do differently?
+
+     Try to talk to the source of the data sooner and ideally schedule a session with teh researchers to look over the data and hopefully unpick what it all meant a lot sooner than we did. 
+\end{itemize}
 
 % Other questions can be addressed as appropriate for a project. 
 
 % Such material is regarded as an important part of the dissertation; it should demonstrate that you are capable not only of carrying out a piece of work but also of thinking critically about how you did it and how you might have done it better. This is seen as an important part of an honours degree. 
 
+I'm very pleased with the end result of the project, it is a nicely developed clean peice of software that meets it's basic funtional requirements. The area that really could have been improved upon was the amount of time it took to get to grips with the data. If I had had the understanding of it much earlier in the project, there could have been more features developed that would have helped the researchers a lot more than what I was able to produce. One area that I would have loved to be able to explore was creating a comparison tool, which would allow them to compare two or more genes directly. 
+
+This would have added a lot more complexity to the project, but considering how smoothly the development of the application went, once the data was understood correctly, I think there would have been plenty of time. The actual development of the database and website did only take around a week, so there was a lot more room for new features, had the data been understood earlier. 
+
 % There will be good things and room for improvement with any project. As you write this section, identify and discuss the parts of the work that went well and also consider ways in which the work could be improved. 
 
-% In the latter stages of the module, we will discuss the evaluation. That will probably be around week 9, although that differs each year. 
+The application was built with very robust software engineering principles, and the code is a testament to how cleanly it was developed, there are very few code smells\cite{smells} throughout the code. This is mostly thanks to the discipline enforced by having linters and automated testing. The only area that falls down in this regard is the amount of unit tests. As the project stands there are only a handful of unit tests to check the finding of coding sequences. Ideally it would be good to expand the testing to cover the Pug templates, the controller logic, and the search functionality. 
+
+Unfortunately by the time the data was understood enough to develop the application fully, there was not enough time to test these features and write up this report. 
+
+In the future this will be deployed to the university servers, and I will offer to help maintain and develop new features for the researchers if they need it, as I am keen for their project to go well, which what provided the motivation for this project to be a success, which overall I feel that it has been. 
