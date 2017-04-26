@@ -182,6 +182,65 @@ Abstracting the functionality of the project out into these three components all
 \subsubsection{Even more detail}
 
 \subsection{User Interface}
+Before building the user interface for this project, I examined several other similar sites to see what information they were displaying and how it was laid out. The first was the Candida Genome Database\cite{cgd} and it's "Locus" page. It lists column headings on the left, and the the infromation on the right. This design is easy to read and doesn't clutter up the page too much.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.40]{cgd-locus}
+\caption{Candida Genome Databases's locus page}
+\end{center}
+\end{figure}
+
+Next the Yeast Genome\cite{sgd} project's locus page was inspected:
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.40]{sgd-locus}
+\caption{Yeast Genome Project's locus page}
+\end{center}
+\end{figure}
+
+This page was very nicely formatted and laid out, it clearly had a lot of development, as it had integrations with two genome browsers as well as a large amount of extra information and graphical representations of the genes locations. Replicating this would be ideal, however it is too far out of the scope of this project, as many extra systems would have to be setup to get this data and make it as interactive.
+
+Much like the rest of this project the UI was prototyped along with the understanding of the data at the time. This means that the UI was evolving with the data, and wasn't truly decided upon and polished until the data that was being displayed was known to be correct, and wouldn't change. Unfortunately this didn't happen until quite late in the project. 
+
+\subsubsection{Final design}
+The focus for this design was to make it as simple to implement and use as possible, as this isn't a public facing service it doesn't need to be a cutting edge design aimed at grabbing users attention. Instead it just needs to be functional and represent the data clearly. 
+
+There are only two pages on the website, a search view, and a locus page for specific genes. These share the same template, and adapt based on the data provided to them. The tasks for these pages are simply to display the data in the database, and provide a form to query it.
+
+Tooltips were used to display information about each row. As the site is only going to be used by a couple of researchers there wasn't much benefit to creating a help section or a how to guide on how to use the site, as firstly it has been changing a lot during development and secondly it is quicker to just have a direct conversation with them about areas that they might not understand. However if in the future this were to become a public service, I would create an extra information page that lists more background information about the project, the data and how the website is to be used. 
+
+The page was constructed with bootstrap's\cite{bootstrap} grid system, which allows the content to be dynamically repositioned to fit different size displays.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.30]{candida-locus}
+\caption{The final locus page for the project}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.35]{candida-search}
+\caption{The final search page for the project}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.6]{candida-mobile}
+\caption{A locus page viewed on a mobile device}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.6]{candida-tooltip}
+\caption{Tooltip on mouse hover describing what row means}
+\end{center}
+\end{figure}
+
 
 \subsection{Other relevant sections}
 
