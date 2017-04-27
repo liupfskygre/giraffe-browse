@@ -1,6 +1,7 @@
 const HitModel = require('../models/hit.js')
+    , mongoose = require('mongoose')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/hit.pug')
-    , max = 100
+    , max = 300
 
 class hitController {
   constructor (req, res) {
@@ -23,8 +24,9 @@ class hitController {
 
   listKnown () {
     let query = { name: { $exists: true, $ne: null } }
+      , constraints = this.searchConstraints
 
-    HitModel.find(query, this.searchContraints, (err, data) => {
+    HitModel.find(query, constraints, (err, data) => {
       if (err) {
         this.render(null, {}, err)
       } else {
@@ -39,14 +41,18 @@ class hitController {
       , search = JSON.parse(JSON.stringify(options))
       , query = options
       , sort = {}
+      , aggQuery
       , origSeq
 
     delete options.limit
 
     if (options._id) {
+      query._id = mongoose.Types.ObjectId(query._id)
       constraints = { _id: false }
+      aggQuery = [ { $match: query }, { $project: constraints } ]
     } else {
       query = {}
+      constraints = this.searchConstraints
 
       if (options['codingseq.seq']) {
         origSeq = options['codingseq.seq']
@@ -55,21 +61,27 @@ class hitController {
         delete search['codingseq.seq']
       }
 
-      if (options.search) {
-        query['$text'] = { '$search': options.search }
-      }
-
       if (options.species) {
         query.species = options.species
       }
 
+      if (!options.search) {
+        delete constraints.score
+      }
+
+      aggQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
+
+      if (options.search) {
+        query['$text'] = { '$search': options.search }
+        sort = { $sort: { score: { $meta: 'textScore' } } }
+        aggQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
+      }
+
       search['codingseq.seq'] = origSeq
 
-      sort = { score: { $meta: 'textScore' } }
-      constraints = this.searchConstraints
     }
 
-    HitModel.find(query, constraints, (err, data) => {
+    HitModel.aggregate(aggQuery).allowDiskUse(true).exec((err, data) => {
       if (err) {
         this.render(null, options, err)
       } else {
@@ -79,7 +91,7 @@ class hitController {
           this.render(data, search, null)
         }
       }
-    }).limit(limit).sort(sort)
+    })
   }
 }
 
