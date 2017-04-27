@@ -1,5 +1,4 @@
 const HitModel = require('../models/hit.js')
-    , mongoose = require('mongoose')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/hit.pug')
     , max = 300
 
