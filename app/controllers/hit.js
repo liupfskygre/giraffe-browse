@@ -35,7 +35,18 @@ class hitController {
     }).limit(100)
   }
 
-  view (options) {
+  view (id, search) {
+    let constraints = { _id: false }
+    HitModel.findOne(id, constraints, (err, data) => {
+      if (err) {
+        this.render(null, search, err)
+      } else {
+        this.render([ data ], search, null)
+      }
+    })
+  }
+
+  search (options) {
     let constraints = {}
       , limit = options.limit < max ? parseInt(options.limit) : max
       , search = JSON.parse(JSON.stringify(options))
@@ -46,40 +57,33 @@ class hitController {
 
     delete options.limit
 
-    if (options._id) {
-      query._id = mongoose.Types.ObjectId(query._id)
-      constraints = { _id: false }
-      aggQuery = [ { $match: query }, { $project: constraints } ]
-    } else {
-      query = {}
-      constraints = this.searchConstraints
+    query = {}
+    constraints = this.searchConstraints
 
-      if (options['codingseq.seq']) {
-        origSeq = options['codingseq.seq']
-        let seq = new RegExp(options['codingseq.seq'], 'i')
-        query['codingseq.seq'] = seq
-        delete search['codingseq.seq']
-      }
-
-      if (options.species) {
-        query.species = options.species
-      }
-
-      if (!options.search) {
-        delete constraints.score
-      }
-
-      aggQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
-
-      if (options.search) {
-        query['$text'] = { '$search': options.search }
-        sort = { $sort: { score: { $meta: 'textScore' } } }
-        aggQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
-      }
-
-      search['codingseq.seq'] = origSeq
-
+    if (options['codingseq.seq']) {
+      origSeq = options['codingseq.seq']
+      let seq = new RegExp(options['codingseq.seq'], 'i')
+      query['codingseq.seq'] = seq
+      delete search['codingseq.seq']
     }
+
+    if (options.species) {
+      query.species = options.species
+    }
+
+    if (!options.search) {
+      delete constraints.score
+    }
+
+    aggQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
+
+    if (options.search) {
+      query['$text'] = { '$search': options.search }
+      sort = { $sort: { score: { $meta: 'textScore' } } }
+      aggQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
+    }
+
+    search['codingseq.seq'] = origSeq
 
     HitModel.aggregate(aggQuery).allowDiskUse(true).exec((err, data) => {
       if (err) {

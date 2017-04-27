@@ -6,9 +6,9 @@ module.exports = (app) => {
     try {
       let hit = new HitController(req, res)
       if (req.params.id) {
-        hit.view({ _id: req.params.id })
+        hit.view({ _id: req.params.id }, req.query)
       } else {
-        hit.view(req.query)
+        hit.search(req.query)
       }
     } catch (e) {
       next(e)
