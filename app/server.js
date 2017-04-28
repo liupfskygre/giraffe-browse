@@ -5,7 +5,9 @@ let express = require('express')
   , port = process.env.PORT || 3000
   , path = require('path')
   , connectDatabase = require('./database.js')
+  , cache = require('express-cache-headers')
 
+app.use(cache(300))
 app.use(logger('dev'))
 app.use(express.static(path.join(__dirname, 'assets', 'build')))
 addRoutes(app)
