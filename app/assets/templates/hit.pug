@@ -1,45 +1,21 @@
 extend header
 
 block content 
+  
+  include ./mixins.pug
 
   pre
     // pre=JSON.stringify(locals, 2, null)
     a.col-md-2(href='/')
       img(src='/images/logo.png')
 
-    form.form(action='/hit', method='GET')
-      div.col-md-3
-        div.form-group
-          label.col-sm-3.control-label Search:
-          div.col-sm-9
-            input.form-control(type='text', name='search', value=options.search)
-        div.form-group
-          label.col-sm-3.control-label(for='codingseq.seq') Sequence:
-          div.col-sm-9
-            textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
-
-      div.col-md-3
-        div.form-group
-          label.col-sm-3.control-label Species:
-          div.col-sm-9
-            select.form-control(name='species', value=options.species)
-              option(default, value='', selected=options.species === '') -- select --
-              option(value='shehate', selected=options.species === 'shehate') shehate
-              option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
-              option(value='boidinii', selected=options.species === 'boidinii') boidinii
-        div.form-group
-          label.col-sm-3.control-label(for='limit') Limit:        
-          div.col-sm-9
-            input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
-        div.form-group
-          button.form-control.search search
+    +searchForm(options)
 
     div.col-md-4.info
       p
         | Search for a gene by CGDID, name or description, and/or a nuecleotide coding sequence snippet in the sequence field.
         | 
         | Coding sequences are highlighted in red. Created by Owen Garland (owg1@aber.ac.uk).
-
 
   if data
     if data[0]._id
@@ -49,99 +25,3 @@ block content
       div.hidden-box
   if error
     pre=error
-
-mixin listItems(data)
-  div.table-responsive
-    table.table
-      thead
-        tr
-          th.col-md-1 Candida Gene Name
-          th.col-md-5 Description
-          th.col-md-1 Species
-          th.col-md-1 Candida Geneome ID
-          th.col-md-1 Uniprot ID
-      tbody
-        each item in data
-          tr
-            td
-              a(href='/hit/' + item._id) #{item.name}
-            td
-              a(href='/hit/' + item._id) #{item.protein.desc}
-            td
-              a(href='/hit/' + item._id) #{item.species}
-            td.external
-              a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + item.cgdid) #{item.cgdid}
-            td.external
-              a(href='http://www.uniprot.org/uniprot/' + item.uniprot) #{item.uniprot}
-
-mixin display(hit)
-  div.table-responsive
-    table.table
-      thead
-        tr
-          th.col-md-1.header Item
-          th.col-md-11 Value
-      tbody
-        tr
-          td.header(data-toggle='tooltip', title='Name of gene in Candida Genome Database') Gene Name
-            sup ?
-          td=hit.name
-        tr
-          td.header(data-toggle='tooltip', title='Description of protein function from NCBI/Uniprot') Description
-            sup ?
-          td=hit.protein.desc
-        tr
-          td.header(data-toggle='tooltip', title='Strain of Candida') Species
-            sup ?
-          td=hit.species
-        tr
-          td.header(data-toggle='tooltip', title='Accession ID from Candida Genome Database') Hit ID
-            sup ?
-          td=hit.hitid
-        tr
-          td.header(data-toggle='tooltip', title='Uniprot ID link to locus') Uniprot ID
-            sup ?
-          td
-            a(href='http://www.uniprot.org/uniprot/' + hit.uniprot) #{hit.uniprot}
-        tr
-          td.header(data-toggle='tooltip', title='Candida Genome ID link to locus') Candida Genome ID
-            sup ?
-          td
-            a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + hit.cgdid) #{hit.cgdid}
-        tr
-          td.header(data-toggle='tooltip', title='Links to the Gene Ontology ID\'s associated with this protein') Gene Ontology IDs
-            sup ?
-          td
-            if hit.protein.goids
-              each id in hit.protein.goids
-                a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
-        tr
-          td.header(data-toggle='tooltip', title='The ID of the scaffold that this hit was found in') Contig ID
-            sup ?
-          td=hit.contig.head
-        tr
-          td.header(data-toggle='tooltip', title='The scaffold / neucleotide sequence that the gene was found in. Coding sequence highlighted in red') Contig 
-            sup ?
-            div
-              button.btn.copybutton(data-clipboard-target='.hidden-box') Copy coding sequence
-            div
-              div.col-md-6.copyarea
-                input.plusminus.form-control.bfh-number(type='number', min='0') 
-              div.col-md-6.copyarea
-                div.buttoninfo +/- bases  
-              div.infobox
-                |  
-          td
-            div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
-        tr
-          td.header(data-toggle='tooltip', title='Reference coding sequence that codes for the protein') Coding Sequence
-            sup ?
-            div
-              button.btn.reverse Reverse Compliment
-          td
-            div.sequence.col-md-12.coding=hit.codingseq.seq
-        tr
-          td.header(data-toggle='tooltip', title='Amino acid sequence that creates the protien') Protein Sequence
-            sup ?
-          td
-            div.sequence.col-md-12.protein=hit.protein.seq

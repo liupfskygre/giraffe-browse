@@ -1,4 +1,5 @@
 const HitController = require(__dirname + '/controllers/hit.js')
+const HomeController = require(__dirname + '/controllers/home.js')
 
 module.exports = (app) => {
 
@@ -17,8 +18,8 @@ module.exports = (app) => {
 
   app.get('*', (req, res, next) => {
     try {
-      let hit = new HitController(req, res)
-      hit.listKnown()
+      let home = new HomeController(req, res)
+      home.render()
     } catch (e) {
       next(e)
     }

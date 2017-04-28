@@ -17,7 +17,7 @@ class hitController {
   }
 
   render (hit, options, err) {
-    let html = template({ title: 'Hits', data: hit, options: options, error: err })
+    let html = template({ title: 'Candida Hits', data: hit, options: options, error: err })
     this.res.send(html)
   }
 

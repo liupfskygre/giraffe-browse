@@ -1,0 +1,10 @@
+extend header
+
+block content 
+
+  include ./mixins.pug
+
+  // pre=JSON.stringify(locals, 2, null)
+  p Welcome to the IBERS Candida Genome website!
+    
+  +searchForm(options)
