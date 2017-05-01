@@ -7,8 +7,8 @@ class hitController {
     this.res = res
   }
 
-  render (hit, options, err) {
-    let html = template({ title: 'Candida Hits', data: hit, options: options, error: err })
+  render (title, data, options, error) {
+    let html = template({ title, data, options, error })
     this.res.send(html)
   }
 
@@ -16,9 +16,9 @@ class hitController {
     let constraints = { _id: false }
     HitModel.findOne(id, constraints, (err, data) => {
       if (err) {
-        this.render(null, search, err)
+        this.render('Something went wrong', null, search, err)
       } else {
-        this.render([ data ], search, null)
+        this.render('Candida ' + data.name, [ data ], search, null)
       }
     })
   }
@@ -61,12 +61,12 @@ class hitController {
 
     HitModel.aggregate(aggregateQuery).allowDiskUse(true).exec((err, data) => {
       if (err) {
-        this.render(null, options, err)
+        this.render('Something went wrong', null, options, err)
       } else {
         if (!data.length) {
-          this.render(null, search, 'No results.')
+          this.render('Candida Search', null, search, 'No results.')
         } else {
-          this.render(data, search, null)
+          this.render('Candida Search', data, search, null)
         }
       }
     })
