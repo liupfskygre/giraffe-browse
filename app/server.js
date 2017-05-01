@@ -5,8 +5,8 @@ let express = require('express')
   , port = process.env.PORT || 3000
   , path = require('path')
   , connectDatabase = require('./database.js')
-  , basicAuth = require('basic-auth-connect')
   , cache = require('express-cache-headers')
+// , basicAuth = require('basic-auth-connect')
 
 // app.use(basicAuth('ibers', 'candida'))
 app.use(cache(300))
