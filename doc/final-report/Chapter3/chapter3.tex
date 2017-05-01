@@ -45,6 +45,18 @@ The website will only have a few requirements:
 
     All of the code and LaTeX will be written with the editor Vim, which has been configured to have many optimisations to this workflow. The full Vim configuration that was used can be found here\cite{vimrc}.
 
+  \subsection{Code Style}
+  For this project the Clock Limited code standard\cite{clockstandard} will be followed. This has a few key variations to typical Javascript. 
+
+  \begin{itemize}
+    \item Semicolons are not required in JS, so they are not used to denote EOL.
+    \item Strings are encapsulated with single quotes, not double. 
+    \item Comma first\cite{commafirst} listing of variables, objects and arrays.
+    \item No commenting, to avoid confusion, encourage descriptive naming and reduce file length.
+  \end{itemize}
+
+  These rules ensure that the code written is clean and easy to read.
+
   \subsection{Version Control}
     This project is being entirely tracked with Git version control. This allows the developer to have all of the work backed up, with an easily accessible history. It also allows for branching of the project to test out experimental features or bug fixes. The project is remotely hosted on Github\cite{github} for remote backup and access via multiple hosts. Github also is widely supported for third party integrations, something that will be utilised quite extensively. 
 
