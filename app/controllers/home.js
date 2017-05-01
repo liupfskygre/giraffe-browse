@@ -1,4 +1,4 @@
-const template = require('pug').compileFile(__dirname + '/../assets/templates/home.pug')
+const template = require('pug').compileFile(__dirname + '/../assets/templates/pages/home.pug')
 
 class homeController {
   constructor (req, res) {

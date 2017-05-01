@@ -8,7 +8,7 @@ let express = require('express')
   , basicAuth = require('basic-auth-connect')
   , cache = require('express-cache-headers')
 
-app.use(basicAuth('ibers', 'candida'))
+// app.use(basicAuth('ibers', 'candida'))
 app.use(cache(300))
 app.use(logger('dev'))
 app.use(express.static(path.join(__dirname, 'assets', 'build')))
