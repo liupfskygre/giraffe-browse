@@ -3,6 +3,13 @@ I can't really do this section.
 
 Maybe talk about deployment to the Uni servers, and how the researchers will use it? 
 
+\subsection{Deployment and future work}
+Due to the commercially sensitive nature of the data being used in the project, this service cannot be hosted on a publicly accessible server. Because of this it is planned to be deployed to a Virtual Machine running on the Universities servers once the project is complete. 
+
+After demonstrating the application to the researchers, it was made clear that they would prefer it if the site was put behind a password to ensure that they had control over the data within the university. To do this there could either be a simple user system developed, or as a simple solution a HTTP basic auth login check added to the website. The later solution is very easy to implement, one extra package and one line of code, when compared to the users system, that would require front end changes, however it is a lot less flexible. 
+
+After the demonstration they also highlighted how they would like a splash page containing information about the project, the institution and the researchers themselves. This would not be difficult to implement, it would just mean adding another route to the application, however it depends on them providing the information and design for how the page should be presented. This is a low priority as it is mainly for when the project is published and made available to the public, which could be a year or more away from happening. 
+
 % This section should discuss issues you encountered as you tried to implement your experiments. What were the results of running the experiments? What conclusions can you draw from these results? 
 
 % During the work, you might have found that elements of your experiments were unnecessary or overly complex; perhaps third party libraries were available that simplified some of the functions that you intended to implement. If things were easier in some areas, then how did you adapt your project to take account of your findings?
