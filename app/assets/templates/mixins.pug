@@ -1,54 +1,31 @@
-extend header
+mixin searchForm(options)
+  form.form(action='/hit', method='GET')
+    div.col-md-3
+      div.form-group
+        label.col-sm-3.control-label Search:
+        div.col-sm-9
+          input.form-control(type='text', name='search', value=options.search)
+      div.form-group
+        label.col-sm-3.control-label(for='codingseq.seq') Sequence:
+        div.col-sm-9
+          textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
 
-block content 
+    div.col-md-3
+      div.form-group
+        label.col-sm-3.control-label Species:
+        div.col-sm-9
+          select.form-control(name='species', value=options.species)
+            option(default, value='', selected=options.species === '') -- select --
+            option(value='shehate', selected=options.species === 'shehate') shehate
+            option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
+            option(value='boidinii', selected=options.species === 'boidinii') boidinii
+      div.form-group
+        label.col-sm-3.control-label(for='limit') Limit:        
+        div.col-sm-9
+          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
+      div.form-group
+        button.form-control.search search
 
-  pre
-    // pre=JSON.stringify(locals, 2, null)
-    a.col-md-2(href='/')
-      img(src='/images/logo.png')
-
-    form.form(action='/hit', method='GET')
-      div.col-md-3
-        div.form-group
-          label.col-sm-3.control-label Search:
-          div.col-sm-9
-            input.form-control(type='text', name='search', value=options.search)
-        div.form-group
-          label.col-sm-3.control-label(for='codingseq.seq') Sequence:
-          div.col-sm-9
-            textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
-
-      div.col-md-3
-        div.form-group
-          label.col-sm-3.control-label Species:
-          div.col-sm-9
-            select.form-control(name='species', value=options.species)
-              option(default, value='', selected=options.species === '') -- select --
-              option(value='shehate', selected=options.species === 'shehate') shehate
-              option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
-              option(value='boidinii', selected=options.species === 'boidinii') boidinii
-        div.form-group
-          label.col-sm-3.control-label(for='limit') Limit:        
-          div.col-sm-9
-            input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
-        div.form-group
-          button.form-control.search search
-
-    div.col-md-4.info
-      p
-        | Search for a gene by CGDID, name or description, and/or a nuecleotide coding sequence snippet in the sequence field.
-        | 
-        | Coding sequences are highlighted in red. Created by Owen Garland (owg1@aber.ac.uk).
-
-
-  if data
-    if data[0]._id
-      +listItems(data)
-    else
-      +display(data[0])
-      div.hidden-box
-  if error
-    pre=error
 
 mixin listItems(data)
   div.table-responsive

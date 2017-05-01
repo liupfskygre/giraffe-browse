@@ -1,0 +1,27 @@
+extend ../header
+
+block content 
+  
+  include ../mixins
+
+  pre
+    // pre=JSON.stringify(locals, 2, null)
+    a.col-md-2(href='/')
+      img(src='/images/logo.png')
+
+    +searchForm(options)
+
+    div.col-md-4.info
+      p
+        | Search for a gene by CGDID, name or description, and/or a nuecleotide coding sequence snippet in the sequence field.
+        | 
+        | Coding sequences are highlighted in red. Created by Owen Garland (owg1@aber.ac.uk).
+
+  if data
+    if data[0]._id
+      +listItems(data)
+    else
+      +display(data[0])
+      div.hidden-box
+  if error
+    pre=error
