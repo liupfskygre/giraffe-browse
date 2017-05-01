@@ -4,7 +4,22 @@ block content
 
   include ../mixins
 
-  // pre=JSON.stringify(locals, 2, null)
-  p Welcome to the IBERS Candida Genome website! This splash page, is currently in development, feel free to search above. 
-    
-  +searchForm(options)
+  div.splash
+    a(href='https://www.aber.ac.uk/en/ibers/')
+      center
+        img.header-image(src='/images/aberuni.svg')
+
+    pre
+      | Welcome to the IBERS Candida Genome website! This splash page, is currently in development, feel free to search below. 
+      | 
+      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae ultrices neque. Praesent convallis ultricies tellus eu elementum. Donec suscipit sit amet enim at maximus. Nam non dignissim nisl, pretium porta elit. Donec feugiat leo sed facilisis imperdiet. Mauris imperdiet ac velit in dignissim. Maecenas et eros ut lacus bibendum eleifend ac sed urna. Fusce feugiat, nulla et varius fermentum, arcu ante gravida lorem, nec porta risus ex a nulla. In quis nisl eu ante efficitur ultrices non a orci. Aenean laoreet neque justo, et posuere sapien tempus vel. Pellentesque nec consequat sapien, ac facilisis felis. Etiam et libero consequat, fermentum urna non, pharetra leo. Donec nisl urna, elementum eget lacinia a, consequat sed risus. Duis fringilla ut ipsum sit amet ultrices. Aenean vitae bibendum leo. Fusce vel libero vitae urna vestibulum vestibulum.
+      | 
+      | Sed sollicitudin vehicula erat, id facilisis libero commodo non. Duis et magna vel dui lobortis sagittis. Vestibulum rhoncus urna maximus, posuere enim in, porta lorem. Nunc vitae diam arcu. Nulla iaculis vel odio eu fermentum. Suspendisse molestie rutrum lorem, quis varius arcu tincidunt a. Mauris cursus nec lacus quis finibus. Mauris vitae lorem egestas, porttitor ligula nec, suscipit orci. Phasellus gravida elit ac metus cursus, a vehicula nunc malesuada. Sed volutpat posuere augue eu vehicula. Donec fermentum augue quis nibh volutpat, eu hendrerit nibh scelerisque. Integer a nibh sit amet sapien rutrum imperdiet. Suspendisse vitae odio id massa pretium lobortis. Mauris id cursus tellus, vel luctus neque. In at posuere nulla. Aenean congue, ipsum sit amet lacinia dictum, leo magna fringilla nulla, eu venenatis risus leo vitae augue.
+      | 
+      | Integer rhoncus auctor ante a volutpat. Aliquam nisl mi, congue a ultricies at, suscipit quis nisl. Phasellus ornare ante in enim bibendum, in pharetra quam aliquam. Nunc imperdiet commodo ipsum at ornare. Nullam blandit nibh vitae eleifend fringilla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce auctor nunc ut felis condimentum, nec auctor augue fringilla. Nullam dignissim velit sit amet lectus tempor ultrices. Proin eget eros eu tellus blandit dictum id ullamcorper metus. Pellentesque sollicitudin ligula ante, eu sollicitudin massa dapibus non. Donec bibendum, felis eu porta lobortis, lacus nisl mattis libero, sagittis suscipit elit lorem ut justo. Nullam quis nisl non eros hendrerit volutpat. Fusce consectetur, risus a tincidunt suscipit, urna diam egestas risus, id euismod diam leo quis ligula. Nam tristique tincidunt odio, et porttitor lectus faucibus vel. Cras malesuada maximus mauris et convallis.
+
+  div.row
+    div.col-md-3.margin
+    +searchForm(options)
+    div.col-md-3.margin
+
