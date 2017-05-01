@@ -5,15 +5,6 @@ const HitModel = require('../models/hit.js')
 class hitController {
   constructor (req, res) {
     this.res = res
-    this.searchConstraints =
-      { _id: true
-      , name: true
-      , species: true
-      , cgdid: true
-      , uniprot: true
-      , 'protein.desc': true
-      , score: { $meta: 'textScore' }
-      }
   }
 
   render (hit, options, err) {
@@ -33,7 +24,15 @@ class hitController {
   }
 
   search (options) {
-    let constraints = this.searchConstraints
+    let constraints =
+	{ _id: true
+	, name: true
+	, species: true
+	, cgdid: true
+	, uniprot: true
+	, 'protein.desc': true
+	, score: { $meta: 'textScore' }
+	}
       , limit = options.limit < max ? parseInt(options.limit) : max
       , search = JSON.parse(JSON.stringify(options))
       , query = {}
