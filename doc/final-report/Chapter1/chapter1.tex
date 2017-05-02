@@ -22,23 +22,27 @@ As Sboner et al. highlight in their paper "The real cost of sequencing: higher t
 
 Currently researchers have the genetic information for the three species of yeast in the form a fasta file containing thousands of contigs. These files are large \textgreater 16MB text files containing annotated sequences making it difficult to extract meaningful information quickly. To make predictions about which genes encode which proteins in yeasts they will need to be able to search and browse this data in a much easier to interact with form. 
 
-This is why a website would be advantageous to them, as it would provide a simple and familiar user experience to other web based genome browsers such as the Candida Genome Database\cite{cgd}. In addition to this functionality, one task that would be very useful is to be able to select a proteins coding sequence of nucleotides and then a user defined number of bases up and down stream of the gene, so that when they test out a theory in the wet lab experiments they can easily retrieve the bases around the gene that they intend to modify. 
+This is why a website would be advantageous to them, as it would provide a simple and familiar user experience to other web based genome browsers such as the Candida Genome Database\cite{cgd}, which they are already familiar with and regularly use as a reference. 
 
 \section{Existing Databases}
 As the core of the project focuses on having the data stored in a database, the first action was to investigate the current database solutions that had been developed for genomic information. 
 
 The most well established was CHADO\cite{chado} which was initially developed back in 2005 for the FlyBase\cite{flybase} project. It has since then grown to accommodate genomic information for eukaryotes, plants, and other complex multicell animals. It uses PostgreSQL\cite{postgres} to store it's data and Perl\cite{perl} to setup and maintain the database. Due to it's monolithic approach of being a one size fits all solution, it has over 200 tables in a very complex schema. This makes working on it rather difficult, as there are many relations to consider when entering and manipulating data from the database.
 
-When installing and populating CHADO, it was clear that the project wasn't very well maintained as during the installation several of the Perl modules that it depends on where failing their tests and not installing. This meant several modules had to be manually fixed just to get the application to install correctly. If it takes an experienced programmer and Linux admin several hours to follow the default installation instructions, debugging issues at several steps, it isn't going to be appropriate to impose such a system on potentially less technically minded Biologists. This combined with the fact that Perl has now been superseded by more modern scripting languages such as Python\cite{python} and JavaScript\cite{node}, thanks to their superior package management, eco-systems and syntax, it was clear that a more modern approach would be more sustainable and maintainable for this project and for the future. 
+When installing and populating CHADO, it was clear that the project wasn't very well maintained as during the installation several of the Perl modules that it depends on were not able to successfully build, due to bugs in the modules causing the build tests to fail, and thus not install. This meant several modules had to be manually fixed just to get the application to install correctly. Additional complexity of the systems architecture stemming from it being an older project and not having the active surrounding ecosystem that other platforms may have, increases the time taken to develop for and maintain the database.
+
+This combined with the fact that Perl now has less market share due to the emergence of Python\cite{python} and JavaScript\cite{node} among others, makes it a less favourable language to work with. This is mainly due to newer languages having superior package management, ecosystems and syntax. 
+
+Developing the application in Perl to work with these existing platforms, would be a viable option, but this project is also an opportunity to show that genomic data can be adequately handled by newer technologies such as JavaScript and NoSQL databases.
 
 \section{Alignment Tools}
 As the source of the data was uncertain, it was decided to investigate performing alignments in the event that more data, or different data was needed for the project than what was provided. The original alignment tool BLAST\cite{blast} was developed in the 90's and is very widely accepted as the {\it de-facto} standard for performing alignments. 
 
 Alignment is when a DNA, or protein sequence is compared against a database of known protein sequences that have already been determined via previous research. This allows a researcher to match their sequences against known genes and annotate them accordingly. These annotations aren't proof that genes with similar sequences have the same function, but it is a good starting point. To prove it the researchers will test it in a lab experiment, however as there are many thousands of potential genes to test it is a lot more efficient to infer function via sequence similarity in the first instance.
 
-An alignment is a computationally intensive task there have been many efforts to improve the efficiency of the algorithm and make the most of developments made in computing since the 90's. One area that has been pursued is the use of GPU's to perform alignments in parallel utilising hundreds or thousands of cores of the GPU, compared to the tens of cores on a modern CPU. 
+Aligning two sequences of DNA is a computationally intensive task, that there have been many efforts to improve the efficiency of. One area that has been pursued is the use of GPU's to perform alignments in parallel utilising hundreds or thousands of cores of the GPU, compared to the tens of cores on a modern CPU. 
 
-Initially Diamond\cite{diamond} was tested and was able to align the data sets against the NCBI\cite{ncbi} non-redundant protein database\cite{nr}, in about an hour and a quarter for each species, this was only using the CPU and may have been bottle necked by the mechanical drives being used for storage. 
+Initially Diamond\cite{diamond}, a CPU only tool, was tested and was able to align the data sets against the NCBI\cite{ncbi} non-redundant protein database\cite{nr}, in about an hour and a quarter for each species, this was only using the CPU and may have been bottle necked by the mechanical drives being used for storage. 
 
 The hardware being used for this was an Intel i7-6700k @ 4.6Ghz, 16GB of RAM, a 7200rpm Hard Disk Drive, and a Nvidia GTX 980. 
 
@@ -57,17 +61,15 @@ From studying bioinformatics and researching the most common methods of manipula
 
 In computer science, tools are highly developed and have evolved to a very stable state and the best tools are known to be industry standards for their specialised purposes. 
 
-However in bioinformatics a combination of factors including the relative youth of the field and the large number of competing projects that don't collaborate due to competing for research publications; there have been a wide array of tools created, often by biologists with no software engineering experience, none of which have been adopted and honed as the de facto standard. 
+However in bioinformatics a combination of factors including the relative youth of the field and the large number of competing projects that don't collaborate due to competing for research publications; there have been a wide array of tools created, often by biologists with no software engineering experience, none of which have been adopted and honed as the \texti{de facto} standard. 
 
 This means that for every task in the bioinformatics space there is often many different solutions offered, to what can be a very simple problem. An example of this is the simple task of splitting a fasta file up into several chunks, this should be a very simple problem to solve, and once it's been solved once that tool should become the one tool to complete that task. 
 
-Unfortunately when trying to do this, several tools were discussed on biostars forum\cite{biostars}, none of which worked for the nr database that was trying to be split. Eventually a tool made by Gordon Gremme et al\cite{genometools} was able to complete the task, yet it wasn't mentioned in the earlier discussion on the online forum. 
+Unfortunately when trying to do this, several tools were discussed on biostars forum\cite{biostars}, none of which worked for the non-redundant database that was trying to be split. Eventually a tool called Genometools made by Gordon Gremme et al\cite{genometools} was able to complete the task, yet it wasn't mentioned in the earlier discussion on the online forum. 
 
-As a computer scientist this is a very odd observation, as for most problems in the programming sphere will have had several tools developed to solve it. The community then quite quickly picks the best solutions and adopts them as the known standards.\cite{needed}. 
+Another example of the differences are markup languages, there are really only three major competing standards, XML, JSON and YAML, and they each have their own niche. However in bioinformatics there seems to be many ways to represent data from alignments or sequences, none of which use one of the aforementioned standards. Fasta is appearing to be the most mature way however there are so many standards, tab separated, GFF3, EMBL and SAM files to name a few. 
 
-An example of this is data markup languages, there are really only three major competing standards, XML, JSON and YAML, and they each have their own niche. However in bioinformatics there seems to be many ways to represent data from alignments or sequences. Fasta is appearing to be the most mature way however there are so many standards, tab separated, gff3, EMBL and SAM files to name a few. 
-
-It seems very misguided to have produced all these new file formats, instead of a standard mark up language to represent the data. Fasta could very easily be replace by YAML, which would save a huge amount of developer time as they wouldn't have to produce or implement a fasta parser in their language of choice, as YAML can be natively read by most modern languages. 
+As a computer scientist it seems unusual to have so many competing standards, instead of a standard mark up language to represent the data. Fasta could very easily be replaced by YAML, which would save a huge amount of developer time as they wouldn't have to produce or implement a fasta parser in their language of choice, as YAML can be natively read by most modern languages. 
 
 %\subsection{My motivation}
 %% What was your motivation and interest in this project?  
@@ -90,7 +92,7 @@ Perl is not suited to modern web development, mainly due to it's miniscule marke
 \end{center}
 \end{figure}
 
-Web development simply isn't done in Perl any more, and that means that the ecosystem surrounding it just can't compete with newer technologies such as Ruby on Rails or Node JS.
+Web development in Perl is clearly on the decline as seen by it's market share\cite{perl-market}, and that means that the ecosystem surrounding it just can't compete with newer technologies such as Ruby on Rails or NodeJS.
 
 \subsection{Analysis of the problem}
 Looking at the data that I was provided with there was three clear stages to the development of my solution. The first would be to ensure that the data I had was valid and in the same format for each of the species that were being analysed. The next was to import that data into a database, and then from there develop a web front end to interact with the data in the database. 
