@@ -7,18 +7,18 @@ const dataFiles =
       , blast: dataDir + 'tropicalis/blastx_tropicalis_codingseq_albicans_proteins.json'
       , name: 'tropicalis'
       }
-    // , { contigs: dataDir + 'boidinii/candida_boidinii.fa'
-    //   , proteins: dataDir + 'boidinii/candida_boidinii_proteins_go.fa'
-    //   , codingseq: dataDir + 'boidinii/candida_boidinii_codingseq.fa'
-    //   , blast: dataDir + 'boidinii/blastx_boidinii_codingseq_albicans_proteins.json'
-    //   , name: 'boidinii'
-    //   }
-    // , { contigs: dataDir + 'shehate/candida_shehate.fa'
-    //   , proteins: dataDir + 'shehate/candida_shehate_proteins_go.fa'
-    //   , codingseq: dataDir + 'shehate/candida_shehate_codingseq.fa'
-    //   , blast: dataDir + 'shehate/blastx_shehate_codingseq_albicans_proteins.json'
-    //   , name: 'shehate'
-    //   }
+    , { contigs: dataDir + 'boidinii/candida_boidinii.fa'
+      , proteins: dataDir + 'boidinii/candida_boidinii_proteins_go.fa'
+      , codingseq: dataDir + 'boidinii/candida_boidinii_codingseq.fa'
+      , blast: dataDir + 'boidinii/blastx_boidinii_codingseq_albicans_proteins.json'
+      , name: 'boidinii'
+      }
+    , { contigs: dataDir + 'shehate/candida_shehate.fa'
+      , proteins: dataDir + 'shehate/candida_shehate_proteins_go.fa'
+      , codingseq: dataDir + 'shehate/candida_shehate_codingseq.fa'
+      , blast: dataDir + 'shehate/blastx_shehate_codingseq_albicans_proteins.json'
+      , name: 'shehate'
+      }
     ]
     , importSpecies = require('./import.js')
     , createDatabase = require('../app/database.js')
