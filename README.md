@@ -5,18 +5,31 @@
 [![Waffle.io](https://img.shields.io/badge/Waffle%20Board-active-green.svg)](https://waffle.io/bag-man/final-year-project)
 [![Demo](https://img.shields.io/badge/Demo-live-green.svg)](http://project.owen.cymru)
 
-This is my repository for my final year project. You can read more about what I am doing in my project logs on [my blog](http://owen.cymru).
 
-### Building
+This project is based around a set of genomic data for three species of species of yeast that had been sequenced and annotated. This data is private and not included in the open source version of this repository. 
 
-    nave usemain 6.9.0
-    yarn install
+To get the application running, you need to install NodeJS via your package manager, so you have access to npm.
+
+### Setup
+
+
+    sudo npm install -g nave yarn m
+    sudo nave usemain 6.9.0
+    sudo m 3.4.4 # May require edit to mongodb service file to use /usr/local/bin/mongod.
+    sudo systemctl restart mongodb 
+    yarn install # From project root
+   
+
+### NPM utilities
+    # Import genomic data to MongoDB
+    npm run seed
+
+    # Build and launch the application
     npm run build
     npm start
 
     # Development Mode
     npm run watch
 
-### Testing
-
+    # Run tests
     npm run test

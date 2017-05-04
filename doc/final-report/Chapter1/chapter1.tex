@@ -24,7 +24,7 @@ Currently researchers have the genetic information for the three species of yeas
 
 This is why a website would be advantageous to them, as it would provide a simple and familiar user experience to other web based genome browsers such as the Candida Genome Database\cite{cgd}, which they are already familiar with and regularly use as a reference. 
 
-\section{Existing Databases}
+\subsection{Existing Databases}
 As the core of the project focuses on having the data stored in a database, the first action was to investigate the current database solutions that had been developed for genomic information. 
 
 The most well established was CHADO\cite{chado} which was initially developed back in 2005 for the FlyBase\cite{flybase} project. It has since then grown to accommodate information about other model organisms such as plants, and other complex multicellular animals. It uses PostgreSQL\cite{postgres} to store it's data and Perl\cite{perl} to setup and maintain the database. Due to it's monolithic approach of being a one size fits all solution, it has over 200 tables in a very complex schema. This makes working on it rather difficult, as there are many relations to consider when entering and manipulating data from the database.
@@ -35,7 +35,7 @@ This combined with the fact that Perl now has less market share due to the emerg
 
 Developing the application in Perl to work with these existing platforms, would be a viable option, but this project is also an opportunity to show that genomic data can be adequately handled by newer technologies such as JavaScript and NoSQL databases.
 
-\section{Alignment Tools}
+\subsection{Alignment Tools}
 The data provided by the client in this project was insufficiently documented and so it was deemed prudent to investigate how the existing data was produced. This would ensure that any new data added throughout the project was interoperable, and could be easily produced.
 
 The original alignment tool BLAST\cite{blast} was developed in the 90's and is very widely accepted as the {\it de-facto} standard for performing alignments. 
