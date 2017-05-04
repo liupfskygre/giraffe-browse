@@ -26,12 +26,24 @@ The final bit of data that needs to be added is the position of the coding seque
 \subsection{Website}
 The website will only have a few requirements: 
 
-\begin{itemize}
+\begin{enumerate}
   \item Display each record in the database in an easy to read manner. 
+
+    The first requirement, is that each document in the database can be accessed, and presented to the user. It will have to display all of the fields of the document without overwhelming the user, this is a risk as some of the sequences are very large. Links to other databases such as the GeneOntology database, and UniprotKB database will have to be made into hyperlinks for the user to easily navigate to the relevant information for the found gene. 
+
   \item Highlight coding sequence in contig if possible.
+
+    Visually representing the coding sequence inside of the raw assembled contig, is helpful for researchers to see the surrounding bases up and down stream of the coding sequence. It also allows them to see the full coding sequence with any introns (non-coding regions of bases) included. 
+
   \item Copy coding sequence and +/- a user defined number of bases to the clipboard.
-  \item Search the database for a gene, but name, description, ID, or even by nucleotide sequence. 
-\end{itemize}
+
+    The user should also be able to copy the coding sequence to their clipboard, for use in other applications. They should also be able to select a number of bases to be copied up and down the sequence. 
+
+  \item Search the database for a gene, by name, description, ID, or even by nucleotide sequence. 
+
+    The search functionality is the main aspect of the site as it is what takes the previously difficult to use data, and makes it truly accessible. The search should be flexible enough to allow for as many searches as possible without casting a too wide net. 
+\end{enumerate}
+
 
 \section{Build Process}
   One of the first things that was setup for this project was the build process. This doesn't take long to setup but provides a huge benefit for the rest of the project. It helps to reduce errors and speed up the process of deployment and testing.
@@ -45,7 +57,7 @@ The website will only have a few requirements:
   For this project the Clock Limited code standard\cite{clockstandard} will be followed. This has a few key variations to typical Javascript. 
 
   \begin{itemize}
-    \item Semicolons are not required in JS, so they are not used to denote EOL.
+    \item Semicolons are not required in JS, so they are not used to denote end of line.
     \item Strings are encapsulated with single quotes, not double. 
     \item Comma first\cite{commafirst} listing of variables, objects and arrays.
     \item No commenting, to avoid confusion, encourage descriptive naming and reduce file length.
@@ -303,7 +315,7 @@ Modifying the algorithm to search for the reverse compliment of the coding seque
 \subsubsection{Search functionality}
 Implementation of the search feature underwent several iterations, initially a search based on a regex match was implemented. This meant that each field was searched individually for any subset of the query string. This was very powerful as it would allow substrings to be found for each property of the searched for term. 
 
-An example of this would be if "glucose-6" was searched in the description field, all documents in the database with that string in the description would be returned. This could then be combined with other fields to narrow down the query. 
+An example of this would be if `glucose-6' was searched in the description field, all documents in the database with that string in the description would be returned. This could then be combined with other fields to narrow down the query. 
 
 This implementation was done during the prototyping phase to get a very basic search working for testing purposes, the reason it wasn't going to remain in the application is that a project wide regex search is very inefficient as the search has to be matched against every value int eh entire database for every single query made. Something that would have slowed down the site to unusable levels of performance.
 
