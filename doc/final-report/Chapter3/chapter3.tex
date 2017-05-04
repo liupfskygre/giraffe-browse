@@ -110,7 +110,7 @@ The first stage in designing this system was to decide upon what database techno
 
 In this project there will only be one set of data to be stored, the list of genes and their various related data. From the users perspective they will only be interacting with this set of data, they will never be trying to combine a gene with another dataset for example. 
 
-If this data was stored in a relational system like PostgreSQL, then there would need to be several tables for shared data, to store it in a normalised form. For example, there would be a contig table and each gene would store a link to the contig that it was from. This means that when a user requests to view a gene the database will have to perform a join between the gene table and the table storing the contig to retrieve all of the relevant information. This makes it harder to develop and maintain the database, as you have to consider how the data is related at all stages of the project. 
+If this data was stored in a relational system like PostgreSQL, then there would need to be several tables for shared data, to store it in a normalised form. For example, there would be a contig table and each gene would store a link to the contig that it was from. This means that when a user requests to view a gene the database will have to perform a join between the gene table and the table storing the contig to retrieve all of the relevant information. This makes it harder to develop and maintain the database, as the relations between the datasets have to be considered throughout the project. 
 
 This would be advantageous if the data was going to be updated frequently, as a piece of data only needs to be updated once, as it is only stored once. However as this project is effectively read only, the data is never going to change, this isn't an issue with MongoDB.
 
@@ -306,7 +306,7 @@ Modifying the algorithm to search for the reverse compliment of the coding seque
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.70]{code1}
+\includegraphics[scale=0.70]{code4}
 \caption{Algorithm to find coding sequence inside a contig. \label{overflow}}
 \end{center}
 \end{figure}
@@ -323,6 +323,13 @@ A better solution was to create a generic search field using MongoDB's textSearc
 The fields indexed for the text search are the gene name, protein description, Uniprot ID and Candida Genome ID. Weights are then applied to each field to determine their value when sorting the results of a search. For example a match with a Uniprot ID is weighted higher than a protein description, allowing for results that have a match to a Uniprot ID are sorted higher than those without.  
 
 With this system in place the search was functioning very well, however there was an issue, if a search returned a large amount of documents back, the sort was unable to be ran due to the default MongoDB sort buffer limit. To get around this issue the search function was re-written as an aggregate function. Aggregate\cite{aggregate} in MongoDB allows for a pipeline of steps to be applied to a query, as well as the option to use disk if memory limits are reached. 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.60]{code4}
+\caption{Function responsible for creating the aggregate search query. \label{overflow}}
+\end{center}
+\end{figure}
 
 
 % This section should discuss issues you encountered as you tried to implement your experiments. What were the results of running the experiments? What conclusions can you draw from these results? 
