@@ -81,31 +81,28 @@ An alternative approach to this project would be to use one of the existing data
 
 As a computer scientist looking at this problem, there doesn't seem to be much need for a very complex solution. Once the data is generated, the hard bit, it just needs to be made into a database friendly format and then stored in a database. From there building a simple web front end to make the database accessible is a very simple task. There isn't any need to manipulate or modify the data, simply create and read it. Because of this it seemed that the current systems were greatly over complicating matters.
 
-  \subsection{SQL vs NoSQL databases}
-
+  \subsection{Comparison of SQL and NoSQL databases}
   Structured Query Language (SQL) databases such as MariaDB, PostrgeSQL and SQLite, store data in a relational manner, this means that data is stored across many linked tables, that are grouped by the data type. They are the interfaced with via SQL to select related data from multiple tables to return a meaningful result. 
   
   \begin{itemize}
     \item SQL based systems have been used for a long time and have a large amount of support and compatibility with different frameworks. 
-    \item Efficient storage of data, not duplicated
-    \item Complex queries can be ran with relative ease
-    \item Requires a strict schema 
-    \item Development is more complex as you have to manage and maintain relations
+    \item Efficient storage of data, as data is put into first normal form and not replicated.
+    \item Complex queries can be ran with relative ease.
+    \item Requires a strict schema.
+    \item Development is more complex as you have to manage and maintain relations.
   \end{itemize}
 
-  NoSQL databases store data in collections of documents. Each collection is usually linked to a use case for the data, for example a website that has blog posts would have a "blog" collection, that stores all of the data for blog posts. The collection is made up of indivdual documents representing individual items, so the "blog" collection will store lots of individual blog posts. Each document is then made up of key value pairs, commonly represented as JSON. 
+  NoSQL databases store data in collections of documents. Each collection is usually linked to a use case for the data, for example a website that has blog posts would have a "blog" collection, that stores all of the data for blog posts. The collection is made up of individual documents representing individual items, so the "blog" collection will store lots of individual blog posts. Each document is then made up of key value pairs, commonly represented as JSON. 
 
   \begin{itemize}
-    \item Collections are based on use cases so no complex selection logic
-    \item Data is represented as JSON so it is very interoperable with JavaScript
-    \item Dynamic schema, not every document has to have the same information as the other documents in the collection
-    \item Newer technology so less legacy support
-    \item Data can be stored twice which is less efficient
+    \item Collections are based on use cases so no complex selection logic.
+    \item Data is represented as JSON so it is very interoperable with JavaScript.
+    \item Dynamic schema, not every document has to have the same information as the other documents in the collection.
+    \item Newer technology so less legacy support.
+    \item Data can be stored twice which is a less efficient use of disk space.
   \end{itemize}
 
-% There should be a clear statement of the research questions, which you will evaluate at the end of the work. 
-
-% In most cases, the agreed objectives or requirements will be the result of a compromise between what would ideally have been produced and what was felt to be possible in the time available. A discussion of the process of arriving at the final list is usually appropriate.
+The decision on which techno,logy to use is discussed in the Design section. 
 
 \section{Research Method and Software Process}
 It was intended to use a blend of agile and extreme programming methodologies for this project. The idea was to ensure that as the understanding of the task at hand increased and new requirements or changes to the structure of the application became necessary, an agile workflow would allow adaptations to be made without setting the project's progress back. 

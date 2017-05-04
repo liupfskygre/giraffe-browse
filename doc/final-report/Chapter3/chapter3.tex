@@ -94,6 +94,7 @@ The website will only have a few requirements:
 % 
 % Even though a research project is investigating specific research questions, it is still necessary for you to discuss the software that you develop. Research has a habit of generating bits of software that can exist for several years and need future modification. Therefore you need to be able to discuss the technical issues as well as the research approach. 
 
+\subsection{Choice of Database Technology}
 The first stage in designing this system was to decide upon what database technology would be used for the data store. In the Analysis section the merits and disadvantages of NoSQL and SQL solutions were highlighted in generic terms. For this project there is a focus on using modern web development technologies, and MongoDB (A NoSQL database solution) fits this well, as it stores data based on use case. 
 
 In this project there will only be one set of data to be stored, the list of genes and their various related data. From the users perspective they will only be interacting with this set of data, they will never be trying to combine a gene with another dataset for example. 
@@ -104,47 +105,45 @@ This would be advantageous if the data was going to be updated frequently, as a 
 
 This choice was also influenced by the choice of server side language, which for this project will be NodeJS. 
 
-NodeJS was chosen because:
+\subsection{Choice of Server Side Technology}
+NodeJS was chosen for several reasons, firstly as both server side and client side portions of the code are written in JavaScript, it is easier to develop, since you are working with one unified language. 
 
-\begin{itemize}
-  \item Client and server side languages are the same.
-  \item Integrates well with MongoDB as it uses BSON which works with native JSON.
-  \item Provides easy package management via npm.
-  \item ES6 syntax is very nice.
-  \item I have a lot of experience with it and learning a new language is outside of the scope of the project.
-\end{itemize}
+It also works very well with MongoDB as, MongoDB represents it's data as JSON objects, which are native to JavaScript, this makes querying and operating on data returned via MongoDB much easier, as it is already in a format native to the language. 
+
+NodeJS has a very good packaging system, called Node Package Manager (npm), the npm repository has access to the largest collection of software packages, as well as being very easy to use and maintain package lists thanks to the package.json file, which is automatically updated when new modules are used. 
+
+JavaScript has historically been looked down on due in part to it's syntax and type system, however with the latest stable specification\cite{es6} (ES6) of the language a lot of these issues have been addressed. 
 
 As outlined in Ioannis K. Chaniotis et al's paper, `Our study concludes that Node.js offers client-server development integration, aiding code reusability in web applications, and is the perfect tool for developing fast, scalable network applications.'\cite{node-perf}
 
-The website for this interface will be built off of nodestack\cite{nodestack}, a set of boilerplate code that uses several technologies including:
+In addition to this I have a lot of prior experience with the language and ecosystem, which reduces the barriers to development that learning a new language would create. 
 
+\subsubsection{Nodestack}
+As well as NodeJS the project will also be utilising a set of boilerplate code called \cite{nodestack}. This code helps to setup a project and provides many extra features to the basic NodeJS stack. 
 
-\begin{itemize}
-  \item Node JS / ES6
+\subsubsection*{Node JS / ES6}
 
-    "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world."\cite{node-org}
-    Since Node >4.0 it has supported the ES6 standard, which provides a lot of syntactic sugar, and makes the formatting of the code a lot easier to read and write. 
-  \item Webpack
+"Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosysubsubsection*{of open source libraries in the world."\cite{node-org}
+    Since Node \textgreater4.0 it has supported the ES6 standard, which provides a lot of syntactic sugar, and makes the formatting of the code a lot easier to read and write. 
+    \subsubsection*{Webpack}
     
     Webpack is a module bundler that allows for easy packaging of client side javascript. It allows the client side javascript to be written in ES6, then when built it will transpile the ES6 code into more widely supported ES2015 code, minify it for efficient, and package it into one single file. This means that the code can be written in a nicely organised manner across multiple files in ES6, and then reduced to one small file for actual usage. 
 
-  \item Mongoose
+    \subsubsection*{Mongoose}
 
     Mongoose is an Object Data Manager, it allows developers to define schema's and validation for their data objects as well as extensible models for those objects. This makes interactions with MongoDB a lot simpler, as well as easy enforcement of validation rules.
 
-  \item Pug
+    \subsubsection*{Pug}
 
     Pug is an HTML templating language that allows developers to write HTML with dynamic variables from the server side, and include some logic elements. The main benefit is that it has a much cleaner syntax than HTML so it is a lot easier to read and write. 
 
-  \item Stylus
+    \subsubsection*{Stylus}
 
     Stylus is an expressive CSS language that, like Pug and ES6, improves the syntax of CSS by minimising unnecessary elements. It has many other advantages over CSS, although for this project they aren't likely to be utilised as the front end design work of this project will be minimal. 
 
-  \item Bootstrap
+    \subsubsection*{Bootstrap}
 
     Bootstrap is a CSS and JS framework that is aimed at making responsive websites easier to write. With the addition of bootstrap to the project adapting the front end to work on mobile will be minimal. It also adds useful features for laying out the page and some attractive default CSS. 
-\end{itemize}
-
 
 Using this boilerplate will save a huge amount of time in development as the basic framework of the web application is already laid out, so the development time can be focussed on developing software to meet the functional requirements rather than investing time in setting up a good web framework. 
 
@@ -189,27 +188,16 @@ That data will then be inserted into MongoDB, and an index built on the searchab
 \end{lstlisting}
 
     
-
-% The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
-
-% Typically, for an object-oriented design, the discussion will focus on the choice of objects and classes and the allocation of methods to classes. The use made of reusable components should be described and their source referenced. Particularly important decisions concerning data structures usually affect the architecture of a system and so should be described here.
-
-% How much material you include on detailed design and implementation will depend very much on the nature of the project. It should not be padded out. Think about the significant aspects of your system. For example, describe the design of the user interface if it is a critical aspect of your system, or provide detail about methods and data structures that are not trivial. Do not spend time on long lists of trivial items and repetitive descriptions. If in doubt about what is appropriate, speak to your supervisor.
- 
-% You should also identify any support tools that you used. You should discuss your choice of implementation tools - programming language, compilers, database management system, program development environment, etc.
-
-% Some example sub-sections may be as follows, but the specific sections are for you to define. 
-
 \subsection{Overall Architecture}
-As the application only has one data object to model, the architecture isn't that complex. However it is still beneficial to follow good design principles which is why a traditional Model View Controller (MVC) design pattern was followed. 
+As the application only has one data object to model, the architecture isn't that complex. However it is still beneficial to follow good design principles which is why a traditional Model View Controller (MVC) design pattern\cite{mvc} was followed. 
 
 The MVC design pattern allows for each data object that is being modelled to have three components, a model which defines the data's structure and it's functionality, a controller that is how the application interacts with that model, and finally a view, which is what is displayed to the user and how they interact with the model. For example a user may click on a gene, which sends a request to the controller, the controller then requests that gene from the model, which in turn updates the view, that the user can then see the gene that they had selected. 
 
 Abstracting the functionality of the project out into these three components allows for the development to be a lot easier to manage and work with, than having one monolithic class to handle the entire functionality of a data object. 
 
-There will only be two routes in the application, one to the home page, which will simply list the first 100 results in the database, mainly to show the user what search results look like, before they have searched. 
+There will only be two routes in the application, one to the home page, which will simply display a splash page with some user information on, and another route handles searching and viewing genes, this will be done by have a URL parameter for the gene ID in the database. 
 
-The other route handles searching and viewing genes, this will be done by have a URL parameter for the gene ID in the database. If this is present then the view to display a gene in full will be displayed to the user. If it isn't present then a search must have been performed and the query string in the URL will provide the options for the search. A search will return just a few key fields for each search results and then display the results in a list.   
+If this is present then the view to display a gene in full will be displayed to the user. If it isn't present then a search must have been performed and the query string in the URL will provide the options for the search. A search will return just a few key fields for each search results and then display the results in a list.   
 
 When viewing a gene, the coding sequence will have to be highlighted inside of the contig, to do this the coding range that was determined when the data was imported will be used to select the substring. 
 
