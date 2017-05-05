@@ -1,19 +1,21 @@
 \chapter{Completion and deployment}
 
 \subsection{Deployment to production}
-Once the application had been through several development iterations and was nearing completion, it was presented to the researchers for signing off, and discussions about deployment and maintenance. A couple of changes were requested, first a splash page that provided a place for information about the project to be listed, secondly, they wanted the website to be password protected. 
+Once the application had been through several development iterations and was nearing completion, it was presented to the researchers for signing off, discussions about deployment and maintenance provisions. A couple of changes were requested, first a splash page that provided a place for information about the project to be listed, secondly, they wanted the website to be password protected. 
 
-These changes were quickly implemented and the project was deployed to a Virtual Machine (VM) on the universities network. To ensure the stability of the service, it was put behind a Varnish\cite{varnish} cache.
+These changes were quickly implemented as a temporary measure to demonstrate that the requirements could be met, however they do need revisiting as the splash page requires some more design work based on feedback with the clients, and the password authentication system is simple a HTTP Basic Auth login, which isn't a very secure or flexible system. 
 
-Doing this enabled caching on all of the responses from the webserver to client requests, meaning that if a request has already had a response processed for it, then a cached version will be served from Varnish rather than adding load to the NodeJS application. This speeds up the site as data can be immediately returned, once it has been processed already.
+The project was deployed to a Virtual Machine (VM) on the universities network. To ensure the stability of the service, it was put behind a Varnish\cite{varnish} cache. Doing this enabled caching on all of the responses from the webserver to client requests, meaning that if a request has already had a response processed for it, then a cached version will be served from Varnish rather than adding load to the NodeJS application. This speeds up the sites response time as data can be immediately returned, once it has been processed already.
 
-A systemd\cite{systemd} service file was also written and installed on the server for the NodeJS process, this enables the application to be controlled from systemd. This is done so that the application can be started at boot time, as well as monitored, restarted and stopped from the systemd interface. 
+A systemd\cite{systemd} service file was also written and installed on the server for the NodeJS process, this enables the application to be controlled from systemd. This is done so that the application can be started at boot time, as well as monitored, restarted and stopped from the systemd interface; which is how all the other services on the VM are controlled.
 
 One difficulty faced during this deployment was the versioning on MongoDB, provided by the OS on the VM. The application had been developed on Arch Linux which provides a recent version (3.4) of MongoDB in it's package manager, however on the VM which was running Ubuntu, the package was for version 2.6, that doesn't support the new wiredTiger\cite{tiger} storage engine. 
 
-Initially it was spotted that the MongoDB version was different, and corrected it by installing version 3.4. However when data was entered into the database, it was taking up around three times as much room, filling up the VM's disk space. 
+The difference in versions was noted initially, and corrected by installing version 3.4. However when data was entered into the database, it was taking up around three times as much room, filling up the VM's disk space. 
 
-To correct this you have to manually update the storage engine and create a new database directory in the MongoDB configuration. Once this was done the data was imported correctly, taking up the expected amount of storage. 
+To correct this a manual process of updating the storage engine and database directory in the MongoDB configuration was necessary. This enabled the data to be imported correctly, taking up the expected amount of storage. 
+
+With the deployment complete, the README.md file in the project was updated to reflect the steps necessary to replicate a full deployment, so that other developers could replicate the production environment. 
 
 % This section should discuss issues you encountered as you tried to implement your experiments. What were the results of running the experiments? What conclusions can you draw from these results? 
 
