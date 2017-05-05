@@ -19,14 +19,14 @@ The database has to store the following information for each hit from the alignm
   \item If it can be found, the positions of the start and end of the coding sequence in the raw contig. 
 \end{itemize}
 
-From these requirements it is clear there are a few pieces of data that need to be extracted from the data that has been collated. For each alignment with \textit{C. albicans} the protein sequence and GO annotations need to found, the coding sequence that was used in the alignment and the contig that it came from. In addition to this the metadata about the genes such as the name and ID's need to be read from the mapping file that was created earlier. 
+From these requirements it is clear there are a few pieces of data that need to be extracted from the data that has been collated. For each alignment with \textit{C. albicans} the protein sequence and GO annotations need to found, the coding sequence that was used in the alignment and the contig that it came from. In addition to this, the metadata about the genes such as the name and ID's need to be read from the mapping file that was created earlier. 
 
 The final bit of data that needs to be added is the position of the coding sequence in the contig. An algorithm will have to be developed to detect this.
 
 \subsection{Website}
-The website will only have a few requirements: 
+The website will only have a few funcitonal requirements: 
 
-\begin{enumerate}
+\begin{enumerate}[label=FR\arabic*]
   \item Display each record in the database in an easy to read manner. 
 
     The first requirement, is that each document in the database can be accessed, and presented to the user. It will have to display all of the fields of the document without overwhelming the user, this is a risk as some of the sequences are very large. Links to other databases such as the GeneOntology database, and UniprotKB database will have to be made into hyperlinks for the user to easily navigate to the relevant information for the found gene. 
