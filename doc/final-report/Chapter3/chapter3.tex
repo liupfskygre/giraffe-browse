@@ -70,7 +70,7 @@ The website will only have a few requirements:
 
     When pushing code to Github, a module called Husky\cite{husky} will run the test suite on the developers local machine. If the tests fail, the code will not be pushed.
 
-  \subsection{Test suite}
+  \subsection{Test Suite}
     The test suite is set up to first clean the project of old builds and coverage reports, then run ESlint\cite{eslint}. This will scan the entire codebase for files that do not adhere to the code style. This means that any badly formatted code will cause an error and prevent the code from being pushed until the issues are fixed.
 
     After the linting check, the test suite will use Mocha\cite{mocha} to run all of the JavaScript test files that are in the project. If any of the assertions made in the test files fail, the project will not be pushed. 
@@ -199,7 +199,7 @@ That data will then be inserted into MongoDB, and an index built on the searchab
 \end{lstlisting}
 
     
-\subsection{Overall Architecture}
+\subsection{Website Architecture}
 As the application only has one data object to model, the architecture isn't that complex. However it is still beneficial to follow good design principles which is why a traditional Model View Controller (MVC) design pattern\cite{mvc} was followed. 
 
 The MVC design pattern allows for each data object that is being modelled to have three components, a model which defines the data's structure and it's functionality, a controller that is how the application interacts with that model, and finally a view, which is what is displayed to the user and how they interact with the model. For example a user may click on a gene, which sends a request to the controller, the controller then requests that gene from the model, which in turn updates the view, that the user can then see the gene that they had selected. 
