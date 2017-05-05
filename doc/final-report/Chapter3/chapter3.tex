@@ -107,43 +107,45 @@ The website will only have a few funcitonal requirements:
 % Even though a research project is investigating specific research questions, it is still necessary for you to discuss the software that you develop. Research has a habit of generating bits of software that can exist for several years and need future modification. Therefore you need to be able to discuss the technical issues as well as the research approach. 
 
 \subsection{Choice of Database Technology}
-The first stage in designing this system was to decide upon what database technology would be used for the data store. In the Analysis section the merits and disadvantages of NoSQL and SQL solutions were highlighted in generic terms. For this project there is a focus on using modern web development technologies, and MongoDB (A NoSQL database solution) fits this well, as it stores data based on use case. 
+The first stage in designing this system was to decide upon what database technology would be used for the data store. In the Analysis section the merits and disadvantages of NoSQL and SQL solutions were highlighted in generic terms. For this project there is a focus on using modern web development technologies, and MongoDB (A NoSQL database solution) fits this well, as it stores data based on use case, which fits well with the MVC design pattern, as typically each Model in the design refers to a use case. 
 
-In this project there will only be one set of data to be stored, the list of genes and their various related data. From the users perspective they will only be interacting with this set of data, they will never be trying to combine a gene with another dataset for example. 
+In this project there will only be one set of data to be stored, the list of genes and their various related data. From the users perspective they will only be interacting with this set of data, they will never be trying to combine a gene with another dataset for example. The only use case for this data then is to be displayed. 
 
 If this data was stored in a relational system like PostgreSQL, then there would need to be several tables for shared data, to store it in a normalised form. For example, there would be a contig table and each gene would store a link to the contig that it was from. This means that when a user requests to view a gene the database will have to perform a join between the gene table and the table storing the contig to retrieve all of the relevant information. This makes it harder to develop and maintain the database, as the relations between the datasets have to be considered throughout the project. 
 
 This would be advantageous if the data was going to be updated frequently, as a piece of data only needs to be updated once, as it is only stored once. However as this project is effectively read only, the data is never going to change, this isn't an issue with MongoDB.
 
-This choice was also influenced by the choice of server side language, which for this project will be NodeJS. 
+This choice was also influenced by the choice of server side language, which for this project will be Node.js. 
 
 \subsection{Choice of Server Side Technology}
-NodeJS was chosen for several reasons, firstly as both server side and client side portions of the code are written in JavaScript, it is easier to develop, since you are working with one unified language. 
+Node.js was chosen for several reasons, firstly as both server side and client side portions of the code are written in JavaScript, it is easier to develop, since you are working with one unified language. 
 
-It also works very well with MongoDB as, MongoDB represents it's data as JSON objects, which are native to JavaScript, this makes querying and operating on data returned via MongoDB much easier, as it is already in a format native to the language. 
+It also works very well with MongoDB, as MongoDB represents it's data as JSON objects, which are native to JavaScript. This makes querying and operating on data returned via MongoDB much easier, as it is already in a format native to the language. 
 
-NodeJS has a very good packaging system, called Node Package Manager (npm), the npm repository has access to the largest collection of software packages, as well as being very easy to use and maintain package lists thanks to the package.json file, which is automatically updated when new modules are used. 
+Node.js has a very good packaging system, called Node Package Manager (npm), the npm repository has access to the largest collection\cite{modulecounts} of software packages, as well as being very easy to use and maintain thanks to the package.json file, which is automatically updated when new modules are used. 
 
-JavaScript has historically been looked down on due in part to it's syntax and type system, however with the latest stable specification\cite{es6} (ES6) of the language a lot of these issues have been addressed. 
+JavaScript has historically been looked down on due in part to it's syntax and type system, however with the latest stable specification\cite{es6} (ES6) of the language, a lot of these issues have been addressed. 
 
-As outlined in Ioannis K. Chaniotis et al's paper, `Our study concludes that Node.js offers client-server development integration, aiding code reusability in web applications, and is the perfect tool for developing fast, scalable network applications.'\cite{node-perf}
+As outlined in Ioannis K. Chaniotis et al's paper, `A study on the viability of Node.js for web development from the perspective of performance.', they state that `Our study concludes that Node.js offers client-server development integration, aiding code reusability in web applications, and is the perfect tool for developing fast, scalable network applications.'\cite{node-perf}
 
-In addition to this I have a lot of prior experience with the language and ecosystem, which reduces the barriers to development that learning a new language would create. 
+In addition to this there is a lot of prior experience with the language and ecosystem, which reduces the barriers to development that learning a new language would create. 
 
 \subsubsection{Nodestack}
-As well as NodeJS the project will also be utilising a set of boilerplate code called \cite{nodestack}. This code helps to setup a project and provides many extra features to the basic NodeJS stack. 
+As well as Node.js the project will also be utilising a set of boilerplate code called Nodestack\cite{nodestack}. This code helps to setup a web service and provides many extra features to the basic Node.js stack. 
 
-\subsubsection*{Node JS / ES6}
+\subsubsection*{Node.js / ES6}
 
-"Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosysubsubsection*{of open source libraries in the world."\cite{node-org}
-    Since Node \textgreater4.0 it has supported the ES6 standard, which provides a lot of syntactic sugar, and makes the formatting of the code a lot easier to read and write. 
+`Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem open source libraries in the world.'\cite{node-org}
+
+    Since Node \textgreater4.0 it has supported the ES6 standard, which provides a lot of syntactic sugar, and makes the formatting of the code a lot easier to read and write. This is also supported for the client side code via the babel transpiler, which compiles ES6 code into the more widely supported ES2015 standard.
+
     \subsubsection*{Webpack}
     
     Webpack is a module bundler that allows for easy packaging of client side javascript. It allows the client side javascript to be written in ES6, then when built it will transpile the ES6 code into more widely supported ES2015 code, minify it for efficient, and package it into one single file. This means that the code can be written in a nicely organised manner across multiple files in ES6, and then reduced to one small file for actual usage. 
 
     \subsubsection*{Mongoose}
 
-    Mongoose is an Object Data Manager, it allows developers to define schema's and validation for their data objects as well as extensible models for those objects. This makes interactions with MongoDB a lot simpler, as well as easy enforcement of validation rules.
+    Mongoose is an Object Data Manager, it allows developers to define schemas and validation for their data objects as well as extensible models for those objects. This makes interactions with MongoDB a lot simpler, as well as easy enforcement of validation rules.
 
     \subsubsection*{Pug}
 
@@ -164,13 +166,13 @@ For more detail on how the boiler plate works, you can read the guide here: \url
 \subsection{Database Import}
 To import the genenomic data into the database from the fasta file format, a script will be written that will use a npm module called fasta2json\cite{fasta2json} to read the fasta files into JSON format. 
 
-From there it will use the blast results generated by the diamond script to look up the cotnig, coding sequence, and amino acid sequence (protein) for each of the blast results. 
+From there it will use the alignment results generated by the Diamond script to look up the contig, coding sequence, and amino acid sequence (protein) for each of the alignment results. 
 
-It will also compare the hit ID with the mappings file that was produced to get the ID's for the equivalent Uniprot and Candida Genome Database hits, if they are available. 
+It will also compare the hit ID with the mappings file that was produced to get the ID's for the equivalent UniProt and Candida Genome Database hits, if they are available. 
 
-That data will then be inserted into MongoDB, and an index built on the searchable fields. This index will allow for a very fast and efficient search for the key fields that will be searched for in the database, description, gene name and ID's.
+That data will then be inserted into MongoDB, and an index built on the searchable fields. This index will allow for a very fast and efficient search for the key fields that will be searched for in the database; description, gene name and ID's.
 
-\begin{lstlisting}[caption=The database schema that will represent the hit object]
+\begin{lstlisting}[caption=The database schema that will represent a gene in the database.]
   { id: Schema.ObjectId
   , hitid: String
   , species: String
@@ -205,18 +207,18 @@ As the application only has one data object to model, the architecture isn't tha
 
 The MVC design pattern allows for each data object that is being modelled to have three components, a model which defines the data's structure and it's functionality, a controller that is how the application interacts with that model, and finally a view, which is what is displayed to the user and how they interact with the model. For example a user may click on a gene, which sends a request to the controller, the controller then requests that gene from the model, which in turn updates the view, that the user can then see the gene that they had selected. 
 
-Abstracting the functionality of the project out into these three components allows for the development to be a lot easier to manage and work with, than having one monolithic class to handle the entire functionality of a data object. 
+Abstracting the functionality of the project out into these three components allows for the development to be a lot easier to manage and work with, than having one monolithic class to handle the entire functionality of a gene.
 
-There will only be two routes in the application, one to the home page, which will simply display a splash page with some user information on, and another route handles searching and viewing genes, this will be done by have a URL parameter for the gene ID in the database. 
+There will only be two routes in the application, one to the home page, which will simply display a splash page with some information about the website and project on, and another route that handles searching and viewing genes, this will be done by having a URL parameter for the gene ID in the database. 
 
-If this is present then the view to display a gene in full will be displayed to the user. If it isn't present then a search must have been performed and the query string in the URL will provide the options for the search. A search will return just a few key fields for each search results and then display the results in a list.   
+If this parameter is present then the view to display a gene in full will be displayed to the user. If it isn't present then a search must have been performed and the query string in the URL will provide the options for the search. A search will return just a few key fields for each search result and then display the results in a list.   
 
-When viewing a gene, the coding sequence will have to be highlighted inside of the contig, to do this the coding range that was determined when the data was imported will be used to select the substring. 
+When viewing a gene, the coding sequence will have to be highlighted inside of the contig. To do this the coding range that was determined when the data was imported will be used to select the substring, and then some client side JavaScript will modify the HTML to wrap the coding sequence inside of a span tag. 
 
 As the coding sequences are stored in the database in only one compliment, there will be a reverse compliment button to reverse the compliment of the coding sequence. This is useful if the coding sequence is highlighted in the contig as the reverse compliment, it will allow the users to check that the data is correct. 
 
 \subsection{User Interface}
-Before building the user interface for this project, I examined several other similar sites to see what information they were displaying and how it was laid out. The first was the Candida Genome Database\cite{cgd} and it's "Locus" page. It lists column headings on the left, and the the infromation on the right. This design is easy to read and doesn't clutter up the page too much.
+Before building the user interface for this project, server other similar sites were examined to see what information they were displaying and how it was laid out. The first was the Candida Genome Database\cite{cgd} and it's locus page. It lists column headings on the left, and the the infromation on the right. This design is easy to read and doesn't clutter up the page too much.
 
 \begin{figure}[H]
 \begin{center}
@@ -243,9 +245,9 @@ The focus for this design was to make it as simple to implement and use as possi
 
 There are only two main pages on the website, a search view, and a locus page for specific genes. These share the same template, and adapt based on the data provided to them. The tasks for these pages are simply to display the data in the database, and provide a form to query it.
 
-Tooltips were used to display information about each row. As the site is only going to be used by a couple of researchers there wasn't much benefit to creating a help section or a how to guide on how to use the site, as firstly it has been changing a lot during development and secondly it is quicker to just have a direct conversation with them about areas that they might not understand. However if in the future this were to become a public service, I would create an extra information page that lists more background information about the project, the data and how the website is to be used. 
+Tooltips were used to display information about each row. As the site is only going to be used by a couple of researchers there wasn't much benefit to creating a help section or a how to guide on how to use the site, as firstly it has been changing a lot during development and secondly it is quicker to just have a direct conversation with them about areas that they might not understand. However if in the future this were to become a public service, the home splash page would be updated to provide more information to external users.
 
-The page was constructed with bootstrap's\cite{bootstrap} grid system, which allows the content to be dynamically repositioned to fit different size displays.
+The page was constructed with bootstraps\cite{bootstrap} grid system, which allows the content to be dynamically repositioned to fit different size displays.
 
 \begin{figure}[H]
 \begin{center}
@@ -276,24 +278,24 @@ The page was constructed with bootstrap's\cite{bootstrap} grid system, which all
 \end{figure}
 
 \section{Implementation}
-During the investigation into the data, many issues were encountered. Mainly due to a lack of understanding of what the data meant, and how it was produced. Initially the plan was to take the raw contigs for each species and use diamond to align them against the NCBI nr database. Then from those results link the data back to the Candida Genome Database via the RefSeq ID's that the NCBI nr database uses. However it was later discovered that there was an annotated set of blast data in the provided data, meaning that this step was no longer necessary.
+During the investigation into the data, many issues were encountered. Mainly due to a lack of understanding of what the data meant, and how it was produced. Initially the plan was to take the raw contigs for each species and use diamond to align them against the NCBI nr database. Then from those results link the data back to the Candida Genome Database via the RefSeq ID's that the NCBI nr database uses. However it was later discovered that there was an annotated set of aligned data in the provided data, meaning that this step was no longer necessary.
 
-A prototype was built around this blast data, however it was then realised that the data for \textit{C. boidinii} was not aligned against the NCBI nr database, but rather another unknown data set. This meant that to pursue this line of prototyping a replacement dataset for \textit{C. boidinii} would have to be made, or reproduce all three with another pipeline, as the results from the alignments weren't consistent. 
+A prototype was built around this alignment data, however it was then realised that the data for \textit{C. boidinii} was not aligned against the NCBI nr database, but rather another unknown data set. This meant that to pursue this line of prototyping a replacement dataset for \textit{C. boidinii} would have to be made, or alternatively reproduce all three datasets with another pipeline, as the results from the alignments weren't consistent. 
 
 The core problem was that it was unknown what tools had been used to produce this data as there was no accompanying documentation. It appeared that a proprietary tool blast2go\cite{blast2go} had been used to align and annotate the data. However after using a trial copy to try and replicate the results it was evident that this tool had not actually been used to create the alignments with the NCBI nr database. 
 
-Eventually it became clear that the alignment had just been performed with the BLAST tool, on the universities high performance cluster, with an XML format that wasn't known to have been an options at the time. This meant that the data could actually be reproduced quite easily with Diamond, using the newly discovered XML output that BLAST offers.
+Eventually it became clear that the alignment had been performed with the BLAST tool, on the universities high performance cluster, with an XML format that wasn't known to have been an option at the time. This meant that the data could actually be reproduced quite easily with Diamond, using the newly discovered XML output that BLAST alignments offer.
 
 After these revelations, and another meeting with the researchers, we discovered in the original datasets that there were in fact already annotated protein sequence files and coding sequence files.
 
 \subsection{Collating the data, and linking it to Candida Genome Database}
 This meant that the data was already processed and largely annotated already. There was however one missing piece which was the link back to the Candida Genome Database (CGD), something that would be invaluable to the researchers who were already familiar with the CGD. 
 
-Because of this, thankfully the weeks of effort spent learning about alignments and annotations weren't wasted, as a new alignment was needed to be produced, the coding sequences in the data set against the proteins found in \textit{C. albicans}, the latter being provided by CGD\cite{albicans}. 
+Because of this, thankfully the weeks of effort spent learning about alignments and annotations weren't wasted, as a new alignment was needed to be produced, using the coding sequences in the data set against the proteins found in \textit{C. albicans}, the latter being provided by CGD\cite{albicans}. 
 
-This data generated was then able to be used to link the coding sequences found in our data sets to the well documented genes in \textit{C. albicans}. In addition to this the other annotations provided by the original dataset, such as Gene Ontology ID's, are able to be enhanced by using a mapping from the Candida Genome Database to get UniprotKB ID's which offer even more information on the known genes. 
+This data generated was then able to be used to link the coding sequences found in the data sets to the well documented genes in \textit{C. albicans}. In addition to this the other annotations provided by the original dataset, such as Gene Ontology ID's, are able to be enhanced by using a mapping from the Candida Genome Database to get UniProt ID's which offer even more information on the known genes. 
 
-Now each species had, the raw assembled contigs, the coding sequences, the amino acid sequences, the annotated protein information, a link to the Candida Genome Database, and in some cases a link to the UniprotKB database.
+Now each species had, the raw assembled contigs, the coding sequences, the amino acid sequences, the annotated protein information, a link to the Candida Genome Database, and in some cases a link to the UniProt database.
 
 
 \subsection{Finding the coding sequence in the contig}
@@ -301,9 +303,9 @@ The next key piece of information to recover that would be of great use to the r
 
 To do this mock data was produced manually, that contained the correct results, and unit tests made to check if a dummy function was returning the correct results as defined in the mock data. Then an algorithm was developed to find the position of a coding sequence inside a contig. 
 
-The initial algorithm was only finding around fifty percent of the genes in the dataset. After some discussions with my supervisor, it became apparent that the reason for this is that the coding sequences were stored "in one direction", but the alignment results were finding genes that were the reverse compliment of that. This explains why around fifty percent of the genes weren't found. 
+The initial algorithm was only finding around fifty percent of the genes in the dataset. After some discussions with the supervisor, it became apparent that the reason for this is that the coding sequences were stored in one commpliment, but the alignment results were finding genes that were the reverse compliment of that. This explains why around fifty percent of the genes weren't found. 
 
-Modifying the algorithm to search for the reverse compliment of the coding sequence if it wasn't found "the first way", resulted in every gene being detected. The algorithm, simply found the index of the first twelve bases of the coding sequence in the contig, and the last twelve bases of the coding sequence in the contig. If the start or end couldn't be found it was assumed that the gene was spread across two contigs and the start or end respectively were marked to indicate that the gene was split across two contigs. 
+Modifying the algorithm to search for the reverse compliment of the coding sequence if it wasn't found at first, resulted in every gene being detected. The algorithm, simply found the index of the first twelve bases of the coding sequence in the contig, and the last twelve bases of the coding sequence in the contig. If the start or end couldn't be found it was assumed that the gene was spread across two contigs and the start or end respectively were marked to indicate that the gene was split across two contigs. 
 
 \begin{figure}[H]
 \begin{center}
@@ -317,20 +319,22 @@ Implementation of the search feature underwent several iterations, initially a s
 
 An example of this would be if `glucose-6' was searched in the description field, all documents in the database with that string in the description would be returned. This could then be combined with other fields to narrow down the query. 
 
-This implementation was done during the prototyping phase to get a very basic search working for testing purposes, the reason it wasn't going to remain in the application is that a project wide regex search is very inefficient as the search has to be matched against every value int eh entire database for every single query made. Something that would have slowed down the site to unusable levels of performance.
+This implementation was done during the prototyping phase to get a very basic search working for testing purposes, the reason it wasn't going to remain in the application is that a project wide regex search is very inefficient as the search has to be matched against every value in the entire database for every single query made. This would have resulted in search operations on teh website being too slow to be functional.
 
 A better solution was to create a generic search field using MongoDB's textSearch\cite{textsearch} feature, that utilises pre-compiled indexes to lookup data in a much more advanced manner. Indexing is quite an intensive task, however for this application where the data is only being read from the service, there is only a need to generate an index once, when the data is being imported to the database, this means the negative impact of an index isn't really in effect, as the import stage is a one time event. 
 
-The fields indexed for the text search are the gene name, protein description, Uniprot ID and Candida Genome ID. Weights are then applied to each field to determine their value when sorting the results of a search. For example a match with a Uniprot ID is weighted higher than a protein description, allowing for results that have a match to a Uniprot ID are sorted higher than those without.  
+The fields indexed for the text search are the gene name, protein description, UniProt ID and Candida Genome Database ID. Weights are then applied to each field to determine their value when sorting the results of a search. For example a match with a UniProt ID is weighted higher than a protein description, allowing for results that have a match to a UniProt ID to be displayed higher in the search results, than those without.
 
-With this system in place the search was functioning very well, however there was an issue, if a search returned a large amount of documents back, the sort was unable to be ran due to the default MongoDB sort buffer limit. To get around this issue the search function was re-written as an aggregate function. Aggregate\cite{aggregate} in MongoDB allows for a pipeline of steps to be applied to a query, as well as the option to use disk if memory limits are reached. 
+With this system in place the search was functioning very well, however there was an issue, if a search returned a large amount of documents back, the sort was unable to be ran due to the default MongoDB sort buffer limit being too small to handle the number of results returned. To get around this issue the search function was re-written as an aggregate function. Aggregate\cite{aggregate} in MongoDB allows for a pipeline of steps to be applied to a query, as well as the option to use disk if memory limits are reached. 
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.60]{code4}
+\includegraphics[scale=0.60]{code3}
 \caption{Function responsible for creating the aggregate search query. \label{overflow}}
 \end{center}
 \end{figure}
+
+This fixed the sorting bug, and ensures that all of the correct results for a query are returned, while still maintaining a high level of performance. 
 
 
 % This section should discuss issues you encountered as you tried to implement your experiments. What were the results of running the experiments? What conclusions can you draw from these results? 
@@ -342,7 +346,7 @@ With this system in place the search was functioning very well, however there wa
 % If you had multiple experiments to run, it may be sensible to discuss each experiment in separate sections. 
 
 \section{Testing}
-Initially it was planned to develop this application in a test driven manner, as it leads to high quality code and stable solutions. 
+Initially it was planned to develop this application in a test driven manner, as it can help to produce high quality code and stable solutions. 
 
 The difficulty with this approach was that when developing prototypes rapid development is key, as it allows you to try out many different solutions. If a strict TDD pattern was followed during this phase the prototyping would have been drastically slowed as the amount of development work would have doubled. Unfortunately this wasn't a worthy endeavour as time was limited and developing tests for prototype code that may never end up in the final codebase was not going to be feasible.
 
