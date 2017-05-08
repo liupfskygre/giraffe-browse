@@ -4,7 +4,7 @@
 There are two main components to the software being developed for this project. The first is the manipulation of the data into a database, and the second is a web front end for the data to be accessed via. 
 
 \subsection{Database}
-The database has to store the following information for each hit from the alignment with \textit{C. albicans}:
+The database will store data about every successful alignment of a coding sequence from one of the species to a known protein found in \textit{C. albicans}. Each one of these alignments will hence forth be referred to as a `hit'. The database has to store the following information for each hit from the alignment with \textit{C. albicans}:
 
 \begin{itemize}
   \item ID of the hit that was found when the species coding sequences have been aligned with \textit{C. albicans}.
@@ -24,7 +24,7 @@ From these requirements it is clear there are a few pieces of data that need to 
 The final bit of data that needs to be added is the position of the coding sequence in the contig. An algorithm will have to be developed to detect this.
 
 \subsection{Website}
-The website will only have a few funcitonal requirements: 
+The website will have the following functional requirements: 
 
 \begin{enumerate}[label=FR\arabic*]
   \item Display each record in the database in an easy to read manner. 
@@ -49,7 +49,7 @@ The website will only have a few funcitonal requirements:
 \subsection{Choice of Database Technology}
 The first stage in designing this system was to decide upon what database technology would be used for the data store. In the Analysis section the merits and disadvantages of NoSQL and SQL solutions were highlighted in generic terms. For this project there is a focus on using modern web development technologies, and MongoDB (A NoSQL database solution) fits this well, as it stores data based on use case, which fits well with the MVC design pattern, as typically each Model in the design refers to a use case. 
 
-In this project there will only be one set of data to be stored, the list of genes and their various related data. From the users perspective they will only be interacting with this set of data, they will never be trying to combine a gene with another dataset for example. The only use case for this data then is for it to be displayed. 
+In this project there will only be one set of data to be stored, the list of genes and their various related data. From the user's perspective they will only be interacting with this set of data, they will never be trying to combine a gene with another dataset for example. The only use case for this data then is for it to be displayed. 
 
 If this data was stored in a relational system like PostgreSQL, then there would need to be several tables for shared data, to store it in a normalised form. For example, there would be a contig table and each gene would store a link to the contig that it was from. This means that when a user requests to view a gene, the database will have to perform a join between the gene table and the table storing the contig to retrieve all of the relevant information. This makes it harder to develop and maintain the database, as the relations between the datasets have to be considered throughout the project. 
 
@@ -62,18 +62,18 @@ This choice was also influenced by the choice of server side language, which for
 
 Node.js was chosen for several reasons, firstly as both server side and client side portions of the code are written in JavaScript, it is easier to develop, since you are working with one unified language. Rather than having to learn to use and build a server side language as well as JavaScript.
 
-It also works very well with MongoDB, as MongoDB represents it's data as JSON objects, which are native to JavaScript. This makes querying and operating on data returned via MongoDB much easier, as it is already in a format native to the language. 
+It also works very well with MongoDB, as MongoDB represents its data as JSON objects, which are native to JavaScript. This makes querying and operating on data returned via MongoDB much easier, as it is already in a format native to the language. 
 
 Node.js has a very good packaging system, called Node Package Manager (npm), the npm repository has access to the largest collection\cite{modulecounts} of software packages, as well as being very easy to use and maintain thanks to the package.json file, which is automatically updated when new modules are used. 
 
-JavaScript has historically been looked down on due in part to it's syntax and type system, however with the latest stable specification\cite{es6} (ES6) of the language, a lot of these issues have been addressed. 
+JavaScript has historically been looked down on due in part to its syntax and type system, however with the latest stable specification\cite{es6} (ES6) of the language, a lot of these issues have been addressed. 
 
 As outlined in Ioannis K. Chaniotis et al's paper, `A study on the viability of Node.js for web development from the perspective of performance.', they conclude that `... Node.js offers client-server development integration, aiding code reusability in web applications, and is the perfect tool for developing fast, scalable network applications.'\cite{node-perf}
 
 In addition to this, prior work has been done with the language on several projects, which reduces the barriers to development that learning a new language would create. 
 
 \subsection{Nodestack}
-The project will be utilising a set of boilerplate code called Nodestack\cite{nodestack}. This code helps to setup a basic web service and provides many extra features to compliment the basic Node.js stack. 
+The project will be utilising a set of boilerplate code called Nodestack\cite{nodestack}. This code helps to setup a basic web service and provides many extra features to complement the basic Node.js stack. 
 
 \subsubsection*{ES6}
 
@@ -100,8 +100,6 @@ The project will be utilising a set of boilerplate code called Nodestack\cite{no
     Bootstrap is a CSS and JavaScript framework that is aimed at making responsive websites easier to write. With the addition of bootstrap to the project, adapting the front end to work on mobile will be a minimal amount of work. It also adds useful features for laying out the page and some attractive default CSS. 
 
 Using this boilerplate will save a huge amount of time in development as the basic framework of the web application is already laid out, so the development time can be focussed on developing software to meet the functional requirements rather than investing time in setting up a good web framework. 
-
-For more detail on how the boiler plate works, you can read the guide here: \url{http://blog.owen.cymru/nodejs-es6-boiler-plate/}
 
 \section{Build Process}
   One of the first things that was setup for this project was the build process. This doesn't take long to setup but provides a huge benefit for the rest of the project. It helps to reduce errors and speed up the process of deployment and testing.
@@ -137,7 +135,7 @@ For more detail on how the boiler plate works, you can read the guide here: \url
     Once the test's have been ran Istanbul\cite{istanbul} will provide a coverage report, that will show to the user the percentage of tested code that has been covered by the assertions. After this the code can finally be pushed to Github. 
     
   \subsection{Continuous Integration}
-    Once the code has been pushed to Github, a hook on Github will trigger Travis CI\cite{travis} to clone down the latest version of the code to it's servers and run the test suite again on it's own server. This is very useful as occasionally developers can bypass Husky to push code, or have something setup in their system that isn't defined in the application, that causes tests to pass on their system but not when the application is built from scratch. The CI test will expose any bugs that arise from these situations and prevent the code being deployed to the staging server. 
+    Once the code has been pushed to Github, a hook on Github will trigger Travis CI\cite{travis} to clone down the latest version of the code to its servers and run the test suite again on its own server. This is very useful as occasionally developers can bypass Husky to push code, or have something setup in their system that isn't defined in the application, that causes tests to pass on their system but not when the application is built from scratch. The CI test will expose any bugs that arise from these situations and prevent the code being deployed to the staging server. 
 
     Once those tests are successful, it will send the coverage report generated by Istanbul to another third party service called Codecov\cite{codecov}. This tracks the test coverage over time and provides interactive charts highlighting areas that need more test coverage. 
 
@@ -200,7 +198,7 @@ That data will then be inserted into MongoDB, and an index built on the searchab
 \subsection{Website Architecture}
 As the application only has one data object to model, the architecture isn't that complex. However it is still beneficial to follow good design principles which is why a traditional Model View Controller (MVC) design pattern\cite{mvc} was followed. 
 
-The MVC design pattern allows for each data object that is being modelled to have three components, a model which defines the data's structure and it's functionality, a controller that is how the application interacts with that model, and finally a view, which is what is displayed to the user and how they interact with the model. For example a user may click on a gene, which sends a request to the controller, the controller then requests that gene from the model, which in turn updates the view, the user can then see the gene that they had selected. 
+The MVC design pattern allows for each data object that is being modelled to have three components, a model which defines the data's structure and its functionality, a controller that is how the application interacts with that model, and finally a view, which is what is displayed to the user and how they interact with the model. For example a user may click on a gene, which sends a request to the controller, the controller then requests that gene from the model, which in turn updates the view, the user can then see the gene that they had selected. 
 
 Abstracting the functionality of the project out into these three components allows for the development to be a lot easier to manage and work with, than having one monolithic class to handle the entire functionality of a gene object.
 
@@ -208,10 +206,10 @@ There will only be two routes in the application, one to the home page, which wi
 
 When viewing a gene, the coding sequence will have to be highlighted inside of the contig. To do this the coding range that was determined when the data was imported will be used to select the substring, and then some client side JavaScript will modify the HTML to wrap the coding sequence inside of a span tag. 
 
-As the coding sequences are stored in the database in only one compliment, there will be a reverse compliment button to reverse the compliment of the coding sequence. This is useful if the coding sequence is highlighted in the contig as the reverse compliment, it will allow the users to visually check that the data is correct. 
+As the coding sequences are stored in the database in only one complement, there will be a reverse complement button to reverse the compliment of the coding sequence. This is useful if the coding sequence is highlighted in the contig as the reverse complement, it will allow the users to visually check that the data is correct. 
 
 \subsection{User Interface}
-Before building the user interface for this project, several other similar sites were examined to see what information they were displaying and how it was laid out. The first was the Candida Genome Database\cite{cgd} and it's locus page. It lists column headings on the left, and the information on the right. This design is easy to read and doesn't clutter up the page too much.
+Before building the user interface for this project, several other similar sites were examined to see what information they were displaying and how it was laid out. The first was the Candida Genome Database\cite{cgd} and its locus page. It lists column headings on the left, and the information on the right. This design is easy to read and doesn't clutter up the page too much.
 
 \begin{figure}[H]
 \begin{center}
@@ -272,7 +270,7 @@ The page was constructed with bootstraps\cite{bootstrap} grid system, which allo
 \section{Implementation}
 During the investigation into the data, many issues were encountered. Mainly due to a lack of understanding of what the data meant, and how it was produced. Initially the plan was to take the raw contigs for each species and use diamond to align them against the NCBI nr database. Then from those results link the data back to the Candida Genome Database via the RefSeq ID's that the NCBI nr database uses. However it was later discovered that there was an annotated set of aligned data in the provided data, meaning that this step was no longer necessary.
 
-A prototype was built around this alignment data, however it was then realised that the data for \textit{C. boidinii} was not aligned against the NCBI nr database, but rather another unknown data set. This meant that to pursue this line of prototyping a replacement dataset for \textit{C. boidinii} would have to be made, or alternatively reproduce all three datasets with another pipeline, as the results from the alignments weren't consistent. 
+A prototype was built around the new alignment data, however it was then realised that the data for \textit{C. boidinii} was not aligned against the NCBI nr database, but rather another unknown data set. This meant that to pursue this line of prototyping a replacement dataset for \textit{C. boidinii} would have to be made, or alternatively reproduce all three datasets with another pipeline, as the results from the alignments weren't consistent. 
 
 The core problem was that it was unknown what tools had been used to produce this data as there was no accompanying documentation. It appeared that a proprietary tool blast2go\cite{blast2go} had been used to align and annotate the data. However after using a trial copy to try and replicate the results it was evident that this tool had not actually been used to create the alignments with the NCBI nr database. 
 
@@ -295,9 +293,9 @@ The next key piece of information to recover that would be of great use to the r
 
 To do this mock data was produced manually, that contained the correct results, and unit tests made to check if a dummy function was returning the correct results as defined in the mock data. Then an algorithm was developed to find the position of a coding sequence inside a contig, using these tests to check the accuracy of the functions results.
 
-The initial algorithm was only finding around fifty percent of the genes in the dataset. After some discussions with the project supervisor, it became apparent that the reason for this is that the coding sequences were stored in one compliment, but the alignment results were finding genes that were the reverse compliment. This explains why around fifty percent of the genes weren't found. 
+The initial algorithm was only finding around fifty percent of the genes in the dataset. After some discussions with the project supervisor, it became apparent that the reason for this is that the coding sequences were stored in one complement, but the alignment results were finding genes that were the reverse complement. As DNA is stored in two strands and is complementary, each strand is the reverse and opposite of the other. For example one strand may contain the bases `ACTG', which means that the other strand it is connected to, stores `CAGT'. This explains why around fifty percent of the genes weren't found. 
 
-Modifying the algorithm to search for the reverse compliment of the coding sequence if it wasn't found at first, resulted in every gene being detected. The algorithm, simply found the index of the first twelve bases of the coding sequence in the contig, and the last twelve bases of the coding sequence in the contig. If the start or end couldn't be found it was assumed that the gene was spread across two contigs and the start or end respectively were marked to indicate that the gene was split across two contigs. 
+Modifying the algorithm to search for the reverse complement of the coding sequence if it wasn't found at first, resulted in every gene being detected. The algorithm, simply found the index of the first twelve bases of the coding sequence in the contig, and the last twelve bases of the coding sequence in the contig. Twelve was chosen as it was a large enough number to lower the odds that the bases it was selecting was not a random occurrence, but short enough to allow for any introns (non coding regions), or unknown reads to not affect the detection. If the start or end couldn't be found it was assumed that the gene was spread across two contigs and the start or end respectively were marked to indicate that the gene was split across two contigs. 
 
 \begin{figure}[H]
 \begin{center}
@@ -338,10 +336,17 @@ Another difficulty in testing this project was that the majority of the projects
 Unfortunately it would be beyond the scope of this project to test the biological accuracy of the data that was imported. However I was able to manually verify that the data was correct at several stages, by aligning sequences from this project against other genomic databases such as the Candida Genome Database\cite{cgd} and the Yeast Genome\cite{sgd} project. 
 
 \subsection{Automated Testing}
-For the area's of logic that were testable, a TDD design was followed, mainly for the selection of the coding sequence in the contig, as this was the only real area of logic in the project that had it's own custom algorithm to be tested. In addition to this the test suite that was being used for the project also checked the project for code formatting issues with the ESLint\cite{eslint} tool. This will cause the tests to fail if potentially dangerous assertions are made in the code. For example if an equal to value (==) operator was used instead of an equal to value and type (===) operator it will throw an error highlighting the issue to the developer. 
+For the area's of logic that were testable, a TDD design was followed, mainly for the selection of the coding sequence in the contig, as this was the only real area of logic in the project that had its own custom algorithm to be tested. In addition to this the test suite that was being used for the project also checked the project for code formatting issues with the ESLint\cite{eslint} tool. This will cause the tests to fail if potentially dangerous assertions are made in the code. For example if an equal to value (==) operator was used instead of an equal to value and type (===) operator it will throw an error highlighting the issue to the developer. 
 
 \subsubsection{Unit Tests}
-Where possible, test driven development was used to produce unit tests, these were mainly written for the logic that detects the coding sequence inside the contig. This is a crucial algorithm as the sites functionality depends on this data being accurate, so it was important that the algorithm be thoroughly tested. To do this several mock database records were created that had all the different possibilities that a gene could be found in, a normal hit, a reverse compliment hit, a missing hit and a hit that was split above and below the contig. 
+Where possible, test driven development was used to produce unit tests, these were mainly written for the logic that detects the coding sequence inside the contig. This is a crucial algorithm as the sites functionality depends on this data being accurate, so it was important that the algorithm be thoroughly tested. To do this several mock database records were created that had all the different possibilities that a gene could be found in, a normal hit, a reverse complement hit, a missing hit and a hit that was split above and below the contig. 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{code6}
+\caption{An example of one of the unit tests to check the coding range was being found correctly.}
+\end{center}
+\end{figure}
 
 Tests were then written to compare the result of the finding function against the correct values stored in the mock data. The function was then able to be developed ensuring that the data it was returning was correct. 
 

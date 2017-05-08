@@ -5,9 +5,9 @@ The data for this project was produced by a contracted researcher who had since 
 This lead to a lot of confusion as it wasn't immediately obvious what each bit of data was and what it meant. Examining the data and learning about the biology behind it took several weeks, and ascertaining what bits of data were actually relevant to the project took even longer. Eventually it was determined that for each species there were three files that would need to be incorporated into the project.
 
 \begin{itemize}
-  \item Raw assembled contigs of DNA, these would be used to get a genes position in the genome, and it's surrounding bases. 
-  \item Protein sequences found from using BLAST, annotated with Gene Ontology ID's.
-  \item Coding sequences, these are the nucleotide sequences that coded for the proteins. 
+  \item Raw assembled contigs of DNA, these would be used to find a genes position in the genome, and its surrounding bases. 
+  \item Amino acid sequences that code for the proteins found using BLAST to align the assembled contigs against the NCBI non-redundant protein database, annotated with Gene Ontology ID's and protein function.
+  \item Coding sequences, these are the nucleotide sequences that coded for the amino acid sequences. 
 \end{itemize}
 
 Linking this data to the Candida Genome Database (CGD) was a key bit of information that was missing. To do this the annotated proteins\cite{albicans} for \textit{C. albicans} were downloaded, then turned into a reference database with Diamond. With this the three species could then have their coding sequences aligned against \textit{C. albicans} to produce accession ID's from the Candida Genome Database. The script that performed this step is included in the project as \texttt{run\_diamond.sh}.

@@ -19,7 +19,7 @@ describe('Hit', () => {
     done()
   })
 
-  it('should find the start and end of the coding sequence with the reverse compliment', (done) => {
+  it('should find the start and end of the coding sequence with the reverse complement', (done) => {
     let start = reverseHit.codingRange.start
     , end = reverseHit.codingRange.end
     , result = findCodingRange(reverseHit.codingseq.seq, reverseHit.contig.seq)

@@ -21,7 +21,7 @@ Unfortunately a side effect of the last minute need to include basic HTTP auth, 
 
 A systemd\cite{systemd} service file was then written and installed on the server for the Node.js process, this enables the application to be controlled from systemd. This is done so that the application can be started at boot time, as well as monitored, restarted and stopped from the systemd interface; which is how all the other services on the VM are controlled.
 
-One difficulty faced during this deployment was the versioning on MongoDB, provided by the OS on the VM. The application had been developed on Arch Linux which provides a recent version (3.4) of MongoDB in it's package manager, however on the VM which was running Ubuntu, the package was for version 2.6, that doesn't support the new wiredTiger\cite{tiger} storage engine. 
+One difficulty faced during this deployment was the versioning on MongoDB, provided by the OS on the VM. The application had been developed on Arch Linux which provides a recent version (3.4) of MongoDB in its package manager, however on the VM which was running Ubuntu, the package was for version 2.6, that doesn't support the new wiredTiger\cite{tiger} storage engine. 
 
 The difference in versions was noted initially, and corrected by installing version 3.4. However when data was entered into the database, it was taking up around three times as much room, filling up the VM's disk space. 
 
