@@ -1,5 +1,5 @@
 \chapter{Third-Party Code and Libraries}
-\section{Nodestack}
+\section{Nodestack Boilerplate}
 
 \url{https://github.com/bag-man/nodestack}
 
@@ -19,7 +19,7 @@ JQuery is a client side javascript library that makes navigating and interacting
 Bootstrap is a library for styling webpages and making them easily responsive to different screen sizes.
 
 \section{package.json}
-Below is the modules listed in the package.json for the project, which can be found with the source code, all third party software is listed here along with it's version. This is how node modules are packaged, this automates the management of all modules, and locks the versions. For this project I was using yarn\cite{yarn} to manage the packages rather than the default node package manager (npm)\cite{npm}. Yarn has a couple of advantages, mainly that it is a lot faster than npm3 and that it automatically creates a lock file for modules and their dependencies. 
+Below is the modules listed in the package.json for the project, which can be found with the source code, all third party software is listed here along with it's version and license. This is how node modules are packaged, this automates the management of all modules, and locks the versions. For this project I was using yarn\cite{yarn} to manage the packages rather than the default node package manager (npm)\cite{npm}. Yarn has a couple of advantages, mainly that it is a lot faster than npm3 and that it automatically creates a lock file for modules and their dependencies. 
 
 \subsection{Development Dependencies}
   This section of third party modules are not installed on the production builds of the application, they are only for use when developing the application, they don't change the functionality of it at all, just make it easier to work on. 
@@ -85,7 +85,7 @@ Testing framework for javascript.
 Monitors source files for changes, and relaunches the application when files are changed.
 
 \subsection{Build Dependencies}
-These third party modules are the frameworks libraries and modules that are actually used to by the application to function. 
+These third party modules are the frameworks, libraries and modules that are actually used to by the application to function. 
 
 \subsubsection*{basic-auth-connect} 
 
@@ -135,7 +135,7 @@ The web framework that powers the Node.js application.
 
 \url{https://www.npmjs.com/package/fasta2json} @ 0.1.1 - MIT
 
-Module that reads fasta files into JSON objects.
+Module that reads FASTA files into JSON objects.
 
 \subsubsection*{mongoose}
 
