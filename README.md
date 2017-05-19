@@ -1,10 +1,6 @@
 # Building an online resource for Candida Tropicalis
 
-[![Build Status](https://travis-ci.com/bag-man/final-year-project.svg?token=gr5Kv7LRnKCzUp9adeKC&branch=master)](https://travis-ci.com/bag-man/final-year-project)
-[![Codecov](https://codecov.io/gh/bag-man/final-year-project/branch/master/graph/badge.svg?token=GuPuQcHhdX)](https://codecov.io/gh/bag-man/final-year-project)
-[![Waffle.io](https://img.shields.io/badge/Waffle%20Board-active-green.svg)](https://waffle.io/bag-man/final-year-project)
-[![Demo](https://img.shields.io/badge/Demo-live-green.svg)](http://project.owen.cymru)
-
+[You can see a demo version of the site here.](http://candida.owen.cymru)
 
 This project is based around a set of genomic data for three species of species of yeast that had been sequenced and annotated. This data is private and not included in the open source version of this repository. 
 
