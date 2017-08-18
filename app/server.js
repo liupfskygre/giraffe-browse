@@ -6,9 +6,11 @@ let express = require('express')
   , path = require('path')
   , connectDatabase = require('./database.js')
   , cache = require('express-cache-headers')
+  , compression = require('compression')
 
 app.use(cache(31536000))
 app.use(logger('combined'))
+app.use(compression())
 app.use(express.static(path.join(__dirname, 'assets', 'build')))
 addRoutes(app)
 
