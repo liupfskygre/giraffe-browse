@@ -1,45 +1,48 @@
 const fasta2json = require('fasta2json')
     , gff2json = require('bionode-gff')
     , species =
-      { contigs: '../data/ecoli.fa'
-      , gff: '../data/prokka-ecoli.gff'
+      { contigs: __dirname + '/../data/ecoli.fa'
+      , gff: __dirname + '/../data/prokka-ecoli.gff'
       , name: 'ecoli'
       }
+    , createDatabase = require('../app/database.js')
+    , HitModel = require('../app/models/hit.js')
 
-let contigs = fasta2json.ReadFasta(species.contigs).map((contig) => {
-  contig.head = contig.head.split(' ')[0]
-  return contig
-})
+createDatabase()
 
-let gff = []
+HitModel.db.dropDatabase().then(() => {
+  let contigs = fasta2json.ReadFasta(species.contigs)
 
-gff2json.read(species.gff).on('data', data => gff.push(data)).on('end', () => {
-  let importData = []
+  gff2json.read(species.gff).on('data', (data) => {
+    let contig = contigs.find(x => x.head.split(' ')[0] === data.seqid)
+      , cds = contig.seq.substr(data.start, data.end) // this needs to be checked, and probably reverse complimented
+      , hit = Object.assign({ species: species.name, contig, cds }, data)
 
-  gff.forEach((query) => {
-      importData.push(extractHit(query))
+    HitModel.db.collection('hits').insert(hit, (err) => {
+      if (err) console.log('ERROR: ' + err)
+    })
+
+  }).on('end', () => {
+
+    // HitModel.db.collection('hits').createIndex(
+    //   { name: 'text'
+    //   , cgdid: 'text'
+    //   , uniprot: 'text'
+    //   , 'protein.desc': 'text'
+    //   }
+    // , { weights:
+    //     { 'protein.desc': 8
+    //     , name: 6
+    //     , cgdid: 10
+    //     , uniprot: 10
+    //     }
+    //   , name: 'hit_search_index'
+    //   }
+    // )
+
+    HitModel.db.close(() => {
+      console.log('Finished.')
+      process.exit(0)
+    })
   })
-
-  console.log('Adding ' + importData.length + ' genes from ' + species.name + '...')
-
-  return importData
-
-  function extractHit (gff) {
-    let contig = contigs.find(x => x.head === gff.seqid)
-      , codingseq = codingseqs.find(x => x.head === hit.scaffold)
-      , protein = proteins.find(x => x.headid === hit.scaffold)
-      , codingRange = findCodingRange(codingseq.seq, contig.seq)
-
-    let data =
-      { hitid: hit.cgdId
-      , species: species.name
-      , contig
-      , codingseq
-      , protein
-      , codingRange
-      }
-
-    return data
-  }
-
 })
