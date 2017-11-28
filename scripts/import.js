@@ -1,8 +1,8 @@
 const fasta2json = require('fasta2json')
     , gff2json = require('bionode-gff')
     , species =
-      { contigs: __dirname + '/../data/ecoli.fa'
-      , gff: __dirname + '/../data/prokka-ecoli.gff'
+      { contigs: __dirname + '/../data/ecoli-split.gff'
+      , gff: __dirname + '/../data/prokka-ecoli-split.gff'
       , name: 'ecoli'
       }
     , createDatabase = require('../app/database.js')
@@ -18,11 +18,15 @@ HitModel.db.dropDatabase().then(() => {
       , cds = contig.seq.substr(data.start, data.end) // this needs to be checked, and probably reverse complimented
       , hit = Object.assign({ species: species.name, contig, cds }, data)
 
-    HitModel.db.collection('hits').insert(hit, (err) => {
+    HitModel.create(hit, (err) => {
       if (err) console.log('ERROR: ' + err)
     })
 
   }).on('end', () => {
+    HitModel.db.close(() => {
+      console.log('Finished.')
+      process.exit(0)
+    })
 
     // HitModel.db.collection('hits').createIndex(
     //   { name: 'text'
@@ -40,9 +44,5 @@ HitModel.db.dropDatabase().then(() => {
     //   }
     // )
 
-    HitModel.db.close(() => {
-      console.log('Finished.')
-      process.exit(0)
-    })
   })
 })
