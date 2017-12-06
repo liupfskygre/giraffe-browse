@@ -1,7 +1,7 @@
 const fasta2json = require('fasta2json')
     , gff2json = require('bionode-gff')
     , species =
-      { contigs: __dirname + '/../data/ecoli-split.gff'
+      { contigs: __dirname + '/../data/ecoli-split.fa'
       , gff: __dirname + '/../data/prokka-ecoli-split.gff'
       , name: 'ecoli'
       }
