@@ -5,8 +5,9 @@ const fasta2json = require('fasta2json')
       , gff: __dirname + '/../data/prokka-ecoli-split.gff'
       , name: 'ecoli'
       }
-    , createDatabase = require('../app/database.js')
-    , HitModel = require('../app/models/hit.js')
+    , createDatabase = require('../app/database')
+    , HitModel = require('../app/models/hit')
+    , ContigModel = require('../app/models/contig')
 
 createDatabase()
 
@@ -15,12 +16,17 @@ HitModel.db.dropDatabase().then(() => {
 
   gff2json.read(species.gff).on('data', (data) => {
     let contig = contigs.find(x => x.head.split(' ')[0] === data.seqid)
-      , cds = contig.seq.substr(data.start, data.end) // this needs to be checked, and probably reverse complimented
-      , hit = Object.assign({ species: species.name, contig, cds }, data)
 
-    HitModel.create(hit, (err) => {
-      if (err) console.log('ERROR: ' + err)
-    })
+    ContigModel.findOneAndUpdate({ head: contig.head }, contig, { upsert: true, new: true }).then((contigId) => {
+      contigId = contigId._id
+      // this needs to be checked, and probably reverse complimented
+      let cds = contig.seq.substr(data.start, data.end)
+        , hit = Object.assign({ species: species.name, contig: contigId, cds }, data)
+
+      HitModel.create(hit, (err) => {
+        if (err) console.log('ERROR: ' + err)
+      })
+    }).catch(err => console.error(222, err))
 
   }).on('end', () => {
     HitModel.db.close(() => {
