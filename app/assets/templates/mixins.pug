@@ -84,7 +84,7 @@ mixin display(hit)
           td.header(data-toggle='tooltip', title='The contig the CDS was found in') Contig
             sup ?
           td
-            div.sequence.col-md-12.coding
+            div.sequence.col-md-12.contig
               a(href='/contig/' + hit.contig.id)=hit.contig.head
         // tr
         //   td.header(data-toggle='tooltip', title='Amino acid sequence that creates the protien') Protein Sequence
