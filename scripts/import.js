@@ -1,63 +1,73 @@
 const fasta2json = require('fasta2json')
     , gff2json = require('bionode-gff')
     , species =
-      { contigs: __dirname + '/../data/ecoli-split.fa'
-      , gff: __dirname + '/../data/prokka-ecoli-split.gff'
+      { contigs: __dirname + '/../data/ecoli.fa'
+      , gff: __dirname + '/../data/prokka-ecoli.gff'
       , name: 'ecoli'
       }
     , createDatabase = require('../app/database')
     , HitModel = require('../app/models/hit')
     , ContigModel = require('../app/models/contig')
+    , db = createDatabase()
 
-createDatabase()
-
-HitModel.db.dropDatabase().then(() => {
+db.dropDatabase().then(() => {
   let contigs = fasta2json.ReadFasta(species.contigs)
 
-  gff2json.read(species.gff).on('data', (gff) => {
-    let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
+  ContigModel.create(contigs, (err) => {
+    if (err) console.log('ERROR: ' + err)
 
-    ContigModel.findOneAndUpdate({ head: contig.head }, contig, { upsert: true, new: true }).then((contigId) => {
-      contigId = contigId._id
-      // this needs to be checked, and probably reverse complimented
-      let codingseq = contig.seq.substr(gff.start, gff.end)
+    let promises = []
 
-      if (gff.strand === '-') {
-        let reverse = codingseq.split('').reverse().join('')
+    gff2json.read(species.gff).on('data', (gff) => {
+      promises.push(new Promise((resolve, reject) => {
+        let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
 
-        codingseq = reverse.replace(/[ACTG]/g, (base) => {
-          return 'ACTG'.charAt('TGAC'.indexOf(base))
+        ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {
+          contigId = contigId._id
+
+          // this needs to be checked, and probably reverse complimented
+          let codingseq = contig.seq.substr(gff.start, gff.end)
+
+          if (gff.strand === '-') {
+            let reverse = codingseq.split('').reverse().join('')
+
+            codingseq = reverse.replace(/[ACTG]/g, (base) => {
+              return 'ACTG'.charAt('TGAC'.indexOf(base))
+            })
+          }
+
+          let hit = Object.assign({ species: species.name, contig: contigId, codingseq }, gff)
+
+          HitModel.create(hit).then(() => {
+            resolve()
+          }).catch(err => reject(err))
+        }).catch(err => reject(err))
+      }))
+
+    }).on('end', () => {
+      Promise.all(promises).then(() => {
+        db.close(() => {
+          console.log('Finished.')
+          process.exit(0)
         })
-      }
-
-      let hit = Object.assign({ species: species.name, contig: contigId, codingseq }, gff)
-
-      HitModel.create(hit, (err) => {
-        if (err) console.log('ERROR: ' + err)
-      })
-    }).catch(err => console.error(222, err))
-
-  }).on('end', () => {
-    HitModel.db.close(() => {
-      console.log('Finished.')
-      process.exit(0)
+      }).catch(console.error)
     })
-
-    // HitModel.db.collection('hits').createIndex(
-    //   { name: 'text'
-    //   , cgdid: 'text'
-    //   , uniprot: 'text'
-    //   , 'protein.desc': 'text'
-    //   }
-    // , { weights:
-    //     { 'protein.desc': 8
-    //     , name: 6
-    //     , cgdid: 10
-    //     , uniprot: 10
-    //     }
-    //   , name: 'hit_search_index'
-    //   }
-    // )
-
   })
 })
+
+      // db.collection('hits').createIndex(
+      //   { name: 'text'
+      //   , cgdid: 'text'
+      //   , uniprot: 'text'
+      //   , 'protein.desc': 'text'
+      //   }
+      // , { weights:
+      //     { 'protein.desc': 8
+      //     , name: 6
+      //     , cgdid: 10
+      //     , uniprot: 10
+      //     }
+      //   , name: 'hit_search_index'
+      //   }
+      // )
+

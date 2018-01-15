@@ -7,4 +7,5 @@ module.exports = (url = dbUrl) => {
   mongoose.connection.on('error', (err) => {
       console.log('Mongoose Connection ERROR: ' + err)
   })
+  return mongoose.connection
 }
