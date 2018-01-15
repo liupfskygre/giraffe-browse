@@ -1,4 +1,5 @@
 const HitController = require(__dirname + '/controllers/hit.js')
+const ContigController = require(__dirname + '/controllers/contig.js')
 const HomeController = require(__dirname + '/controllers/home.js')
 
 module.exports = (app) => {
@@ -10,6 +11,17 @@ module.exports = (app) => {
         hit.view({ _id: req.params.id }, req.query)
       } else {
         hit.search(req.query)
+      }
+    } catch (e) {
+      next(e)
+    }
+  })
+
+  app.get('/contig/:id', (req, res, next) => {
+    try {
+      let contig = new ContigController(req, res)
+      if (req.params.id) {
+        contig.view({ _id: req.params.id })
       }
     } catch (e) {
       next(e)
