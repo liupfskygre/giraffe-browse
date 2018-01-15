@@ -80,6 +80,12 @@ mixin display(hit)
               button.btn.reverse Reverse Complement
           td
             div.sequence.col-md-12.coding=hit.codingseq
+        tr
+          td.header(data-toggle='tooltip', title='The contig the CDS was found in') Contig
+            sup ?
+          td
+            div.sequence.col-md-12.coding
+              a(href='/contig/' + hit.contig.id)=hit.contig.head
         // tr
         //   td.header(data-toggle='tooltip', title='Amino acid sequence that creates the protien') Protein Sequence
         //     sup ?

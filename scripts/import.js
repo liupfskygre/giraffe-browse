@@ -23,7 +23,7 @@ db.dropDatabase().then(() => {
         let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
 
         ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {
-          contigId = contigId._id
+          let savedContig = { id: contigId._id, head: contig.head }
 
           // this needs to be checked, and probably reverse complimented
           let codingseq = contig.seq.substr(gff.start, gff.end)
@@ -36,7 +36,7 @@ db.dropDatabase().then(() => {
             })
           }
 
-          let hit = Object.assign({ species: species.name, contig: contigId, codingseq }, gff)
+          let hit = Object.assign({ species: species.name, contig: savedContig, codingseq }, gff)
 
           HitModel.create(hit).then(() => {
             resolve()

@@ -18,7 +18,10 @@ const schema = new Schema(
     , locustag: String
     , product: String
     }
-  , contig: Object
+  , contig:
+    { id: String
+    , head: String
+    }
   , codingseq: String
   }
 )
