@@ -18,9 +18,9 @@ class hitController {
       if (err) {
         this.render('Something went wrong', null, search, err)
       } else {
-        this.render('Candida ' + data.name, [ data ], search, null)
+        this.render(data.attributes.ID, [ data ], search, null)
       }
-    })
+    }).lean()
   }
 
   search (options) {

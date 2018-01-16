@@ -59,20 +59,8 @@ mixin display(hit)
           th.col-md-1.header Item
           th.col-md-11 Value
       tbody
-        // tr
-        //   td.header(data-toggle='tooltip', title='The scaffold / neucleotide sequence that the gene was found in. Coding sequence highlighted in red') Contig 
-        //     sup ?
-        //     div
-        //       button.btn.copybutton(data-clipboard-target='.hidden-box') Copy coding sequence
-        //     div
-        //       div.col-md-6.copyarea
-        //         input.plusminus.form-control.bfh-number(type='number', min='0') 
-        //       div.col-md-6.copyarea
-        //         div.buttoninfo +/- bases  
-        //       div.infobox
-        //         |  
-          td
-            div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
+        // TO DO: Use GFF3 definitions for tooltips
+
         tr
           td.header(data-toggle='tooltip', title='Reference coding sequence that codes for the protein') Coding Sequence
             sup ?
@@ -81,13 +69,49 @@ mixin display(hit)
           td
             div.sequence.col-md-12.coding=hit.codingseq
         tr
-          td.header(data-toggle='tooltip', title='The contig the CDS was found in') Contig
+          td.header(data-toggle='tooltip', title='A link to the full contig where the CDS was found. Warning: may be a large file.') Contig
             sup ?
-          td
-            div.sequence.col-md-12.contig
-              a(href='/contig/' + hit.contig.id)=hit.contig.head
-        // tr
-        //   td.header(data-toggle='tooltip', title='Amino acid sequence that creates the protien') Protein Sequence
-        //     sup ?
-        //   td
-        //     div.sequence.col-md-12.protein=hit.protein.seq
+          td 
+            a(href='/contig/' + hit.contig.id)=hit.contig.head
+        tr
+          td.header(data-toggle='tooltip', title='Source of data') Source
+            sup ?
+          td=hit.source
+        tr
+          td.header(data-toggle='tooltip', title='Type of data') Type
+            sup ?
+          td=hit.type
+        tr
+          td.header(data-toggle='tooltip', title='Start of sequence in contig') Start
+            sup ?
+          td=hit.start
+        tr
+          td.header(data-toggle='tooltip', title='End of sequence in contig') End
+            sup ?
+          td=hit.end
+        tr
+          td.header(data-toggle='tooltip', title='Score of match') Score
+            sup ?
+          td=hit.score
+        tr
+          td.header(data-toggle='tooltip', title='Left or Right hand strand') Strand
+            sup ?
+          td=hit.strand
+        tr
+          td.header(data-toggle='tooltip', title='Phase') Phase
+            sup ?
+          td=hit.phase
+
+        tr
+          td.header(data-toggle='tooltip', title='Attributes') Attributes
+          td.header
+        each value, property in hit.attributes
+          tr
+            td.header(data-toggle='tooltip', title=property) 
+              +ucfirst(property)
+            td=value
+
+mixin ucfirst(text)
+  - text = text.charAt(0).toUpperCase() + text.slice(1);
+  .
+    #{text}
