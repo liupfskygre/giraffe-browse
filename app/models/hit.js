@@ -11,13 +11,13 @@ const schema = new Schema(
   , score: String
   , strand: String
   , phase: String
-  , attributes:
-    { ID: String
-    , inference: String
-    , ecnumber: String
-    , locustag: String
-    , product: String
-    }
+  , attributes: Object
+    // { ID: String
+    // , inference: String
+    // , ecnumber: String
+    // , locustag: String
+    // , product: String
+    // }
   , contig:
     { id: String
     , head: String
