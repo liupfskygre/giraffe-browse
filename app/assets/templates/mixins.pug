@@ -17,24 +17,15 @@ mixin listItems(data)
     table.table
       thead
         tr
-          th.col-md-1 Candida Gene Name
-          th.col-md-5 Description
-          th.col-md-1 Species
-          th.col-md-1 Candida Geneome ID
-          th.col-md-1 Uniprot ID
+          th.col-md-1 GFF ID
+          th.col-md-5 Contig ID
       tbody
         each item in data
           tr
             td
-              a(href='/hit/' + item._id) #{item.name}
+              a(href='/hit/' + item._id) #{item.attributes.ID}
             td
-              a(href='/hit/' + item._id) #{item.protein.desc}
-            td
-              a(href='/hit/' + item._id) #{item.species}
-            td.external
-              a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + item.cgdid) #{item.cgdid}
-            td.external
-              a(href='http://www.uniprot.org/uniprot/' + item.uniprot) #{item.uniprot}
+              a(href='/hit/' + item._id) #{item.contig}
 
 mixin display(hit)
   div.table-responsive
@@ -86,6 +77,22 @@ mixin display(hit)
           td.header(data-toggle='tooltip', title='Phase') Phase
             sup ?
           td=hit.phase
+        tr
+          td.header(data-toggle='tooltip', title='ID') ID
+            sup ?
+          td=hit.gffId
+        tr
+          td.header(data-toggle='tooltip', title='Product') Product
+            sup ?
+          td=hit.product
+        tr
+          td.header(data-toggle='tooltip', title='locus') Locus tag
+            sup ?
+          td=hit.locustag
+        tr
+          td.header(data-toggle='tooltip', title='Name') Name
+            sup ?
+          td=hit.name
 
         tr
           td.header(data-toggle='tooltip', title='Attributes') Attributes

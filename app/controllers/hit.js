@@ -26,26 +26,13 @@ class hitController {
   search (options) {
     let constraints =
 	{ _id: true
-	, name: true
-	, species: true
-	, cgdid: true
-	, uniprot: true
-	, 'protein.desc': true
+        , 'contig.head': true
+        , attributes: true
 	, score: { $meta: 'textScore' }
 	}
       , limit = options.limit < max ? parseInt(options.limit) : max
       , search = JSON.parse(JSON.stringify(options))
       , query = {}
-
-    if (options['codingseq.seq']) {
-      search['codingseq.seq'] = options['codingseq.seq']
-      let seq = new RegExp(options['codingseq.seq'], 'i')
-      query['codingseq.seq'] = seq
-    }
-
-    if (options.species) {
-      query.species = options.species
-    }
 
     if (!options.search) {
       delete constraints.score
@@ -64,9 +51,9 @@ class hitController {
         this.render('Something went wrong', null, options, err)
       } else {
         if (!data.length) {
-          this.render('Candida Search', null, search, 'No results.')
+          this.render('Search', null, search, 'No results.')
         } else {
-          this.render('Candida Search', data, search, null)
+          this.render('Search', data, search, null)
         }
       }
     })

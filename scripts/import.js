@@ -36,7 +36,25 @@ db.dropDatabase().then(() => {
             })
           }
 
-          let hit = Object.assign({ species: species.name, contig: savedContig, codingseq }, gff)
+          let gffId = gff.attributes.ID
+          let product = gff.attributes.product
+          let locustag = gff.attributes.locus_tag
+          let name = gff.attributes.Name
+
+          delete gff.attributes.ID
+          delete gff.attributes.product
+          delete gff.attributes.locus_tag
+          delete gff.attributes.Name
+
+          let hit = Object.assign(
+            { species: species.name
+            , gffId
+            , product
+            , locustag
+            , name
+            , contig: savedContig
+            , codingseq
+            }, gff)
 
           HitModel.create(hit).then(() => {
             resolve()
@@ -46,6 +64,22 @@ db.dropDatabase().then(() => {
 
     }).on('end', () => {
       Promise.all(promises).then(() => {
+        db.collection('hits').createIndex(
+          { 'contig.head': 'text'
+          , gffId: 'text'
+          , locustag: 'text'
+          , product: 'text'
+          , name: 'text'
+          }
+        , { weights:
+            { product: 8
+            , 'contig.head': 6
+            , locusttag: 10
+            , gffId: 10
+            }
+          , name: 'hit_search_index'
+          }
+        )
         db.close(() => {
           console.log('Finished.')
           process.exit(0)
@@ -54,20 +88,3 @@ db.dropDatabase().then(() => {
     })
   })
 })
-
-      // db.collection('hits').createIndex(
-      //   { name: 'text'
-      //   , cgdid: 'text'
-      //   , uniprot: 'text'
-      //   , 'protein.desc': 'text'
-      //   }
-      // , { weights:
-      //     { 'protein.desc': 8
-      //     , name: 6
-      //     , cgdid: 10
-      //     , uniprot: 10
-      //     }
-      //   , name: 'hit_search_index'
-      //   }
-      // )
-
