@@ -5,16 +5,13 @@ block content
   include ../mixins
 
   pre
-    a.col-md-2(href='/')
-      img(src='/images/logo.png')
-
     +searchForm(options)
 
-    div.col-md-4.info
+    div.col-md-9.info
       p
-        | Search for a gene by CGDID, name or description, and/or a nuecleotide coding sequence snippet in the sequence field.
+        | Search for a gene by ID, Name, Product or Locustag.
         | 
-        | Coding sequences are highlighted in red. Created by Owen Garland (owg1@aber.ac.uk).
+        | Created by Owen Garland (garland.owen@gmail.com).
 
   if data
     if data[0]._id

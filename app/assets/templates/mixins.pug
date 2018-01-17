@@ -2,29 +2,14 @@ mixin searchForm(options)
   form.form(action='/hit', method='GET')
     div.col-md-3
       div.form-group
-        label.col-sm-3.control-label Search:
-        div.col-sm-9
+        // label.col-sm-3.control-label Search:
+        div.col-sm-12
           input.form-control(type='text', name='search', value=options.search)
-      div.form-group
-        label.col-sm-3.control-label(for='codingseq.seq') Sequence:
-        div.col-sm-9
-          textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
-
-    div.col-md-3
-      div.form-group
-        label.col-sm-3.control-label Species:
-        div.col-sm-9
-          select.form-control(name='species', value=options.species)
-            option(default, value='', selected=options.species === '') -- select --
-            option(value='shehate', selected=options.species === 'shehate') shehate
-            option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
-            option(value='boidinii', selected=options.species === 'boidinii') boidinii
-      div.form-group
-        label.col-sm-3.control-label(for='limit') Limit:        
-        div.col-sm-9
-          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
-      div.form-group
-        button.form-control.search search
+        // label.col-sm-3.control-label(for='limit') Limit:        
+        // div.col-sm-9
+        //   input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
+        div.col-sm-12
+          button.form-control.search search
 
 
 mixin listItems(data)
