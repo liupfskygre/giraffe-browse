@@ -72,6 +72,10 @@ mixin display(hit)
             sup ?
           td=hit.end
         tr
+          td.header(data-toggle='tooltip', title='length of CDS') Length
+            sup ?
+          td=hit.length
+        tr
           td.header(data-toggle='tooltip', title='Score of match') Score
             sup ?
           td=hit.score

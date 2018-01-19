@@ -26,7 +26,7 @@ db.dropDatabase().then(() => {
           let savedContig = { id: contigId._id, head: contig.head }
 
           // this needs to be checked, and probably reverse complimented
-          let codingseq = contig.seq.substr(gff.start, gff.end)
+          let codingseq = contig.seq.substring(gff.start - 1, gff.end)
 
           if (gff.strand === '-') {
             let reverse = codingseq.split('').reverse().join('')
@@ -40,6 +40,7 @@ db.dropDatabase().then(() => {
           let product = gff.attributes.product
           let locustag = gff.attributes.locus_tag
           let name = gff.attributes.Name
+          let length = codingseq.length
 
           delete gff.attributes.ID
           delete gff.attributes.product
@@ -52,6 +53,7 @@ db.dropDatabase().then(() => {
             , product
             , locustag
             , name
+            , length
             , contig: savedContig
             , codingseq
             }, gff)

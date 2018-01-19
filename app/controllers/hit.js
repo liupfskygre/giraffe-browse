@@ -15,10 +15,11 @@ class hitController {
   view (id, search) {
     let constraints = { _id: false }
     HitModel.findOne(id, constraints, (err, data) => {
+      console.log(id)
       if (err) {
         this.render('Something went wrong', null, search, err)
       } else {
-        this.render(data.attributes.ID, [ data ], search, null)
+        this.render('GENE VIEW', [ data ], search, null)
       }
     }).lean()
   }

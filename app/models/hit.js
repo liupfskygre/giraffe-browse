@@ -14,6 +14,7 @@ const schema = new Schema(
   , locustag: String
   , product: String
   , gffId: String
+  , length: String
   , name: String
   , attributes: Object
   , contig:
