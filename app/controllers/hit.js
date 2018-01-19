@@ -27,7 +27,9 @@ class hitController {
     let constraints =
 	{ _id: true
         , 'contig.head': true
-        , attributes: true
+        , gffId: true
+        , name: true
+        , product: true
 	, score: { $meta: 'textScore' }
 	}
       , limit = options.limit < max ? parseInt(options.limit) : max

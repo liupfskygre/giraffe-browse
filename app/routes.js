@@ -1,6 +1,5 @@
 const HitController = require(__dirname + '/controllers/hit.js')
 const ContigController = require(__dirname + '/controllers/contig.js')
-const HomeController = require(__dirname + '/controllers/home.js')
 
 module.exports = (app) => {
 
@@ -30,8 +29,8 @@ module.exports = (app) => {
 
   app.get('*', (req, res, next) => {
     try {
-      let home = new HomeController(req, res)
-      home.render()
+      let hits = new HitController(req, res)
+      hits.search(req.query)
     } catch (e) {
       next(e)
     }

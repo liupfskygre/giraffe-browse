@@ -17,15 +17,21 @@ mixin listItems(data)
     table.table
       thead
         tr
+          th.col-md-1 Name
+          th.col-md-1 Product
           th.col-md-1 GFF ID
           th.col-md-5 Contig ID
       tbody
         each item in data
           tr
             td
-              a(href='/hit/' + item._id) #{item.attributes.ID}
+              a(href='/hit/' + item._id) #{item.name}
             td
-              a(href='/hit/' + item._id) #{item.contig}
+              a(href='/hit/' + item._id) #{item.product}
+            td
+              a(href='/hit/' + item._id) #{item.gffId}
+            td
+              a(href='/hit/' + item._id) #{item.contig.head}
 
 mixin display(hit)
   div.table-responsive

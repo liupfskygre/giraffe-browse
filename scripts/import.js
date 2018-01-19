@@ -76,6 +76,7 @@ db.dropDatabase().then(() => {
             , 'contig.head': 6
             , locusttag: 10
             , gffId: 10
+            , name: 10
             }
           , name: 'hit_search_index'
           }
