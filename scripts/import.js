@@ -25,7 +25,6 @@ db.dropDatabase().then(() => {
         ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {
           let savedContig = { id: contigId._id, head: contig.head }
 
-          // this needs to be checked, and probably reverse complimented
           let codingseq = contig.seq.substring(gff.start - 1, gff.end)
 
           if (gff.strand === '-') {
