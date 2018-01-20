@@ -1,5 +1,6 @@
 const fasta2json = require('fasta2json')
     , gff2json = require('bionode-gff')
+    , nt = require('ntseq')
     , species =
       { contigs: __dirname + '/../data/ecoli.fa'
       , gff: __dirname + '/../data/prokka-ecoli.gff'
@@ -46,6 +47,9 @@ db.dropDatabase().then(() => {
           delete gff.attributes.locus_tag
           delete gff.attributes.Name
 
+          let proteinseq = (new nt.Seq()).read(codingseq)
+          proteinseq = proteinseq.translate()
+
           let hit = Object.assign(
             { species: species.name
             , gffId
@@ -55,6 +59,7 @@ db.dropDatabase().then(() => {
             , length
             , contig: savedContig
             , codingseq
+            , proteinseq
             }, gff)
 
           HitModel.create(hit).then(() => {

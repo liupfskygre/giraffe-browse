@@ -22,6 +22,7 @@ const schema = new Schema(
     , head: String
     }
   , codingseq: String
+  , proteinseq: String
   }
 )
 

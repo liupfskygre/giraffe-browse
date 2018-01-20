@@ -52,6 +52,7 @@
     "fasta2json": "^0.1.1",
     "mongoose": "^4.8.6",
     "morgan": "^1.7.0",
+    "ntseq": "^1.1.0",
     "pug": "^2.0.0-beta11",
     "stylus": "^0.54.5",
     "webpack": "^2.2.1"
