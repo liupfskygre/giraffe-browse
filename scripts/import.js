@@ -14,9 +14,7 @@ const fasta2json = require('fasta2json')
 db.dropDatabase().then(() => {
   let contigs = fasta2json.ReadFasta(species.contigs)
 
-  ContigModel.create(contigs, (err) => {
-    if (err) console.log('ERROR: ' + err)
-
+  ContigModel.create(contigs).then(() => {
     let promises = []
 
     gff2json.read(species.gff).on('data', (gff) => {
@@ -93,5 +91,5 @@ db.dropDatabase().then(() => {
         })
       }).catch(console.error)
     })
-  })
+  }).catch(console.err)
 })
