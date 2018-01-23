@@ -34,3 +34,7 @@ clip.on('success', (e) => {
 clip.on('error', () => {
   $('.infobox').text('Can\'t copy in this browser:(')
 })
+
+// $('.fields1').on('change', function () {
+//   $('.search1').attr('name', this.value)
+// })

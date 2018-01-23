@@ -1,17 +1,19 @@
-mixin searchForm(options)
+mixin searchForm(options, fields)
   form.form(action='/hit', method='GET')
-    div.col-md-3
-      div.form-group
-        // label.col-sm-3.control-label Search:
-        div.col-sm-12
-          input.form-control(type='text', name='search', value=options.search)
+    div.form-group
+      each val in [1, 2, 3, 4]
+        div.col-md-3
+          div.col-sm-12
+            select(class="form-control fields" + val, name='fields[' + val + ']')
+              each field in fields
+                option(value=field) #{field}
+            input(class="form-control search" + val, type='text', name='inputs[' + val + ']', value=options.search)
+      div.col-sm-12
+        button.form-control.search search
+
         // label.col-sm-3.control-label(for='limit') Limit:        
         // div.col-sm-9
         //   input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
-        div.col-sm-4
-          input.form-control.deep(type='checkbox', name='deep', value=options.deep)
-        div.col-sm-8
-          button.form-control.search search
 
 
 mixin listItems(data)

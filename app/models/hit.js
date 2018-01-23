@@ -11,11 +11,7 @@ const schema = new Schema(
   , score: String
   , strand: String
   , phase: String
-  , locustag: String
-  , product: String
-  , gffId: String
   , length: String
-  , name: String
   , attributes: Object
   , contig:
     { id: String

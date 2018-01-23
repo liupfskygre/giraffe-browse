@@ -1,14 +1,15 @@
 const HitModel = require('../models/hit.js')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/pages/hit.pug')
-    , max = 1000
+    // , max = 1000
 
 class hitController {
-  constructor (req, res) {
+  constructor (req, res, fields) {
     this.res = res
+    this.fields = fields
   }
 
   render (title, data, options, error) {
-    let html = template({ title, data, options, error })
+    let html = template({ title, data, options, error, fields: this.fields })
     this.res.send(html)
   }
 
@@ -27,55 +28,37 @@ class hitController {
     let constraints =
 	{ _id: true
         , 'contig.head': true
-        , gffId: true
-        , name: true
-        , product: true
-	, score: { $meta: 'textScore' }
 	}
-      , limit = options.limit < max ? parseInt(options.limit) : max
       , search = JSON.parse(JSON.stringify(options))
-      , query = {}
+      // , limit = options.limit < max ? parseInt(options.limit) : max
+      , attributes = {}
 
-    if (!options.search) {
-      delete constraints.score
-    }
-
-    if (options.deep && options.search) {
-      let qs = new RegExp(options['search'], 'i')
-      query['product'] = qs
-
-      HitModel.find(query, constraints, (err, data) => {
-        if (err) {
-          this.render('Something went wrong', null, options, err)
-        } else {
-          if (!data.length) {
-            this.render('Search', null, search, 'No results.')
-          } else {
-            this.render('Search', data, search, null)
-          }
-        }
-      })
-    } else {
-      let aggregateQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
-
-      if (options.search) {
-        query['$text'] = { '$search': options.search }
-        let sort = { $sort: { score: { $meta: 'textScore' } } }
-        aggregateQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
+    if (options.fields) {
+      for (let i = 0; i < options.fields.length; i++) {
+        attributes['attributes.' + options.fields[i]] = new RegExp(options.inputs[i], 'i')
       }
 
-      HitModel.aggregate(aggregateQuery).allowDiskUse(true).exec((err, data) => {
-        if (err) {
-          this.render('Something went wrong', null, options, err)
-        } else {
-          if (!data.length) {
-            this.render('Search', null, search, 'No results.')
-          } else {
-            this.render('Search', data, search, null)
-          }
-        }
-      })
+      delete options.fields
+      delete options.inputs
     }
+
+    for (let option in options) {
+      options[option] = new RegExp(options[option], 'i')
+    }
+
+    Object.assign(options, attributes)
+
+    HitModel.find(options, constraints, (err, data) => {
+      if (err) {
+        this.render('Something went wrong', null, options, err)
+      } else {
+        if (!data.length) {
+          this.render('Search', null, search, 'No results.')
+        } else {
+          this.render('Search', data, search, null)
+        }
+      }
+    })
   }
 }
 

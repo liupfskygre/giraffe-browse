@@ -3,15 +3,17 @@ const fasta2json = require('fasta2json')
     , nt = require('ntseq')
     , Promise = require('bluebird')
     , species =
-      { contigs: __dirname + '/../data/ecoli.fa'
+      { contigs: __dirname + '/../data/prokka-ecoli.fa'
       , gff: __dirname + '/../data/prokka-ecoli.gff'
+      // { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
+      // , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
       , name: 'ecoli'
       }
     , createDatabase = require('../app/database')
     , HitModel = require('../app/models/hit')
+    , MetadataModel = require('../app/models/metadata')
     , ContigModel = require('../app/models/contig')
     , db = createDatabase()
-    , CONCURRENCY = 100 // bluebirdjs.com/docs/api/promise.map.html#map-option-concurrency
 
 db.dropDatabase().then(() => {
   console.log('Database dropped')
@@ -21,6 +23,7 @@ db.dropDatabase().then(() => {
     console.log('Contigs saved')
 
     let gffs = []
+    let fields = []
 
     gff2json.read(species.gff).on('data', (gff) => {
       gffs.push(gff)
@@ -35,6 +38,7 @@ db.dropDatabase().then(() => {
           let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
 
           ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {
+
             // {{{
             let savedContig = { id: contigId._id, head: contig.head }
 
@@ -48,32 +52,27 @@ db.dropDatabase().then(() => {
               })
             }
 
-            let gffId = gff.attributes.ID
-            let product = gff.attributes.product
-            let locustag = gff.attributes.locus_tag
-            let name = gff.attributes.Name
             let length = codingseq.length
-
-            delete gff.attributes.ID
-            delete gff.attributes.product
-            delete gff.attributes.locus_tag
-            delete gff.attributes.Name
 
             let proteinseq = (new nt.Seq()).read(codingseq)
             proteinseq = proteinseq.translate()
 
             let hit = Object.assign(
               { species: species.name
-              , gffId
-              , product
-              , locustag
-              , name
               , length
               , contig: savedContig
               , codingseq
               , proteinseq
               }, gff)
+
             // }}}
+
+            Object.keys(gff.attributes).forEach((attr) => {
+              if (fields.indexOf(attr) === -1) {
+                fields.push(attr)
+              }
+            })
+
             HitModel.create(hit).then(() => {
               saved++
               if (saved % 1000 === 0) console.log(saved + ' saved')
@@ -81,30 +80,34 @@ db.dropDatabase().then(() => {
             }).catch(reject)
           }).catch(reject)
         })
-      }, {concurrency: CONCURRENCY}).then(() => {
-        console.log('Creating indexes')
 
-        db.collection('hits').createIndex(
-          { 'contig.head': 'text'
-          , gffId: 'text'
-          , locustag: 'text'
-          , product: 'text'
-          , name: 'text'
-          }
-        , { weights:
-            { product: 8
-            , 'contig.head': 6
-            , locustag: 10
-            , gffId: 10
-            , name: 10
+      }).then(() => {
+        console.log('Creating metadata')
+        MetadataModel.create({ fields }).then(() => {
+          console.log('Creating indexes')
+
+          db.collection('hits').createIndex(
+            { 'contig.head': 'text'
+            , gffId: 'text'
+            , locustag: 'text'
+            , product: 'text'
+            , name: 'text'
             }
-          , name: 'hit_search_index'
-          }
-        )
+          , { weights:
+              { product: 8
+              , 'contig.head': 6
+              , locustag: 10
+              , gffId: 10
+              , name: 10
+              }
+            , name: 'hit_search_index'
+            }
+          )
 
-        db.close(() => {
-          console.log('Finished.')
-          process.exit(0)
+          db.close(() => {
+            console.log('Finished.')
+            process.exit(0)
+          })
         })
       }).catch((err) => { console.log(err) })
     })
