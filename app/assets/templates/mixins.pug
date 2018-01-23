@@ -8,7 +8,9 @@ mixin searchForm(options)
         // label.col-sm-3.control-label(for='limit') Limit:        
         // div.col-sm-9
         //   input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
-        div.col-sm-12
+        div.col-sm-4
+          input.form-control.deep(type='checkbox', name='deep', value=options.deep)
+        div.col-sm-8
           button.form-control.search search
 
 

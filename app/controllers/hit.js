@@ -40,32 +40,44 @@ class hitController {
       delete constraints.score
     }
 
-    // if (options['deepSearch']) {
-    // if (options.search) {
-    //   search['search'] = options['search']
-    //   let seq = new RegExp(options['search'], 'i')
-    //   query['search'] = seq
-    // }
+    console.log(11111111111, options)
 
-    let aggregateQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
+    if (options.deep && options.search) {
+      let qs = new RegExp(options['search'], 'i')
+      query['product'] = qs
 
-    if (options.search) {
-      query['$text'] = { '$search': options.search }
-      let sort = { $sort: { score: { $meta: 'textScore' } } }
-      aggregateQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
-    }
-
-    HitModel.aggregate(aggregateQuery).allowDiskUse(true).exec((err, data) => {
-      if (err) {
-        this.render('Something went wrong', null, options, err)
-      } else {
-        if (!data.length) {
-          this.render('Search', null, search, 'No results.')
+      HitModel.find(query, constraints, (err, data) => {
+        if (err) {
+          this.render('Something went wrong', null, options, err)
         } else {
-          this.render('Search', data, search, null)
+          if (!data.length) {
+            this.render('Search', null, search, 'No results.')
+          } else {
+            this.render('Search', data, search, null)
+          }
         }
+      })
+    } else {
+      let aggregateQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
+
+      if (options.search) {
+        query['$text'] = { '$search': options.search }
+        let sort = { $sort: { score: { $meta: 'textScore' } } }
+        aggregateQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
       }
-    })
+
+      HitModel.aggregate(aggregateQuery).allowDiskUse(true).exec((err, data) => {
+        if (err) {
+          this.render('Something went wrong', null, options, err)
+        } else {
+          if (!data.length) {
+            this.render('Search', null, search, 'No results.')
+          } else {
+            this.render('Search', data, search, null)
+          }
+        }
+      })
+    }
   }
 }
 
