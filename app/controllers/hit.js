@@ -40,8 +40,6 @@ class hitController {
       delete constraints.score
     }
 
-    console.log(11111111111, options)
-
     if (options.deep && options.search) {
       let qs = new RegExp(options['search'], 'i')
       query['product'] = qs
