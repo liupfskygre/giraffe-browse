@@ -1,6 +1,7 @@
 const fasta2json = require('fasta2json')
     , gff2json = require('bionode-gff')
     , nt = require('ntseq')
+    , Promise = require('bluebird')
     , species =
       { contigs: __dirname + '/../data/ecoli.fa'
       , gff: __dirname + '/../data/prokka-ecoli.gff'
@@ -15,13 +16,17 @@ db.dropDatabase().then(() => {
   let contigs = fasta2json.ReadFasta(species.contigs)
 
   ContigModel.create(contigs).then(() => {
-    let promises = []
+    let gffs = []
 
     gff2json.read(species.gff).on('data', (gff) => {
-      promises.push(new Promise((resolve, reject) => {
+      gffs.push(gff)
+    }).on('end', () => {
+      Promise.map(gffs, (gff) => {
         let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
 
         ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {
+
+          // {{{
           let savedContig = { id: contigId._id, head: contig.head }
 
           let codingseq = contig.seq.substring(gff.start - 1, gff.end)
@@ -59,37 +64,34 @@ db.dropDatabase().then(() => {
             , codingseq
             , proteinseq
             }, gff)
+          // }}}
 
-          HitModel.create(hit).then(() => {
-            resolve()
-          }).catch(err => reject(err))
-        }).catch(err => reject(err))
-      }))
+          HitModel.create(hit).then(() => {}).catch(console.error)
 
-    }).on('end', () => {
-      Promise.all(promises).then(() => {
-        db.collection('hits').createIndex(
-          { 'contig.head': 'text'
-          , gffId: 'text'
-          , locustag: 'text'
-          , product: 'text'
-          , name: 'text'
-          }
-        , { weights:
-            { product: 8
-            , 'contig.head': 6
-            , locusttag: 10
-            , gffId: 10
-            , name: 10
+        }).catch(console.error)
+      }).then(() => {
+          db.collection('hits').createIndex(
+            { 'contig.head': 'text'
+            , gffId: 'text'
+            , locustag: 'text'
+            , product: 'text'
+            , name: 'text'
             }
-          , name: 'hit_search_index'
-          }
-        )
-        db.close(() => {
-          console.log('Finished.')
-          process.exit(0)
+          , { weights:
+              { product: 8
+              , 'contig.head': 6
+              , locustag: 10
+              , gffId: 10
+              , name: 10
+              }
+            , name: 'hit_search_index'
+            }
+          )
+          db.close(() => {
+            console.log('Finished.')
+            process.exit(0)
+          })
         })
-      }).catch(console.error)
     })
   }).catch(console.err)
 })
