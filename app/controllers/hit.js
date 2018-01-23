@@ -36,24 +36,24 @@ class hitController {
       , search = JSON.parse(JSON.stringify(options))
       , query = {}
 
-    // if (!options.search) {
-    //   delete constraints.score
-    // }
+    if (!options.search) {
+      delete constraints.score
+    }
 
     // if (options['deepSearch']) {
-    if (options.search) {
-      search['search'] = options['search']
-      let seq = new RegExp(options['search'], 'i')
-      query['search'] = seq
-    }
+    // if (options.search) {
+    //   search['search'] = options['search']
+    //   let seq = new RegExp(options['search'], 'i')
+    //   query['search'] = seq
+    // }
 
     let aggregateQuery = [ { $match: query }, { $project: constraints }, { $limit: limit } ]
 
-    // if (options.search) {
-    //   query['$text'] = { '$search': options.search }
-    //   let sort = { $sort: { score: { $meta: 'textScore' } } }
-    //   aggregateQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
-    // }
+    if (options.search) {
+      query['$text'] = { '$search': options.search }
+      let sort = { $sort: { score: { $meta: 'textScore' } } }
+      aggregateQuery = [ { $match: query }, { $project: constraints }, sort, { $limit: limit } ]
+    }
 
     HitModel.aggregate(aggregateQuery).allowDiskUse(true).exec((err, data) => {
       if (err) {

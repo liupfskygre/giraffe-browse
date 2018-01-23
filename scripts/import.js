@@ -18,7 +18,7 @@ db.dropDatabase().then(() => {
   let contigs = fasta2json.ReadFasta(species.contigs)
 
   ContigModel.create(contigs).then(() => {
-    console.log('Contigs stored')
+    console.log('Contigs saved')
 
     let gffs = []
 
@@ -101,6 +101,7 @@ db.dropDatabase().then(() => {
           , name: 'hit_search_index'
           }
         )
+
         db.close(() => {
           console.log('Finished.')
           process.exit(0)
