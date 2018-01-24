@@ -43,6 +43,7 @@ class hitController {
     if (options.fields) {
       for (let i = 0; i < options.fields.length; i++) {
         attributes['attributes.' + options.fields[i]] = new RegExp(options.inputs[i], 'i')
+        constraints['attributes.' + options.fields[i]] = true
       }
 
       delete options.fields
