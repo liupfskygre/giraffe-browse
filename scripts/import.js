@@ -3,12 +3,14 @@ const fasta2json = require('fasta2json')
     , nt = require('ntseq')
     , Promise = require('bluebird')
     , species =
-      { contigs: __dirname + '/../data/prokka-ecoli.fa'
-      , gff: __dirname + '/../data/prokka-ecoli.gff'
-      // { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
-      // , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
+      { contigs: __dirname + '/../data/Staphylococcus_aureus_cds.fa'
+      , gff: __dirname + '/../data/Staphylococcus_aureus.gff'
       , name: 'ecoli'
       }
+      // { contigs: __dirname + '/../data/prokka-ecoli.fa'
+      // , gff: __dirname + '/../data/prokka-ecoli.gff'
+      // { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
+      // , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
     , createDatabase = require('../app/database')
     , HitModel = require('../app/models/hit')
     , MetadataModel = require('../app/models/metadata')
@@ -36,6 +38,7 @@ db.dropDatabase().then(() => {
 
       Promise.map(gffs, (gff) => {
         return new Promise((resolve, reject) => {
+          // Need to handle if this doesn't work
           let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
 
           ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {
