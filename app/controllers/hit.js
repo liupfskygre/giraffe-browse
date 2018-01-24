@@ -43,7 +43,10 @@ class hitController {
     if (options.fields) {
       for (let i = 0; i < options.fields.length; i++) {
         let search = options.inputs ? options.inputs[i] : false
-        if (search.length) {
+        // TypeError: Cannot read property 'length' of undefined
+        // at hitController.search (/home/owg1/Projects/candida-website/app/controllers/hit.js:46:20)
+
+        if (search && search.length) {
           attributes['attributes.' + options.fields[i]] = new RegExp(search, 'i')
         } else {
           attributes['attributes.' + options.fields[i]] = { $exists: true }
