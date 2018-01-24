@@ -28,6 +28,10 @@ class hitController {
     let constraints =
 	{ _id: true
         , 'contig.head': true
+        , start: true
+        , end: true
+        , type: true
+        , 'attributes.ID': true
 	}
       , search = JSON.parse(JSON.stringify(options))
       // , limit = options.limit < max ? parseInt(options.limit) : max

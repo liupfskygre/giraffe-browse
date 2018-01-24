@@ -15,25 +15,27 @@ mixin searchForm(options, fields)
         // div.col-sm-9
         //   input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
 
-
 mixin listItems(data)
   div.table-responsive
     table.table
       thead
         tr
-          th.col-md-1 Name
-          th.col-md-1 Product
-          th.col-md-1 GFF ID
+          th.col-md-1 ID
+          th.col-md-1 Type
+          th.col-md-1 Start
+          th.col-md-1 End
           th.col-md-5 Contig ID
       tbody
         each item in data
           tr
             td
-              a(href='/hit/' + item._id) #{item.name}
+              a(href='/hit/' + item._id) #{item.attributes.ID}
             td
-              a(href='/hit/' + item._id) #{item.product}
+              a(href='/hit/' + item._id) #{item.type}
             td
-              a(href='/hit/' + item._id) #{item.gffId}
+              a(href='/hit/' + item._id) #{item.start}
+            td
+              a(href='/hit/' + item._id) #{item.end}
             td
               a(href='/hit/' + item._id) #{item.contig.head}
 
@@ -96,23 +98,6 @@ mixin display(hit)
           td.header(data-toggle='tooltip', title='For features of type "CDS", the phase indicates where the feature begins with reference to the reading frame. The phase is one of the integers 0, 1, or 2, indicating the number of bases that should be removed from the beginning of this feature to reach the first base of the next codon. In other words, a phase of "0" indicates that the next codon begins at the first base of the region described by the current line, a phase of "1" indicates that the next codon begins at the second base of this region, and a phase of "2" indicates that the codon begins at the third base of this region. This is NOT to be confused with the frame, which is simply start modulo 3.  For forward strand features, phase is counted from the start field. For reverse strand features, phase is counted from the end field.  The phase is REQUIRED for all CDS features.') Phase
             sup ?
           td=hit.phase
-        tr
-          td.header(data-toggle='tooltip', title='Indicates the ID of the feature. The ID attribute is required for features that have children (e.g. gene and mRNAs), or for those that span multiple lines, but are optional for other features. IDs for each feature must be unique within the scope of the GFF file. In the case of discontinuous features (i.e. a single feature that exists over multiple genomic locations) the same ID may appear on multiple lines. All lines that share an ID must collectively represent a single feature.') ID
-            sup ?
-          td=hit.gffId
-        tr
-          td.header(data-toggle='tooltip', title='Produced protein') Product
-            sup ?
-          td=hit.product
-        tr
-          td.header(data-toggle='tooltip', title='Locus Tag') Locus tag
-            sup ?
-          td=hit.locustag
-        tr
-          td.header(data-toggle='tooltip', title='Display name for the feature. This is the name to be displayed to the user. Unlike IDs, there is no requirement that the Name be unique within the file.') Name
-            sup ?
-          td=hit.name
-
         tr
           td.header(data-toggle='tooltip', title='Attributes') Attributes
           td.header
