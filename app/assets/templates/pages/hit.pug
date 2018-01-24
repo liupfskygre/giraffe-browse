@@ -5,13 +5,13 @@ block content
   include ../mixins
 
   pre
-    +searchForm(options, fields)
+    +searchForm(options, meta)
 
-    div.col-md-9.info
-      p
-        | Search for a gene by ID, Name, Product or Locustag.
-        | 
-        | Created by Owen Garland (garland.owen@gmail.com).
+    // div.col-md-9.info
+    //   p
+    //     | Search for a gene by ID, Name, Product or Locustag.
+    //     | 
+    //     | Created by Owen Garland (garland.owen@gmail.com).
 
   if data
     if data[0]._id

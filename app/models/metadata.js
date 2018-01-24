@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const schema = new Schema(
   { id: Schema.ObjectId
   , fields: [String]
+  , types: [String]
   }
 )
 

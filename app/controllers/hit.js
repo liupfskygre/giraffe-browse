@@ -3,13 +3,13 @@ const HitModel = require('../models/hit.js')
     // , max = 1000
 
 class hitController {
-  constructor (req, res, fields) {
+  constructor (req, res, meta) {
     this.res = res
-    this.fields = fields
+    this.meta = meta
   }
 
   render (title, data, options, error) {
-    let html = template({ title, data, options, error, fields: this.fields })
+    let html = template({ title, data, options, error, meta: this.meta })
     this.res.send(html)
   }
 

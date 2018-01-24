@@ -5,7 +5,7 @@ module.exports = (app) => {
 
   app.get('/hit/:id?', (req, res, next) => {
     try {
-      let hit = new HitController(req, res, app.fields)
+      let hit = new HitController(req, res, app.meta)
       if (req.params.id) {
         hit.view({ _id: req.params.id }, req.query)
       } else {
@@ -30,7 +30,7 @@ module.exports = (app) => {
   app.get('*', (req, res, next) => {
     try {
       req.fields = app.fields
-      let hits = new HitController(req, res, app.fields)
+      let hits = new HitController(req, res, app.meta)
       hits.search(req.query)
     } catch (e) {
       next(e)

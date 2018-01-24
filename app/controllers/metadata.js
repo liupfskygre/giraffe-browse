@@ -5,7 +5,7 @@ class ContigController {
     this.res = res
   }
 
-  getFields () {
+  getMeta () {
     return new Promise((resolve, reject) => {
       let constraints = { _id: false }
 
@@ -13,7 +13,7 @@ class ContigController {
         if (err) {
           reject(err)
         } else {
-          resolve(data.fields)
+          resolve(data)
         }
       })
     })

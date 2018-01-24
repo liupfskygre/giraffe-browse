@@ -23,7 +23,8 @@ db.dropDatabase().then(() => {
     console.log('Contigs saved')
 
     let gffs = []
-    let fields = []
+      , fields = []
+      , types = []
 
     gff2json.read(species.gff).on('data', (gff) => {
       gffs.push(gff)
@@ -73,6 +74,14 @@ db.dropDatabase().then(() => {
               }
             })
 
+            if (!gff.attributes.ID) {
+              // Generate our own ID
+            }
+
+            if (types.indexOf(gff.type) === -1) {
+              types.push(gff.type)
+            }
+
             HitModel.create(hit).then(() => {
               saved++
               if (saved % 1000 === 0) console.log(saved + ' saved')
@@ -83,27 +92,7 @@ db.dropDatabase().then(() => {
 
       }).then(() => {
         console.log('Creating metadata')
-        MetadataModel.create({ fields }).then(() => {
-          console.log('Creating indexes')
-
-          db.collection('hits').createIndex(
-            { 'contig.head': 'text'
-            , gffId: 'text'
-            , locustag: 'text'
-            , product: 'text'
-            , name: 'text'
-            }
-          , { weights:
-              { product: 8
-              , 'contig.head': 6
-              , locustag: 10
-              , gffId: 10
-              , name: 10
-              }
-            , name: 'hit_search_index'
-            }
-          )
-
+        MetadataModel.create({ fields, types }).then(() => {
           db.close(() => {
             console.log('Finished.')
             process.exit(0)

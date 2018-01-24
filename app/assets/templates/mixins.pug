@@ -1,15 +1,21 @@
-mixin searchForm(options, fields)
+mixin searchForm(options, meta)
   form.form(action='/hit', method='GET')
     div.form-group
       each val in [1, 2, 3, 4]
-        div.col-md-3
+        div.col-md-2
           div.col-sm-12
             select(class="form-control fields" + val, name='fields[' + val + ']')
-              each field in fields
+              option(value='') Select field
+              each field in meta.fields
                 option(value=field) #{field}
             input(class="form-control search" + val, type='text', name='inputs[' + val + ']', value=options.search)
-      div.col-sm-12
-        button.form-control.search search
+      div.col-md-2
+        div.col-sm-12
+          select(class="form-control type", name='type')
+            option(value='') All
+            each type in meta.types
+              option(value=type) #{type}
+          button.form-control.search search
 
         // label.col-sm-3.control-label(for='limit') Limit:        
         // div.col-sm-9

@@ -7,9 +7,11 @@ class Actions {
       }
     })
 
-    if ($('select').val() === '') {
-      $('select').remove()
-    }
+    $('select').each((index, obj) => {
+      if ($(obj).val() === '') {
+        $(obj).remove()
+      }
+    })
 
     if ($('textarea').val() === '') {
       $('textarea').remove()

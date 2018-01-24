@@ -18,8 +18,8 @@ addRoutes(app)
 connectDatabase()
 
 const Meta = new MetadataController()
-Meta.getFields().then((fields) => {
-  app.fields = fields
+Meta.getMeta().then((data) => {
+  app.meta = data
 }).catch((err) => { console.log(err) })
 
 app.listen(port, () => {
