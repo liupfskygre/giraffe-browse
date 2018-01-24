@@ -76,13 +76,16 @@ mixin display(hit)
             sup ?
             div
               button.btn.reverse Reverse Complement
+              button.btn.copybutton(data-clipboard-target='.coding') Copy 
+              div.infobox
           td
             div.sequence.col-md-12.coding=hit.codingseq
         tr
           td.header(data-toggle='tooltip', title='Amino acid sequence of the protein produced by the coding sequence. $ = TGA, & = TAG, * = TAA') Protein Sequence
             sup ?
+              button.btn.copybutton(data-clipboard-target='.proteinseq') Copy 
           td
-            div.sequence.col-md-12=hit.proteinseq
+            div.sequence.col-md-12.proteinseq=hit.proteinseq
         tr
           td.header(data-toggle='tooltip', title='A link to the full contig where the CDS was found. Warning: may be a large file.') Contig
             sup ?
