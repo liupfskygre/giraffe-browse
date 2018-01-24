@@ -42,7 +42,12 @@ class hitController {
 
     if (options.fields) {
       for (let i = 0; i < options.fields.length; i++) {
-        attributes['attributes.' + options.fields[i]] = new RegExp(options.inputs[i], 'i')
+        let search = options.inputs ? options.inputs[i] : false
+        if (search.length) {
+          attributes['attributes.' + options.fields[i]] = new RegExp(search, 'i')
+        } else {
+          attributes['attributes.' + options.fields[i]] = { $exists: true }
+        }
         constraints['attributes.' + options.fields[i]] = true
       }
 

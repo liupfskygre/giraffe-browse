@@ -5,10 +5,10 @@ const fasta2json = require('fasta2json')
     , species =
       // { contigs: __dirname + '/../data/Staphylococcus_aureus_cds.fa'
       // , gff: __dirname + '/../data/Staphylococcus_aureus.gff'
-      { contigs: __dirname + '/../data/prokka-ecoli.fa'
-      , gff: __dirname + '/../data/prokka-ecoli.gff'
-      // { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
-      // , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
+      // { contigs: __dirname + '/../data/prokka-ecoli.fa'
+      // , gff: __dirname + '/../data/prokka-ecoli.gff'
+      { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
+      , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
       , name: 'ecoli'
     }
     , createDatabase = require('../app/database')
