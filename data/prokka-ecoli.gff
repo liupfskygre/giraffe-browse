@@ -1,6 +1,6 @@
 ##gff-version 3
 ##sequence-region Chromosome 1 4558660
-Chromosome	Prodigal:2.6	CDS	337	2799	.	+	0	ID=FNAFGOFC_00001;Name=thrA;gene=thrA;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P00561;locus_tag=FNAFGOFC_00001;product=Bifunctional aspartokinase/homoserine dehydrogenase 1
+Chromosome	Prodigal:2.6	CDS	337	2799	.	+	0	ID=FNAFGOFC_00001;Name=thrA;gene=thrA;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P00561;locus_tag=FNAFGOFC_00001;product=Bifunctional aspartokinase/homoserine dehydrogenase 1;foo=bar
 Chromosome	Prodigal:2.6	CDS	2801	3733	.	+	0	ID=FNAFGOFC_00002;eC_number=2.7.1.39;Name=thrB;gene=thrB;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P00547;locus_tag=FNAFGOFC_00002;product=Homoserine kinase
 Chromosome	Prodigal:2.6	CDS	3734	5020	.	+	0	ID=FNAFGOFC_00003;eC_number=4.2.3.1;Name=thrC;gene=thrC;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P00934;locus_tag=FNAFGOFC_00003;product=Threonine synthase
 Chromosome	Prodigal:2.6	CDS	5234	5530	.	+	0	ID=FNAFGOFC_00004;inference=ab initio prediction:Prodigal:2.6;locus_tag=FNAFGOFC_00004;product=hypothetical protein

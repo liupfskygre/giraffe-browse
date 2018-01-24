@@ -1,6 +1,6 @@
 const HitModel = require('../models/hit.js')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/pages/hit.pug')
-    // , max = 1000
+    , max = 100
 
 class hitController {
   constructor (req, res, meta) {
@@ -25,7 +25,7 @@ class hitController {
   }
 
   search (options) {
-    let constraints =
+    let constraints = // { codingseq: false, proteinseq: false }
 	{ _id: true
         , 'contig.head': true
         , start: true
@@ -34,8 +34,10 @@ class hitController {
         , 'attributes.ID': true
 	}
       , search = JSON.parse(JSON.stringify(options))
-      // , limit = options.limit < max ? parseInt(options.limit) : max
+      , limit = options.limit < max ? parseInt(options.limit) : max
       , attributes = {}
+
+    delete options.limit
 
     if (options.fields) {
       for (let i = 0; i < options.fields.length; i++) {
@@ -62,7 +64,7 @@ class hitController {
           this.render('Search', data, search, null)
         }
       }
-    })
+    }).limit(limit)
   }
 }
 

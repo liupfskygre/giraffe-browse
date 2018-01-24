@@ -1,25 +1,25 @@
 mixin searchForm(options, meta)
   form.form(action='/hit', method='GET')
     div.form-group
-      each val in [1, 2, 3, 4]
+      each val in [0, 1, 2, 3]
         div.col-md-2
           div.col-sm-12
-            select(class="form-control fields" + val, name='fields[' + val + ']')
-              option(value='') Select field
+            select(class="form-control fields" + val, name='fields[' + val + ']',)
+              option(default, value='') Select field
               each field in meta.fields
-                option(value=field) #{field}
-            input(class="form-control search" + val, type='text', name='inputs[' + val + ']', value=options.search)
+                option(value=field, selected=(options.fields && (options.fields[val] === field))) #{field}
+            input(class="form-control search" + val, type='text', name='inputs[' + val + ']', value=(options.inputs && options.inputs[val] ? options.inputs[val] : ''))
       div.col-md-2
         div.col-sm-12
-          select(class="form-control type", name='type')
-            option(value='') All
+          select(class="form-control type", name='type', value=options.type)
+            option(default, value='') All Types
             each type in meta.types
-              option(value=type) #{type}
+              option(value=type, selected=options.type === type) #{type}
           button.form-control.search search
 
-        // label.col-sm-3.control-label(for='limit') Limit:        
-        // div.col-sm-9
-        //   input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
+      div.col-md-2
+        div.col-sm-12
+          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0', placeholder="Limit")
 
 mixin listItems(data)
   div.table-responsive
@@ -30,10 +30,15 @@ mixin listItems(data)
           th.col-md-1 Type
           th.col-md-1 Start
           th.col-md-1 End
-          th.col-md-5 Contig ID
+          th.col-md-2 Contig ID
+          th.col-md-3
+            select.form-group(class="form-control display-field", name='display-field')
+              option(value='') Select field
+              each field in meta.fields
+                option(value=field) #{field}
       tbody
         each item in data
-          tr
+          tr.data-row
             td
               a(href='/hit/' + item._id) #{item.attributes.ID}
             td
@@ -44,6 +49,7 @@ mixin listItems(data)
               a(href='/hit/' + item._id) #{item.end}
             td
               a(href='/hit/' + item._id) #{item.contig.head}
+            td.selector-column
 
 mixin display(hit)
   div.table-responsive

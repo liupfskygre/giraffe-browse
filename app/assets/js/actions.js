@@ -1,5 +1,9 @@
 class Actions {
 
+  updateColumn (field) {
+    alert(field)
+  }
+
   cleanForm () {
     $('input').each((index, obj) => {
       if ($(obj).val() === '') {
