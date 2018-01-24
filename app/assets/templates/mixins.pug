@@ -19,7 +19,7 @@ mixin searchForm(options, meta)
 
       div.col-md-2
         div.col-sm-12
-          button.form-control.search.btn-primary Query
+          button.form-control.search.btn-primary(style="height:60px") Query
 
 mixin listItems(data)
   div.table-responsive
@@ -56,8 +56,9 @@ mixin listItems(data)
             td
               a(href='/hit/' + item._id) #{item.contig.head}
             each val in [ 0, 1, 2, 3 ]
-              td.selector-column
-                a(href='/hit/' + item._id) #{item.attributes[options.fields[val]]}
+              if (options.fields && options.fields[val])
+                td.selector-column
+                  a(href='/hit/' + item._id) #{item.attributes[options.fields[val]]}
                   
 
 mixin display(hit)

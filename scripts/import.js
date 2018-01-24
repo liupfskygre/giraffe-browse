@@ -38,7 +38,6 @@ db.dropDatabase().then(() => {
 
       Promise.map(gffs, (gff) => {
         return new Promise((resolve, reject) => {
-          // Need to handle if this doesn't work
           let contig = contigs.find(x => x.head.split(' ')[0] === gff.seqid)
 
           ContigModel.findOne({ head: contig.head }, { _id: true }).then((contigId) => {

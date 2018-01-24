@@ -1,6 +1,6 @@
 const HitModel = require('../models/hit.js')
     , template = require('pug').compileFile(__dirname + '/../assets/templates/pages/hit.pug')
-    , max = 100
+    , max = 5000
 
 class hitController {
   constructor (req, res, meta) {
