@@ -30,6 +30,7 @@ class hitController {
         , 'contig.head': true
         , start: true
         , end: true
+        , length: true
         , type: true
         , 'attributes.ID': true
 	}

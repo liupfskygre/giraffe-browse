@@ -15,11 +15,11 @@ mixin searchForm(options, meta)
             option(default, value='') All Types
             each type in meta.types
               option(value=type, selected=options.type === type) #{type}
-          button.form-control.search search
+          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0', placeholder="Limit")
 
       div.col-md-2
         div.col-sm-12
-          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0', placeholder="Limit")
+          button.form-control.search search
 
 mixin listItems(data)
   div.table-responsive
@@ -30,9 +30,10 @@ mixin listItems(data)
           th.col-md-1 Type
           th.col-md-1 Start
           th.col-md-1 End
-          th.col-md-2 Contig ID
-          th.col-md-3
-            select.form-group(class="form-control display-field", name='display-field')
+          th.col-md-1 Length
+          th.col-md-1 Contig ID
+          th.col-md-3.form-group
+            select(class="form-control display-field", name='display-field')
               option(value='') Select field
               each field in meta.fields
                 option(value=field) #{field}
@@ -47,6 +48,8 @@ mixin listItems(data)
               a(href='/hit/' + item._id) #{item.start}
             td
               a(href='/hit/' + item._id) #{item.end}
+            td
+              a(href='/hit/' + item._id) #{item.length}
             td
               a(href='/hit/' + item._id) #{item.contig.head}
             td.selector-column
