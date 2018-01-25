@@ -12,7 +12,7 @@ class ContigController {
       if (err) {
         this.res.status(404).send('Contig not found! Sorry :(')
       } else {
-        let contig = '>' + data.head + data.seq
+        let contig = '>' + data.head + '\n' + data.seq
         this.res.setHeader('content-type', 'text/pain')
         this.res.status(200).send(contig)
       }

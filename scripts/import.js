@@ -7,8 +7,10 @@ const fasta2json = require('fasta2json')
       // , gff: __dirname + '/../data/Staphylococcus_aureus.gff'
       // { contigs: __dirname + '/../data/prokka-ecoli.fa'
       // , gff: __dirname + '/../data/prokka-ecoli.gff'
-      { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
-      , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
+      { contigs: __dirname + '/../data/Acidaminococcus_fermentans_pGA-4.fna'
+      , gff: __dirname + '/../data/Acidaminococcus_fermentans_pGA-4.gff'
+      // { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
+      // , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
       , name: 'ecoli'
     }
     , createDatabase = require('../app/database')
