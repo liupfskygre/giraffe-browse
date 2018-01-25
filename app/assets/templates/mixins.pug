@@ -1,55 +1,65 @@
-mixin searchForm(options)
+mixin searchForm(options, meta)
   form.form(action='/hit', method='GET')
-    div.col-md-3
-      div.form-group
-        label.col-sm-3.control-label Search:
-        div.col-sm-9
-          input.form-control(type='text', name='search', value=options.search)
-      div.form-group
-        label.col-sm-3.control-label(for='codingseq.seq') Sequence:
-        div.col-sm-9
-          textarea.form-control(name='codingseq.seq')=options['codingseq.seq']
+    div.form-group
+      each val in [0, 1, 2, 3]
+        div.col-md-2
+          div.col-sm-12
+            select(class="form-control fields" + val, name='fields[' + val + ']',)
+              option(default, value='') Select field
+              each field in meta.fields
+                option(value=field, selected=(options.fields && (options.fields[val] === field))) #{field}
+            input(placeholder="Search", class="form-control search" + val, type='text', name='inputs[' + val + ']', value=(options.inputs && options.inputs[val] ? options.inputs[val] : ''))
+      div.col-md-2
+        div.col-sm-12
+          select(class="form-control type", name='type', value=options.type)
+            option(default, value='') All Types
+            each type in meta.types
+              option(value=type, selected=options.type === type) #{type}
+          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0', placeholder="Limit")
 
-    div.col-md-3
-      div.form-group
-        label.col-sm-3.control-label Species:
-        div.col-sm-9
-          select.form-control(name='species', value=options.species)
-            option(default, value='', selected=options.species === '') -- select --
-            option(value='shehate', selected=options.species === 'shehate') shehate
-            option(value='tropicalis', selected=options.species === 'tropicalis') tropicalis
-            option(value='boidinii', selected=options.species === 'boidinii') boidinii
-      div.form-group
-        label.col-sm-3.control-label(for='limit') Limit:        
-        div.col-sm-9
-          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0')
-      div.form-group
-        button.form-control.search search
-
+      div.col-md-2
+        div.col-sm-12
+          button.form-control.search.btn-primary(style="height:60px") Query
 
 mixin listItems(data)
   div.table-responsive
     table.table
       thead
         tr
-          th.col-md-1 Candida Gene Name
-          th.col-md-5 Description
-          th.col-md-1 Species
-          th.col-md-1 Candida Geneome ID
-          th.col-md-1 Uniprot ID
+          th.col-md-1 ID
+          th.col-md-1 Type
+          th.col-md-1 Start
+          th.col-md-1 End
+          th.col-md-1 Length
+          th.col-md-1 Contig ID
+          each val in [ 0, 1, 2, 3 ]
+            if options.fields && options.fields[val]
+              th(class='col-md-2 field' + val) #{options.fields[val]}
+
+            // select(class="form-control display-field", name='display-field')
+            //   option(value='') Select field
+            //   each field in meta.fields
+            //     option(value=field) #{field}
       tbody
         each item in data
-          tr
+          tr.data-row
             td
-              a(href='/hit/' + item._id) #{item.name}
+              a(href='/hit/' + item._id) #{item.attributes.ID}
             td
-              a(href='/hit/' + item._id) #{item.protein.desc}
+              a(href='/hit/' + item._id) #{item.type}
             td
-              a(href='/hit/' + item._id) #{item.species}
-            td.external
-              a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + item.cgdid) #{item.cgdid}
-            td.external
-              a(href='http://www.uniprot.org/uniprot/' + item.uniprot) #{item.uniprot}
+              a(href='/hit/' + item._id) #{item.start}
+            td
+              a(href='/hit/' + item._id) #{item.end}
+            td
+              a(href='/hit/' + item._id) #{item.length}
+            td
+              a(href='/hit/' + item._id) #{item.contig.head}
+            each val in [ 0, 1, 2, 3 ]
+              if (options.fields && options.fields[val])
+                td.selector-column
+                  a(href='/hit/' + item._id) #{item.attributes[options.fields[val]]}
+                  
 
 mixin display(hit)
   div.table-responsive
@@ -59,66 +69,70 @@ mixin display(hit)
           th.col-md-1.header Item
           th.col-md-11 Value
       tbody
+        // TO DO: Use GFF3 definitions for tooltips
+
         tr
-          td.header(data-toggle='tooltip', title='Name of gene in Candida Genome Database') Gene Name
-            sup ?
-          td=hit.name
-        tr
-          td.header(data-toggle='tooltip', title='Description of protein function from NCBI/Uniprot') Description
-            sup ?
-          td=hit.protein.desc
-        tr
-          td.header(data-toggle='tooltip', title='Strain of Candida') Species
-            sup ?
-          td=hit.species
-        tr
-          td.header(data-toggle='tooltip', title='Accession ID from Candida Genome Database') Hit ID
-            sup ?
-          td=hit.hitid
-        tr
-          td.header(data-toggle='tooltip', title='Uniprot ID link to locus') Uniprot ID
-            sup ?
-          td
-            a(href='http://www.uniprot.org/uniprot/' + hit.uniprot) #{hit.uniprot}
-        tr
-          td.header(data-toggle='tooltip', title='Candida Genome ID link to locus') Candida Genome ID
-            sup ?
-          td
-            a(href='http://www.candidagenome.org/cgi-bin/locus.pl?dbid=' + hit.cgdid) #{hit.cgdid}
-        tr
-          td.header(data-toggle='tooltip', title='Links to the Gene Ontology ID\'s associated with this protein') Gene Ontology IDs
-            sup ?
-          td
-            if hit.protein.goids
-              each id in hit.protein.goids
-                a(href='http://amigo.geneontology.org/amigo/term/' + id) #{id}  
-        tr
-          td.header(data-toggle='tooltip', title='The ID of the scaffold that this hit was found in') Contig ID
-            sup ?
-          td=hit.contig.head
-        tr
-          td.header(data-toggle='tooltip', title='The scaffold / neucleotide sequence that the gene was found in. Coding sequence highlighted in red') Contig 
-            sup ?
-            div
-              button.btn.copybutton(data-clipboard-target='.hidden-box') Copy coding sequence
-            div
-              div.col-md-6.copyarea
-                input.plusminus.form-control.bfh-number(type='number', min='0') 
-              div.col-md-6.copyarea
-                div.buttoninfo +/- bases  
-              div.infobox
-                |  
-          td
-            div.sequence.col-md-12.contig(start=hit.codingRange.start, end=hit.codingRange.end, fail=hit.codingRange.fail)=hit.contig.seq
-        tr
-          td.header(data-toggle='tooltip', title='Reference coding sequence that codes for the protein') Coding Sequence
+          td.header(data-toggle='tooltip', title='The neucleotide coding sequence for the gene') Coding Sequence
             sup ?
             div
               button.btn.reverse Reverse Complement
+              button.btn.copybutton(data-clipboard-target='.coding') Copy 
+              div.infobox
           td
-            div.sequence.col-md-12.coding=hit.codingseq.seq
+            div.sequence.col-md-12.coding=hit.codingseq
         tr
-          td.header(data-toggle='tooltip', title='Amino acid sequence that creates the protien') Protein Sequence
+          td.header(data-toggle='tooltip', title='Amino acid sequence of the protein produced by the coding sequence. $ = TGA, & = TAG, * = TAA') Protein Sequence
             sup ?
+              button.btn.copybutton(data-clipboard-target='.proteinseq') Copy 
           td
-            div.sequence.col-md-12.protein=hit.protein.seq
+            div.sequence.col-md-12.proteinseq=hit.proteinseq
+        tr
+          td.header(data-toggle='tooltip', title='A link to the full contig where the CDS was found. Warning: may be a large file.') Contig
+            sup ?
+          td 
+            a(href='/contig/' + hit.contig.id)=hit.contig.head
+        tr
+          td.header(data-toggle='tooltip', title='The source is a free text qualifier intended to describe the algorithm or operating procedure that generated this feature. Typically this is the name of a piece of software, such as "Genescan" or a database name, such as "Genbank." In effect, the source is used to extend the feature ontology by adding a qualifier to the type creating a new composite type that is a subclass of the type in the type column.') Source
+            sup ?
+          td=hit.source
+        tr
+          td.header(data-toggle='tooltip', title=' The type of the feature (previously called the "method"). This is constrained to be either a term from the Sequence Ontology or an SO accession number. The latter alternative is distinguished using the syntax SO:000000. In either case, it must be sequence_feature (SO:0000110) or an is_a child of it.') Type
+            sup ?
+          td=hit.type
+        tr
+          td.header(data-toggle='tooltip', title='The start and end coordinates of the feature are given in positive 1-based integer coordinates, relative to the landmark given in column one. Start is always less than or equal to end. For features that cross the origin of a circular feature (e.g. most bacterial genomes, plasmids, and some viral genomes), the requirement for start to be less than or equal to end is satisfied by making end = the position of the end + the length of the landmark feature.  For zero-length features, such as insertion sites, start equals end and the implied site is to the right of the indicated base in the direction of the landmark.') Start
+            sup ?
+          td=hit.start
+        tr
+          td.header(data-toggle='tooltip', title='The start and end coordinates of the feature are given in positive 1-based integer coordinates, relative to the landmark given in column one. Start is always less than or equal to end. For features that cross the origin of a circular feature (e.g. most bacterial genomes, plasmids, and some viral genomes), the requirement for start to be less than or equal to end is satisfied by making end = the position of the end + the length of the landmark feature.  For zero-length features, such as insertion sites, start equals end and the implied site is to the right of the indicated base in the direction of the landmark.') End
+            sup ?
+          td=hit.end
+        tr
+          td.header(data-toggle='tooltip', title='Length of the coding sequence, (end - start)') Length
+            sup ?
+          td=hit.length
+        tr
+          td.header(data-toggle='tooltip', title='The score of the feature, a floating point number. As in earlier versions of the format, the semantics of the score are ill-defined. It is strongly recommended that E-values be used for sequence similarity features, and that P-values be used for ab initio gene prediction features.') Score
+            sup ?
+          td=hit.score
+        tr
+          td.header(data-toggle='tooltip', title='The strand of the feature. + for positive strand (relative to the landmark), - for minus strand, and . for features that are not stranded. In addition, ? can be used for features whose strandedness is relevant, but unknown.') Strand
+            sup ?
+          td=hit.strand
+        tr
+          td.header(data-toggle='tooltip', title='For features of type "CDS", the phase indicates where the feature begins with reference to the reading frame. The phase is one of the integers 0, 1, or 2, indicating the number of bases that should be removed from the beginning of this feature to reach the first base of the next codon. In other words, a phase of "0" indicates that the next codon begins at the first base of the region described by the current line, a phase of "1" indicates that the next codon begins at the second base of this region, and a phase of "2" indicates that the codon begins at the third base of this region. This is NOT to be confused with the frame, which is simply start modulo 3.  For forward strand features, phase is counted from the start field. For reverse strand features, phase is counted from the end field.  The phase is REQUIRED for all CDS features.') Phase
+            sup ?
+          td=hit.phase
+        tr
+          td.header(data-toggle='tooltip', title='Attributes') Attributes
+          td.header
+        each value, property in hit.attributes
+          tr
+            td.header(data-toggle='tooltip', title=property) 
+              +ucfirst(property)
+            td=value
+
+mixin ucfirst(text)
+  - text = text.charAt(0).toUpperCase() + text.slice(1);
+  .
+    #{text}

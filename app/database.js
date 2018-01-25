@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 
 module.exports = (url = dbUrl) => {
   mongoose.Promise = global.Promise
-  mongoose.connect(url)
+  mongoose.connect(url, { useMongoClient: true })
   mongoose.connection.on('error', (err) => {
       console.log('Mongoose Connection ERROR: ' + err)
   })
+  return mongoose.connection
 }

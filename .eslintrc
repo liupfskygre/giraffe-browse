@@ -17,6 +17,7 @@
   },
 
   "rules": {
-    "one-var": 0
+    "one-var": 0,
+    "complexity": 0
   }
 }

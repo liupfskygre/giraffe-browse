@@ -14,7 +14,7 @@ describe('Database', () => {
     })
   })
 
-  it('should save & find a new gene', (done) => {
+  it.skip('should save & find a new gene', (done) => {
     HitModel.create(mockHit, () => {
       HitModel.findOne({ uniprot: 'Q59X94' }, 'species name', (err, result) => {
         if (err) console.log(err)

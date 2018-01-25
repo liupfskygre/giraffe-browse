@@ -6,7 +6,7 @@ class homeController {
   }
 
   render () {
-    let html = template({ title: 'Candida Genome', options: { } })
+    let html = template({ title: 'GFF3 Browser', options: { } })
     this.res.send(html)
   }
 }

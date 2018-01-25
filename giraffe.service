@@ -1,0 +1,16 @@
+[Unit]
+Description=Candida Website
+Requires=After=mongodb.service
+
+[Service]
+ExecStart=/usr/local/bin/node /home/giraffe/giraffe-browse/app/server.js
+WorkingDirectory=/home/giraffe/giraffe-browse/
+Restart=always
+RestartSec=10 
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=candida
+User=candida
+
+[Install]
+WantedBy=multi-user.target

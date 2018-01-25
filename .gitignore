@@ -77,3 +77,19 @@ jspm_packages
 
 app/assets/build/js
 app/assets/build/css
+
+data/Bacillus_subtilis_best7003.gff
+data/Bacillus_subtilis_best7003_dna.fa
+data/Caulobacter_crescentus_cb15.gff
+data/Caulobacter_crescentus_cb15_dna.fa
+# data/Escherichia_coli_k_12.gff
+# data/Escherichia_coli_k_12_dna.fa
+data/Mycoplasma_genitalium_g37.gff
+data/Mycoplasma_genitalium_g37_dna.fa
+data/Pseudomonas_fluorescens.gff
+data/Pseudomonas_fluorescens_dna.fa
+data/Staphylococcus_aureus.gff
+data/Staphylococcus_aureus_dna.fa
+data/Clostridium_aminophilum_F.fna
+data/Clostridium_aminophilum_F.gff
+

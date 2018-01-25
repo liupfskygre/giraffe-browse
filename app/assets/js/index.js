@@ -9,17 +9,9 @@ $('.reverse').on('click', () => {
   action.reverseCompliment()
 })
 
-if ($('.contig').length) {
-  action.highlight()
-}
-
 const Clipboard = require('clipboard')
 
-let clip = new Clipboard('.copybutton', {
-  text: () => {
-    return action.copy()
-  }
-})
+let clip = new Clipboard('.copybutton', { })
 
 clip.on('success', (e) => {
   if (e.text) {

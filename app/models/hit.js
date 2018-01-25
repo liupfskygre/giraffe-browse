@@ -3,15 +3,22 @@ const mongoose = require('mongoose')
 
 const schema = new Schema(
   { id: Schema.ObjectId
-  , hitid: String
-  , species: String
-  , name: String
-  , uniprot: String
-  , cgdid: String
-  , contig: { head: String, seq: String }
-  , codingseq: { head: String, seq: String }
-  , protein: { head: String, seq: String, goids: [String], desc: String }
-  , codingRange: { start: Number, end: Number, fail: Boolean }
+  , seqid: String
+  , source: String
+  , type: String
+  , start: String
+  , end: String
+  , score: String
+  , strand: String
+  , phase: String
+  , length: String
+  , attributes: Object
+  , contig:
+    { id: String
+    , head: String
+    }
+  , codingseq: String
+  , proteinseq: String
   }
 )
 
