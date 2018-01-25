@@ -1,5 +1,5 @@
 {
-  "name": "GiraFFe Browse",
+  "name": "GiraFFe-Browse",
   "version": "1.0.0",
   "description": "Import a GFF & FASTA file to MongoDB and have a web UI to browse it",
   "main": "app/server.js",
@@ -17,7 +17,7 @@
     "travis": "npm run base-test && ./node_modules/.bin/codecov -t a5e2d812-2bd3-4cdc-ace5-c8de52d81dca",
     "lint": "./node_modules/.bin/eslint -f unix .",
     "seed": "node scripts/import.js",
-    "postinstall": "npm run seed && npm run build",
+    "postinstall": "npm run build",
     "prepush": "npm test",
     "logs": "heroku logs --tail --app final-year-project-owg1",
     "testwatch": "nodemon --exec 'mocha -R min' "
