@@ -3,21 +3,19 @@ const fasta2json = require('fasta2json')
     , nt = require('ntseq')
     , Promise = require('bluebird')
     , species =
-      // { contigs: __dirname + '/../data/Staphylococcus_aureus_cds.fa'
-      // , gff: __dirname + '/../data/Staphylococcus_aureus.gff'
-      // { contigs: __dirname + '/../data/prokka-ecoli.fa'
-      // , gff: __dirname + '/../data/prokka-ecoli.gff'
-      { contigs: __dirname + '/../data/Acidaminococcus_fermentans_pGA-4.fna'
-      , gff: __dirname + '/../data/Acidaminococcus_fermentans_pGA-4.gff'
-      // { contigs: __dirname + '/../data/Escherichia_coli_k_12_dna.fa'
-      // , gff: __dirname + '/../data/Escherichia_coli_k_12.gff'
-      , name: 'ecoli'
-    }
+      { contigs: process.env.FASTA
+      , gff: process.env.GFF
+      }
     , createDatabase = require('../app/database')
     , HitModel = require('../app/models/hit')
     , MetadataModel = require('../app/models/metadata')
     , ContigModel = require('../app/models/contig')
     , db = createDatabase()
+
+if (!process.env.GFF || !process.env.FASTA) {
+  console.log('GFF and/or FASTA missing, run with "GFF=/path/to/gff FASTA=path/to/fasta node import.js"')
+  process.exit(1)
+}
 
 db.dropDatabase().then(() => {
   console.log('Database dropped')
@@ -63,8 +61,7 @@ db.dropDatabase().then(() => {
             proteinseq = proteinseq.translate()
 
             let hit = Object.assign(
-              { species: species.name
-              , length
+              { length
               , contig: savedContig
               , codingseq
               , proteinseq
