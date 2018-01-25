@@ -1,4 +1,4 @@
-# GFF Web Viewer (WORK IN PROGRESS)
+# GiraFFe Browse (WORK IN PROGRESS)
 This project is based on my undergraduate final year project, where I built an online resource for a set of specific data.
 
 The aim is to modify that project to be more generic, but enabling it to accept GFF3 files as the inputs, making it more accessible to a greater number of researchers. 

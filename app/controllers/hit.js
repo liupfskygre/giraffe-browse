@@ -19,7 +19,7 @@ class hitController {
       if (err) {
         this.render('Something went wrong', null, search, err)
       } else {
-        this.render('GENE VIEW', [ data ], search, null)
+        this.render('GiraFFe Browse', [ data ], search, null)
       }
     }).lean()
   }
@@ -69,9 +69,9 @@ class hitController {
         this.render('Something went wrong', null, options, err)
       } else {
         if (!data.length) {
-          this.render('Search', null, search, 'No results.')
+          this.render('GiraFFe Browse', null, search, 'No results.')
         } else {
-          this.render('Search', data, search, null)
+          this.render('GiraFFe Browse', data, search, null)
         }
       }
     }).limit(limit)
