@@ -1,7 +1,7 @@
 {
-  "name": "final-year-project",
+  "name": "GiraFFe Browse",
   "version": "1.0.0",
-  "description": "Building an online resource for Candida Tropicalis",
+  "description": "Import a GFF & FASTA file to MongoDB and have a web UI to browse it",
   "main": "app/server.js",
   "scripts": {
     "test": "npm run base-test && rm -rf coverage/",
@@ -23,7 +23,7 @@
     "testwatch": "nodemon --exec 'mocha -R min' "
   },
   "engines": {
-    "node": "6.9.0"
+    "node": "8.9.0"
   },
   "author": "Owen Garland",
   "license": "GPL-3.0",
