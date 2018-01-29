@@ -11,6 +11,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     echo
     echo "Installing brew..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew tap homebrew/services
   fi
   
   if [[ -z `command -v node` ]]; then
