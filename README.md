@@ -32,10 +32,9 @@ For more detailed information on install Nodejs on other systems [see their inst
     sudo npm install -g nave 
     sudo nave usemain 8.9.0
 
-### 4. Clone the application to your local machine (This will be updated soon)
-    git clone git@github.com:bag-man/candida-website.git
-    cd candida-website
-    git checkout gff3
+### 4. Clone the application to your local machine
+    git clone git@github.com:bag-man/giraffe-browse.git
+    cd giraffe-browse
 
 ### 5. Install node packages, and build application
     npm install
