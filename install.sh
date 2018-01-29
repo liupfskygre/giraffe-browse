@@ -78,7 +78,7 @@ sudo nave usemain 8.9.0
 
 echo
 echo "Cloning project"
-git clone git@github.com:bag-man/giraffe-browse.git
+git clone https://github.com/bag-man/giraffe-browse.git
 cd giraffe-browse
 
 echo
@@ -86,7 +86,7 @@ echo "Installing packages & building project..."
 npm install 
 npm run build
 
-echo "In the giraffe-browse directory, import your data with: "
+echo "*** In the giraffe-browse directory ***, import your data with: "
 echo "FASTA=path/to/your/fasta/file.fa GFF=path/to/your/gff/file.gff npm run seed"
 echo
 echo "Then start the application with:"
