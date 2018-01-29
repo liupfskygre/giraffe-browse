@@ -7,7 +7,18 @@ It is very much a work in progress, you can see the [roadmap here](https://trell
 
 [You can see a demo version of the site here.](http://praxis.owen.cymru)
 
-## Setup
+## Auto-magical install script
+This script will completely (Fingers crossed) setup the project on OS X, Debian and Ubuntu. For other Linux Distros you need to install Nodejs and MongoDB yourself first. 
+
+Once installed you need to run steps 6 & 7 (Documented below) yourself, as these are the import and running steps which you would want to do more frequently. 
+
+To run the script:
+
+    curl https://raw.githubusercontent.com/bag-man/giraffe-browse/master/install.sh > install.sh; chmod +x install.sh; ./install.sh
+
+
+
+## Full Manual Setup
 ### 1. Install Nodejs
 
 For more detailed information on install Nodejs on other systems [see their install wiki page](https://nodejs.org/en/download/package-manager/).

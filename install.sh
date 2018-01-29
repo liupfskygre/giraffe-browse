@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "GiraFFe Browse installer"
 echo
 echo "*** This script requires sudo priveledges to work ***"
