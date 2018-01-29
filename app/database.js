@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-    , dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/candida'
+    , DBNAME = 'giraffe-browse'
+    , dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/' + DBNAME
 
 module.exports = (url = dbUrl) => {
   mongoose.Promise = global.Promise

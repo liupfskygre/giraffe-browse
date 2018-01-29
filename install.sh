@@ -62,11 +62,10 @@ echo "Installing packages & building project"
 npm install 
 npm run build
 
-echo "Now run:"
+echo "In the giraffe-browse directory, import your data with: "
 echo "FASTA=path/to/your/fasta/file.fa GFF=path/to/your/gff/file.gff npm run seed"
-echo "To import your data to mongodb"
 echo
 echo "Then start the application with:"
-echo "npm run start"
+echo "PORT=3000 npm run start"
 echo
-echo "Now visit http://localhost:3000 to access your data"
+echo "Then visit http://localhost:3000 to access your data"
