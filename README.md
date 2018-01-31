@@ -7,6 +7,11 @@ It is very much a work in progress, you can see the [roadmap here](https://trell
 
 [You can see a demo version of the site here.](http://praxis.owen.cymru)
 
+## Requirements
+To use this tool, you either need to be running OS X or Linux and be able to use the command line to a basic level. If this isn't something you are able to do, you could ask your friendly sysadmin to run this on a server for you. 
+
+The only other requirement is to have a GFF3 file and the accompanying FASTA file that was used to generate the GFF3. Make sure that your GFF3 file doesn't have the FASTA concatenated onto the end of the GFF3 records, and is in a separate file. 
+
 ## Auto-magical install script
 This script will completely (Fingers crossed) setup the project on OS X, Debian and Ubuntu. For other Linux Distros you need to install Nodejs and MongoDB yourself first. 
 
