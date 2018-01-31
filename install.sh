@@ -7,13 +7,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   echo
   echo "Using OS X config..."
 
-  if [[ -z `command -v brew` ]]; then
-    echo
-    echo "Installing brew..."
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew tap homebrew/services
-  fi
-  
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew tap homebrew/services
+
   if [[ -z `command -v node` ]]; then
     echo
     echo "Installing Nodejs..."

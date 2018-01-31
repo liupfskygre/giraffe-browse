@@ -12,15 +12,16 @@ To use this tool, you either need to be running OS X or Linux and be able to use
 
 The only other requirement is to have a GFF3 file and the accompanying FASTA file that was used to generate the GFF3. Make sure that your GFF3 file doesn't have the FASTA concatenated onto the end of the GFF3 records, and is in a separate file. 
 
+In the data folder that is downloaded with the project there, are three datasets for your to try out. 
+
 ## Auto-magical install script
 This script will completely (Fingers crossed) setup the project on OS X, Debian and Ubuntu. For other Linux Distros you need to install Nodejs and MongoDB yourself first. 
 
-Once installed you need to run steps 6 & 7 (Documented below) yourself, as these are the import and running steps which you would want to do more frequently. 
-
-To run the script:
+Navigate to a folder where you want the project live and then run this script:
 
     curl https://raw.githubusercontent.com/bag-man/giraffe-browse/master/install.sh > install.sh; chmod +x install.sh; ./install.sh
 
+Once installed you need to run steps 6 & 7 (Documented below) yourself, as these are the import and running steps which you would want to do more frequently. 
 
 
 ## Full Manual Setup
