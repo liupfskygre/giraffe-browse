@@ -32,6 +32,9 @@ For more detailed information on install Nodejs on other systems [see their inst
 #### OS X
     # Install Brew if you don't have it already
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    
+    # Install brew services
+    brew tap homebrew/services
 
     # Install node
     brew install node
@@ -45,22 +48,30 @@ For more detailed information on install Nodejs on other systems [see their inst
 
 [Linux install instructions](https://docs.mongodb.com/manual/administration/install-on-linux/#recommended)
 
-### 3. Update node to 8.9.0 (LTS)
+### 3. Start MongoDB
+
+    # OS X with brew
+    brew services start mongodb
+
+    # Ubuntu with systemd
+    sudo systemctl start mongodb
+
+### 4. Update node to 8.9.0 (LTS)
     sudo npm install -g nave 
     sudo nave usemain 8.9.0
 
-### 4. Clone the application to your local machine
+### 5. Clone the application to your local machine
     git clone git@github.com:bag-man/giraffe-browse.git
     cd giraffe-browse
 
-### 5. Install node packages, and build application
+### 6. Install node packages, and build application
     npm install
     npm run build
 
-### 6. Import your data set (This may take a few minutes if it is a large data set)
+### 7. Import your data set (This may take a few minutes if it is a large data set)
     FASTA=path/to/your/fasta/file.fa GFF=path/to/your/gff/file.gff npm run seed  
 
-### 7. Start the server
+### 8. Start the server
     PORT=4444 npm run start
 
 You will then be able to access the resource at http://localhost:4444

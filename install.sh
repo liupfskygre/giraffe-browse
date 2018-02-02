@@ -7,6 +7,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   echo
   echo "Using OS X config..."
 
+  echo "Installing brew"
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   brew tap homebrew/services
 
