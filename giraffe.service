@@ -1,16 +1,17 @@
 [Unit]
-Description=Candida Website
+Description=Giraffe Browse
 Requires=After=mongodb.service
 
 [Service]
-ExecStart=/usr/local/bin/node /home/giraffe/giraffe-browse/app/server.js
+Environment=PORT=3000
+ExecStart=/usr/bin/node /home/giraffe/giraffe-browse/app/server.js
 WorkingDirectory=/home/giraffe/giraffe-browse/
 Restart=always
-RestartSec=10 
+RestartSec=10
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=candida
-User=candida
+SyslogIdentifier=giraffe
+User=giraffe
 
 [Install]
 WantedBy=multi-user.target
