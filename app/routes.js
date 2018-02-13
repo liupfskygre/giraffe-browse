@@ -30,8 +30,6 @@ module.exports = (app) => {
 
   app.get('*', (req, res, next) => {
     try {
-      console.log(1111111111)
-      console.log(app.meta)
       let home = new HomeController(req, res, app.meta)
       home.render()
     } catch (e) {
