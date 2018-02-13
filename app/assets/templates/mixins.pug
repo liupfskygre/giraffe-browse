@@ -12,7 +12,7 @@ mixin searchForm(options, meta)
       div.col-md-2
         div.col-sm-12
           select(class="form-control type", name='type', value=options.type)
-            option(default, value='') All Types
+            option(default, value='') Type
             each type in meta.types
               option(value=type, selected=options.type === type) #{type}
           input.form-control.bfh-number(type='number', style="height: 31px", name='limit', value=options.limit, min='0', placeholder="Limit")
