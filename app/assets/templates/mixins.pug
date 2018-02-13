@@ -15,7 +15,7 @@ mixin searchForm(options, meta)
             option(default, value='') All Types
             each type in meta.types
               option(value=type, selected=options.type === type) #{type}
-          input.form-control.bfh-number(type='number', name='limit', value=options.limit, min='0', placeholder="Limit")
+          input.form-control.bfh-number(type='number', style="height: 31px", name='limit', value=options.limit, min='0', placeholder="Limit")
 
       div.col-md-2
         div.col-sm-12
